@@ -1,0 +1,159 @@
+<Matrikon.OPC.Simulation>
+  <CSimRootDevLink description="Sim Server Root"/>
+  <PSTAliasGroup>
+    <PSTAliasGroup name="STAN1">
+      <PSTAlias name="Fail" itemPath="" dataType="11"/>
+      <PSTAlias name="Fail_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Finish" itemPath="" dataType="11" readOnly="1" updateRate="3000" scaling="5" input="[Random.Boolean]" output=""/>
+      <PSTAlias name="Finish_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Help" itemPath="" dataType="11"/>
+      <PSTAlias name="Help_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Part1" itemPath="" dataType="11"/>
+      <PSTAlias name="Part1_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Part2" itemPath="" dataType="11"/>
+      <PSTAlias name="Part2_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Stop" itemPath="" dataType="11"/>
+      <PSTAlias name="Stop_s" itemPath="" dataType="11"/>
+    </PSTAliasGroup>
+    <PSTAliasGroup name="STAN10">
+      <PSTAlias name="Fail" itemPath="" dataType="11"/>
+      <PSTAlias name="Fail_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Finish" itemPath="" dataType="11" readOnly="1" updateRate="3000" scaling="5" input="[Random.Boolean]" output=""/>
+      <PSTAlias name="Finish_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Help" itemPath="" dataType="11"/>
+      <PSTAlias name="Help_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Part1" itemPath="" dataType="11"/>
+      <PSTAlias name="Part1_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Part2" itemPath="" dataType="11"/>
+      <PSTAlias name="Part2_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Stop" itemPath="" dataType="11"/>
+      <PSTAlias name="Stop_s" itemPath="" dataType="11"/>
+    </PSTAliasGroup>
+    <PSTAliasGroup name="STAN11">
+      <PSTAlias name="Fail" itemPath="" dataType="11"/>
+      <PSTAlias name="Fail_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Finish" itemPath="" dataType="11" readOnly="1" updateRate="3000" scaling="5" input="[Random.Boolean]" output=""/>
+      <PSTAlias name="Finish_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Help" itemPath="" dataType="11"/>
+      <PSTAlias name="Help_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Part1" itemPath="" dataType="11"/>
+      <PSTAlias name="Part1_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Part2" itemPath="" dataType="11"/>
+      <PSTAlias name="Part2_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Stop" itemPath="" dataType="11"/>
+      <PSTAlias name="Stop_s" itemPath="" dataType="11"/>
+    </PSTAliasGroup>
+    <PSTAliasGroup name="STAN2">
+      <PSTAlias name="Fail" itemPath="" dataType="11"/>
+      <PSTAlias name="Fail_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Finish" itemPath="" dataType="11" readOnly="1" updateRate="3000" scaling="5" input="[Random.Boolean]" output=""/>
+      <PSTAlias name="Finish_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Help" itemPath="" dataType="11"/>
+      <PSTAlias name="Help_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Part1" itemPath="" dataType="11"/>
+      <PSTAlias name="Part1_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Part2" itemPath="" dataType="11"/>
+      <PSTAlias name="Part2_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Stop" itemPath="" dataType="11"/>
+      <PSTAlias name="Stop_s" itemPath="" dataType="11"/>
+    </PSTAliasGroup>
+    <PSTAliasGroup name="STAN3">
+      <PSTAlias name="Fail" itemPath="" dataType="11"/>
+      <PSTAlias name="Fail_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Finish" itemPath="" dataType="11" readOnly="1" updateRate="3000" scaling="5" input="[Random.Boolean]" output=""/>
+      <PSTAlias name="Finish_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Help" itemPath="" dataType="11"/>
+      <PSTAlias name="Help_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Part1" itemPath="" dataType="11"/>
+      <PSTAlias name="Part1_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Part2" itemPath="" dataType="11"/>
+      <PSTAlias name="Part2_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Stop" itemPath="" dataType="11"/>
+      <PSTAlias name="Stop_s" itemPath="" dataType="11"/>
+    </PSTAliasGroup>
+    <PSTAliasGroup name="STAN4">
+      <PSTAlias name="Fail" itemPath="" dataType="11"/>
+      <PSTAlias name="Fail_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Finish" itemPath="" dataType="11" readOnly="1" updateRate="3000" scaling="5" input="[Random.Boolean]" output=""/>
+      <PSTAlias name="Finish_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Help" itemPath="" dataType="11"/>
+      <PSTAlias name="Help_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Part1" itemPath="" dataType="11"/>
+      <PSTAlias name="Part1_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Part2" itemPath="" dataType="11"/>
+      <PSTAlias name="Part2_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Stop" itemPath="" dataType="11"/>
+      <PSTAlias name="Stop_s" itemPath="" dataType="11"/>
+    </PSTAliasGroup>
+    <PSTAliasGroup name="STAN5">
+      <PSTAlias name="Fail" itemPath="" dataType="11"/>
+      <PSTAlias name="Fail_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Finish" itemPath="" dataType="11" readOnly="1" updateRate="3000" scaling="5" input="[Random.Boolean]" output=""/>
+      <PSTAlias name="Finish_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Help" itemPath="" dataType="11"/>
+      <PSTAlias name="Help_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Part1" itemPath="" dataType="11"/>
+      <PSTAlias name="Part1_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Part2" itemPath="" dataType="11"/>
+      <PSTAlias name="Part2_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Stop" itemPath="" dataType="11"/>
+      <PSTAlias name="Stop_s" itemPath="" dataType="11"/>
+    </PSTAliasGroup>
+    <PSTAliasGroup name="STAN6">
+      <PSTAlias name="Fail" itemPath="" dataType="11"/>
+      <PSTAlias name="Fail_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Finish" itemPath="" dataType="11" readOnly="1" updateRate="3000" scaling="5" input="[Random.Boolean]" output=""/>
+      <PSTAlias name="Finish_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Help" itemPath="" dataType="11"/>
+      <PSTAlias name="Help_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Part1" itemPath="" dataType="11"/>
+      <PSTAlias name="Part1_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Part2" itemPath="" dataType="11"/>
+      <PSTAlias name="Part2_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Stop" itemPath="" dataType="11"/>
+      <PSTAlias name="Stop_s" itemPath="" dataType="11"/>
+    </PSTAliasGroup>
+    <PSTAliasGroup name="STAN7">
+      <PSTAlias name="Fail" itemPath="" dataType="11"/>
+      <PSTAlias name="Fail_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Finish" itemPath="" dataType="11" readOnly="1" updateRate="3000" scaling="5" input="[Random.Boolean]" output=""/>
+      <PSTAlias name="Finish_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Help" itemPath="" dataType="11"/>
+      <PSTAlias name="Help_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Part1" itemPath="" dataType="11"/>
+      <PSTAlias name="Part1_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Part2" itemPath="" dataType="11"/>
+      <PSTAlias name="Part2_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Stop" itemPath="" dataType="11"/>
+      <PSTAlias name="Stop_s" itemPath="" dataType="11"/>
+    </PSTAliasGroup>
+    <PSTAliasGroup name="STAN8">
+      <PSTAlias name="Fail" itemPath="" dataType="11"/>
+      <PSTAlias name="Fail_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Finish" itemPath="" dataType="11" readOnly="1" updateRate="3000" scaling="5" input="[Random.Boolean]" output=""/>
+      <PSTAlias name="Finish_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Help" itemPath="" dataType="11"/>
+      <PSTAlias name="Help_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Part1" itemPath="" dataType="11"/>
+      <PSTAlias name="Part1_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Part2" itemPath="" dataType="11"/>
+      <PSTAlias name="Part2_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Stop" itemPath="" dataType="11"/>
+      <PSTAlias name="Stop_s" itemPath="" dataType="11"/>
+    </PSTAliasGroup>
+    <PSTAliasGroup name="STAN9">
+      <PSTAlias name="Fail" itemPath="" dataType="11"/>
+      <PSTAlias name="Fail_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Finish" itemPath="" dataType="11" readOnly="1" updateRate="3000" scaling="5" input="[Random.Boolean]" output=""/>
+      <PSTAlias name="Finish_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Help" itemPath="" dataType="11"/>
+      <PSTAlias name="Help_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Part1" itemPath="" dataType="11"/>
+      <PSTAlias name="Part1_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Part2" itemPath="" dataType="11"/>
+      <PSTAlias name="Part2_s" itemPath="" dataType="11"/>
+      <PSTAlias name="Stop" itemPath="" dataType="11"/>
+      <PSTAlias name="Stop_s" itemPath="" dataType="11"/>
+    </PSTAliasGroup>
+  </PSTAliasGroup>
+</Matrikon.OPC.Simulation>

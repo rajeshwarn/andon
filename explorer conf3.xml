@@ -1,0 +1,215 @@
+<Session>
+  <Hostname Remote="0" RemoteHost="\\ALG">
+    <Server Name="Matrikon.OPC.Simulation.1" Connected="1" GroupCount="1">
+      
+      <Group Name="PFA2" 
+             Active="-1" ReqUpdateRate="1000" TimeBias="0" PercentDeadband="0,00" Connected="2" ItemCount="12">
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN1.Fail</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN1.Fail_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN1.Finish</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN1.Finish_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN1.Help</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN1.Help_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN1.Part1</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN1.Part1_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN1.Part2</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN1.Part2_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN1.Stop</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN1.Stop_s</Item>
+      </Group>
+
+      <Group Name="FA2.1"
+             Active="-1" ReqUpdateRate="1000" TimeBias="0" PercentDeadband="0,00" Connected="2" ItemCount="12">
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN2.Fail</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN2.Fail_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN2.Finish</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN2.Finish_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN2.Help</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN2.Help_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN2.Part1</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN2.Part1_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN2.Part2</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN2.Part2_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN2.Stop</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN2.Stop_s</Item>
+      </Group>
+
+      <Group Name="FA2.2"
+             Active="-1" ReqUpdateRate="1000" TimeBias="0" PercentDeadband="0,00" Connected="2" ItemCount="12">
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN3.Fail</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN3.Fail_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN3.Finish</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN3.Finish_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN3.Help</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN3.Help_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN3.Part1</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN3.Part1_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN3.Part2</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN3.Part2_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN3.Stop</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN3.Stop_s</Item>
+      </Group>
+
+      <Group Name="FA1.4"
+             Active="-1" ReqUpdateRate="1000" TimeBias="0" PercentDeadband="0,00" Connected="2" ItemCount="12">
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN12.Fail</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN12.Fail_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN12.Finish</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN12.Finish_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN12.Help</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN12.Help_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN12.Part1</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN12.Part1_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN12.Part2</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN12.Part2_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN12.Stop</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN12.Stop_s</Item>
+      </Group>
+
+      <Group Name="FA2.3"
+             Active="-1" ReqUpdateRate="1000" TimeBias="0" PercentDeadband="0,00" Connected="2" ItemCount="12">
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN4.Fail</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN4.Fail_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN4.Finish</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN4.Finish_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN4.Help</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN4.Help_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN4.Part1</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN4.Part1_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN4.Part2</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN4.Part2_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN4.Stop</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN4.Stop_s</Item>
+      </Group>
+
+      <Group Name="FA3.1"
+             Active="-1" ReqUpdateRate="1000" TimeBias="0" PercentDeadband="0,00" Connected="2" ItemCount="12">
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN5.Fail</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN5.Fail_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN5.Finish</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN5.Finish_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN5.Help</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN5.Help_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN5.Part1</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN5.Part1_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN5.Part2</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN5.Part2_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN5.Stop</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN5.Stop_s</Item>
+      </Group>
+
+      <Group Name="FA5.2"
+            Active="-1" ReqUpdateRate="1000" TimeBias="0" PercentDeadband="0,00" Connected="2" ItemCount="12">
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN11.Fail</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN11.Fail_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN11.Finish</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN11.Finish_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN11.Help</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN11.Help_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN11.Part1</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN11.Part1_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN11.Part2</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN11.Part2_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN11.Stop</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN11.Stop_s</Item>
+      </Group>
+
+      <Group Name="FA4.3"
+            Active="-1" ReqUpdateRate="1000" TimeBias="0" PercentDeadband="0,00" Connected="2" ItemCount="12">
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN9.Fail</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN9.Fail_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN9.Finish</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN9.Finish_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN9.Help</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN9.Help_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN9.Part1</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN9.Part1_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN9.Part2</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN9.Part2_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN9.Stop</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN9.Stop_s</Item>
+      </Group>
+
+      <Group Name="FA5.1"
+            Active="-1" ReqUpdateRate="1000" TimeBias="0" PercentDeadband="0,00" Connected="2" ItemCount="12">
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN10.Fail</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN10.Fail_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN10.Finish</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN10.Finish_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN10.Help</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN10.Help_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN10.Part1</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN10.Part1_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN10.Part2</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN10.Part2_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN10.Stop</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN10.Stop_s</Item>
+      </Group>
+
+      <Group Name="FA3.2"
+            Active="-1" ReqUpdateRate="1000" TimeBias="0" PercentDeadband="0,00" Connected="2" ItemCount="12">
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN6.Fail</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN6.Fail_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN6.Finish</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN6.Finish_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN6.Help</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN6.Help_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN6.Part1</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN6.Part1_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN6.Part2</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN6.Part2_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN6.Stop</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN6.Stop_s</Item>
+      </Group>
+
+      <Group Name="FA4.1"
+            Active="-1" ReqUpdateRate="1000" TimeBias="0" PercentDeadband="0,00" Connected="2" ItemCount="12">
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN7.Fail</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN7.Fail_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN7.Finish</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN7.Finish_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN7.Help</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN7.Help_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN7.Part1</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN7.Part1_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN7.Part2</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN7.Part2_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN7.Stop</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN7.Stop_s</Item>
+      </Group>
+
+      <Group Name="FA4.2"
+            Active="-1" ReqUpdateRate="1000" TimeBias="0" PercentDeadband="0,00" Connected="2" ItemCount="12">
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN8.Fail</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN8.Fail_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN8.Finish</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN8.Finish_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN8.Help</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN8.Help_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN8.Part1</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN8.Part1_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN8.Part2</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN8.Part2_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN8.Stop</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN8.Stop_s</Item>
+      </Group>
+
+      <Group Name="FA1.2"
+            Active="-1" ReqUpdateRate="1000" TimeBias="0" PercentDeadband="0,00" Connected="2" ItemCount="12">
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN13.Fail</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN13.Fail_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN13.Finish</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN13.Finish_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN13.Help</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN13.Help_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN13.Part1</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN13.Part1_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN13.Part2</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN13.Part2_s</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN13.Stop</Item>
+        <Item AccessPath="" Active="-1" ReqDataType="0">STAN13.Stop_s</Item>
+      </Group>      
+
+    </Server>
+  </Hostname>
+</Session>
