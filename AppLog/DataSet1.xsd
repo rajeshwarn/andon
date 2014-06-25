@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DataSet1" targetNamespace="http://tempuri.org/DataSet1.xsd" xmlns:mstns="http://tempuri.org/DataSet1.xsd" xmlns="http://tempuri.org/DataSet1.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="Settings" AppSettingsPropertyName="DetroitConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Private" Name="DetroitConnectionString (Settings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.AppLog.Properties.Settings.GlobalReference.Default.DetroitConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DataSet1" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DataSet1" msprop:Generator_UserDSName="DataSet1">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="MemLog" msprop:Generator_TableClassName="MemLogDataTable" msprop:Generator_TableVarName="tableMemLog" msprop:Generator_TablePropName="MemLog" msprop:Generator_RowDeletingName="MemLogRowDeleting" msprop:Generator_RowChangingName="MemLogRowChanging" msprop:Generator_RowEvHandlerName="MemLogRowChangeEventHandler" msprop:Generator_RowDeletedName="MemLogRowDeleted" msprop:Generator_UserTableName="MemLog" msprop:Generator_RowChangedName="MemLogRowChanged" msprop:Generator_RowEvArgName="MemLogRowChangeEvent" msprop:Generator_RowClassName="MemLogRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="MemId" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="1" msprop:Generator_ColumnVarNameInTable="columnMemId" msprop:Generator_ColumnPropNameInRow="MemId" msprop:Generator_ColumnPropNameInTable="MemIdColumn" msprop:Generator_UserColumnName="MemId" type="xs:int" minOccurs="0" />
+              <xs:element name="EventTime" msprop:Generator_ColumnVarNameInTable="columnEventTime" msprop:Generator_ColumnPropNameInRow="EventTime" msprop:Generator_ColumnPropNameInTable="EventTimeColumn" msprop:Generator_UserColumnName="EventTime" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="AlertType" msprop:Generator_ColumnVarNameInTable="columnAlertType" msprop:Generator_ColumnPropNameInRow="AlertType" msprop:Generator_ColumnPropNameInTable="AlertTypeColumn" msprop:Generator_UserColumnName="AlertType" type="xs:short" minOccurs="0" />
+              <xs:element name="Line" msprop:Generator_ColumnVarNameInTable="columnLine" msprop:Generator_ColumnPropNameInRow="Line" msprop:Generator_ColumnPropNameInTable="LineColumn" msprop:Generator_UserColumnName="Line" type="xs:string" minOccurs="0" />
+              <xs:element name="ObjectType" msprop:Generator_ColumnVarNameInTable="columnObjectType" msprop:Generator_ColumnPropNameInRow="ObjectType" msprop:Generator_ColumnPropNameInTable="ObjectTypeColumn" msprop:Generator_UserColumnName="ObjectType" type="xs:string" minOccurs="0" />
+              <xs:element name="ObjectNum" msprop:Generator_ColumnVarNameInTable="columnObjectNum" msprop:Generator_ColumnPropNameInRow="ObjectNum" msprop:Generator_ColumnPropNameInTable="ObjectNumColumn" msprop:Generator_UserColumnName="ObjectNum" type="xs:string" minOccurs="0" />
+              <xs:element name="Message" msprop:Generator_ColumnVarNameInTable="columnMessage" msprop:Generator_ColumnPropNameInRow="Message" msprop:Generator_ColumnPropNameInTable="MessageColumn" msprop:Generator_UserColumnName="Message" type="xs:string" minOccurs="0" />
+              <xs:element name="UserName" msprop:Generator_ColumnVarNameInTable="columnUserName" msprop:Generator_ColumnPropNameInRow="UserName" msprop:Generator_ColumnPropNameInTable="UserNameColumn" msprop:Generator_UserColumnName="UserName" type="xs:string" minOccurs="0" />
+              <xs:element name="AcknowUser" msprop:Generator_ColumnVarNameInTable="columnAcknowUser" msprop:Generator_ColumnPropNameInRow="AcknowUser" msprop:Generator_ColumnPropNameInTable="AcknowUserColumn" msprop:Generator_UserColumnName="AcknowUser" type="xs:string" minOccurs="0" />
+              <xs:element name="AcknowMark" msprop:Generator_ColumnVarNameInTable="columnAcknowMark" msprop:Generator_ColumnPropNameInRow="AcknowMark" msprop:Generator_ColumnPropNameInTable="AcknowMarkColumn" msprop:Generator_UserColumnName="AcknowMark" type="xs:short" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1">
+      <xs:selector xpath=".//mstns:MemLog" />
+      <xs:field xpath="mstns:MemId" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>

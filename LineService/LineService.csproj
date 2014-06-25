@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E2942A28-65E8-48D1-9575-44B997E389C4}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LineService</RootNamespace>
+    <AssemblyName>LineService</AssemblyName>
+    <ProjectTypeGuids>{3D9AD99F-2412-4246-B90B-4EAA41C64699};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <StartArguments>/client:"WcfTestClient.exe"</StartArguments>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Batch.cs" />
+    <Compile Include="BatchMap.cs" />
+    <Compile Include="Button.cs" />
+    <Compile Include="Counter.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="DetroitDataSet.cs">
+      <SubType>Component</SubType>
+      <DependentUpon>DetroitDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="DetroitDataSet.Designer.cs">
+      <DependentUpon>DetroitDataSet.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dispatcher.cs" />
+    <Compile Include="DispatcherMoveArgs.cs" />
+    <Compile Include="DispatcherStationArgs.cs" />
+    <Compile Include="IAssembLine.cs" />
+    <Compile Include="ILogistic.cs" />
+    <Compile Include="IOPCStation.cs" />
+    <Compile Include="IStation.cs" />
+    <Compile Include="Line.cs" />
+    <Compile Include="LineOPCProvider.cs" />
+    <Compile Include="LineQueue.cs" />
+    <Compile Include="LineStation.cs" />
+    <Compile Include="MemLog.cs" />
+    <Compile Include="MessageInspector.cs" />
+    <Compile Include="MXIO.cs" />
+    <Compile Include="Package.cs" />
+    <Compile Include="Planner.cs" />
+    <Compile Include="Product.cs" />
+    <Compile Include="ProductBuffer.cs" />
+    <Compile Include="ProductMap.cs" />
+    <Compile Include="ProductRoute.cs" />
+    <Compile Include="ProductStock.cs" />
+    <Compile Include="ProductsToMove.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="AssembLine.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Router.cs" />
+    <Compile Include="SchedulerFramesCache.cs" />
+    <Compile Include="SerializableDictionary.cs" />
+    <Compile Include="Serialization.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="SuperTimer.cs" />
+    <Compile Include="Supplier.cs" />
+    <Compile Include="TaktTimer2.cs" />
+    <Compile Include="TestStation.cs" />
+    <Compile Include="TimedLineStation.cs" />
+    <Compile Include="TimeManager.cs" />
+    <Compile Include="TimersController.cs" />
+    <Compile Include="UncompletedProduct.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ClassDiagram1.cd" />
+    <None Include="DetroitDataSet.xsc">
+      <DependentUpon>DetroitDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DetroitDataSet.xsd" />
+    <None Include="DetroitDataSet.xss">
+      <DependentUpon>DetroitDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AppLog\AppLog.csproj">
+      <Project>{064FFC29-853B-4A34-A417-2F1139E84828}</Project>
+      <Name>AppLog</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="OPCAutomation">
+      <Guid>{F8582D24-88FB-11D0-B850-00C0F0104305}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="DetroitDataSet.resx">
+      <DependentUpon>DetroitDataSet.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{3D9AD99F-2412-4246-B90B-4EAA41C64699}">
+        <WcfProjectProperties>
+          <AutoStart>True</AutoStart>
+        </WcfProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

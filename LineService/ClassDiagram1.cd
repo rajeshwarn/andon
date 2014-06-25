@@ -1,0 +1,784 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="LineService.BatchesOnLine" Collapsed="true">
+    <Position X="17.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAgAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AssembLine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.ProductsOnLine" Collapsed="true">
+    <Position X="16" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AssembLine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.BatchStock" Collapsed="true">
+    <Position X="24.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AssembLine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.LineFrame" Collapsed="true">
+    <Position X="11.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AssembLine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.AssembLine" Collapsed="true">
+    <Position X="3.5" Y="3.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Properties" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>QIRDNHBAuLAwsAYBGAaIEI0g2IdF4TRkARMHCEHSDxg=</HashCode>
+      <FileName>AssembLine.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="dispatcher" />
+      <Field Name="OPCProvider" />
+      <Field Name="supplier" />
+      <Field Name="timeManager" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Field Name="lineStations" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="LineService.Batch" Collapsed="true">
+    <Position X="16" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAUCEAAkABAAACAAAEMoQARCAAAFAAAiCQAAIgAAAgA=</HashCode>
+      <FileName>Batch.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.BatchMapItem" Collapsed="true">
+    <Position X="21.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAECAAAAAgAAAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>BatchMap.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.BatchMap" Collapsed="true">
+    <Position X="19.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAMAAAAAAAAAgAAABAAAAAQAAAAAADECAAAgAgBAAAA=</HashCode>
+      <FileName>BatchMap.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.Button" Collapsed="true">
+    <Position X="14.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACIAAgAAAABAIAAQBCAAUAQAYEAgAEAAIABAAACgQ=</HashCode>
+      <FileName>Button.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.TimerSerializable" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="19.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Counter.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="LineService.Counter" Collapsed="true">
+    <Position X="10.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAGgAAAAUCBABoAAAAAAAAAAAUBBACAAIQAAAAAAAAA=</HashCode>
+      <FileName>Counter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.DetroitDataSet" Collapsed="true">
+    <Position X="17.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>SRQOAQcOA4AACAJQHQACaxBEAImC6DgIEcSJASOABBg=</HashCode>
+      <FileName>DetroitDataSet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.Dispatcher" Collapsed="true">
+    <Position X="6.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAACKAAAECAACAAAAICAAADAQAEAAAEAEAAgBAQgA=</HashCode>
+      <FileName>Dispatcher.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.DispatcherMoveArgs" Collapsed="true">
+    <Position X="19.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAA=</HashCode>
+      <FileName>DispatcherMoveArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.DispatcherStationArgs" Collapsed="true">
+    <Position X="21.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>DispatcherStationArgs.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.StationRealtimeData" Collapsed="true">
+    <Position X="21.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAQAAAAAAAAAABAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>IAssembLine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.LineStationBase" Collapsed="true">
+    <Position X="6.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAACAQAAAgEAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>IAssembLine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.ProductBase" Collapsed="true">
+    <Position X="3.5" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAAEAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>IAssembLine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.Frame" Collapsed="true">
+    <Position X="11.5" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAFAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>IAssembLine.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.LogistRequestElem" Collapsed="true">
+    <Position X="19.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAQAAAAQAAAAAAAADAAAAAAAQgAA=</HashCode>
+      <FileName>ILogistic.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.LogistTailElem" Collapsed="true">
+    <Position X="21.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAAAAAAAAAAAAQAAAAAAAAACEAAAAAAA=</HashCode>
+      <FileName>ILogistic.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.LogisticInfo" Collapsed="true">
+    <Position X="17.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAAAAAAAgAAAAAAAAAAAgAAAA=</HashCode>
+      <FileName>ILogistic.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.Line" Collapsed="true">
+    <Position X="3.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIACAAAAAAAAAAAAEAAAAAQAAQAEAAEAAAAAAAAAAgA=</HashCode>
+      <FileName>Line.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.VarEventArgs" Collapsed="true">
+    <Position X="14.25" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>LineOPCProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.VarItem" Collapsed="true">
+    <Position X="16" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgIABAAAQAAAAAABAAAACAAAFARCCAAAAAAAAAAA=</HashCode>
+      <FileName>LineOPCProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.LineOPCProvider" Collapsed="true">
+    <Position X="2.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BQSAQQBEAAAgAAgEiAAAAAAogAAAMAAAAIAARABAAgA=</HashCode>
+      <FileName>LineOPCProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.NodeEventArgs" Collapsed="true">
+    <Position X="16" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>LineOPCProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.TagEventArgs" Collapsed="true">
+    <Position X="26.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>LineOPCProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.MoxaIPNode" Collapsed="true">
+    <Position X="24.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQQAIAAAAAIAAAAAAAAAAIAAAAAAAEgAAAACAAEAAAA=</HashCode>
+      <FileName>LineOPCProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.MoxaTag" Collapsed="true">
+    <Position X="28.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAEAAAABAAAACAAAAAAAEACAAAQAAAAAAAQA=</HashCode>
+      <FileName>LineOPCProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.MoxaIPProvider" Collapsed="true">
+    <Position X="26.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABQAAAAAQAAAQAEAAAIAAIAAAAAEAEBAAERAiAAIJAA=</HashCode>
+      <FileName>LineOPCProvider.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.LineQueue" Collapsed="true">
+    <Position X="24.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAABAAAAAAAAAAAAAAAgABBAAEACCAABAAAA=</HashCode>
+      <FileName>LineQueue.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.TimerSnapshort" Collapsed="true">
+    <Position X="21.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIQAAAAAAAAAAQAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>LineStation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.StationBuffer" Collapsed="true">
+    <Position X="17.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAQAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>LineStation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.LineStation" Collapsed="true">
+    <Position X="6.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>5gMgcAAAAAAIoAAACAgAUAFIYAARCBEoBQEBACfBYBg=</HashCode>
+      <FileName>LineStation.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="LineService.Package" Collapsed="true">
+    <Position X="17.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAABAAAAAAAAAAAABAAAAAAAAAAAAAACAEAAA=</HashCode>
+      <FileName>Package.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.Planner" Collapsed="true">
+    <Position X="19.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAECAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>Planner.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.Product" Collapsed="true">
+    <Position X="3.5" Y="10.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAEACAABAIAAAAAEAQAEhEAAAABAAAAABYAAGAAAA=</HashCode>
+      <FileName>Product.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.ProductBuffer" Collapsed="true">
+    <Position X="23" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAA=</HashCode>
+      <FileName>ProductBuffer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.MapItem" Collapsed="true">
+    <Position X="23" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAECAAACAgAAAABAAAAAwAACACAAAEAiEABAAAAAg=</HashCode>
+      <FileName>ProductMap.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.ProductMap" Collapsed="true">
+    <Position X="26.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgAABBAAAAQAAAAAAACACAAAAAABAAAA=</HashCode>
+      <FileName>ProductMap.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.ProductRoute" Collapsed="true">
+    <Position X="14.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ProductRoute.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.ProductStock" Collapsed="true">
+    <Position X="17.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAAAAEAAABAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ProductStock.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.ProductsToMove" Collapsed="true">
+    <Position X="21.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ProductsToMove.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.EventQueue&lt;T&gt;" Collapsed="true">
+    <Position X="23" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIIAAAAAAAAAgAAAAAAAAwgAAgIACIAAAAAAAgAAAA=</HashCode>
+      <FileName>ProductsToMove.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.Router" Collapsed="true">
+    <Position X="8.5" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AwAAgAEACACAAiAgAAACgAAAEAAAAAAEAAAABAAAAAI=</HashCode>
+      <FileName>Router.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.ProductRouter" Collapsed="true">
+    <Position X="8.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAQAAABBAAAAAQAEAAAACAAAAIwIAAAAAE=</HashCode>
+      <FileName>Router.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.DbProductRouter" Collapsed="true">
+    <Position X="8.5" Y="9" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAgAAAAAAAAIEAAAAACAAAAAAAABEAAAAAIAAAAAA=</HashCode>
+      <FileName>Router.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.StationGrafNode" Collapsed="true">
+    <Position X="19.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAIAAAAAAAAAI=</HashCode>
+      <FileName>Router.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.Transition" Collapsed="true">
+    <Position X="24.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAABAAACAA=</HashCode>
+      <FileName>Router.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.SchedulerFramesCache" Collapsed="true">
+    <Position X="26.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SchedulerFramesCache.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.SerializableDictionary&lt;TKey, TVal&gt;" Collapsed="true">
+    <Position X="4.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAQAAAAAAAAAACABAIAAAAAAAAAAAA=</HashCode>
+      <FileName>SerializableDictionary.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="LineService.Serialization" Collapsed="true">
+    <Position X="14.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Serialization.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.SuperCounter" Collapsed="true">
+    <Position X="9.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAACAAAAAAAAAAAAAgAEAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SuperTimer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.Supplier" Collapsed="true">
+    <Position X="3.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CwACEAgBAACQNAIEAAACADCQQQAQABAAAAABAIHAogg=</HashCode>
+      <FileName>Supplier.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.TaktTimer2" Collapsed="true">
+    <Position X="28.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAGAAAAAUABADAAAQAAAAEAAIABAgAEAACAAAAAAAAA=</HashCode>
+      <FileName>TaktTimer2.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.TestStation" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="16" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BgAiYAAAAgAAAAAAAAAAQAQAAAAECAAoBAAACAGAAgg=</HashCode>
+      <FileName>TestStation.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="LineService.TimedLineStation" Collapsed="true">
+    <Position X="6.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>YAYAAIAAIEAAiAQBAQBAQCAAQAAAgQAAAAAAAKGEAAA=</HashCode>
+      <FileName>TimedLineStation.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="LineService.PlanRegister" Collapsed="true">
+    <Position X="3.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TimeManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.FactRegister" Collapsed="true">
+    <Position X="5.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TimeManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.TMSavedData" Collapsed="true">
+    <Position X="23" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQgAAAAAAAAAAAAAgAQAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TimeManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.PlanRegisterRecord" Collapsed="true">
+    <Position X="21.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAQAAAACgAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TimeManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.RegisterRecord" Collapsed="true">
+    <Position X="24.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIQAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TimeManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.KeyCounter" Collapsed="true">
+    <Position X="11.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TimeManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.TimeManager" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>JyQAmLEIiYZwBAEsAAdD6IAIgQEADTAWJJAJIghaAJE=</HashCode>
+      <FileName>TimeManager.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Field Name="lineStations" />
+    </ShowAsCollectionAssociation>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="LineService.TCSavedData" Collapsed="true">
+    <Position X="14.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAA=</HashCode>
+      <FileName>TimersController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.TimersController" Collapsed="true">
+    <Position X="17.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgYAIAEAACAEBAAEAAAiAAAAAAAAAAAQoAAgAAAAgiA=</HashCode>
+      <FileName>TimersController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.UncompletedProducts" Collapsed="true">
+    <Position X="26.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAABAAAAAAAAAgAAACBEAAAAAAAAAAAA=</HashCode>
+      <FileName>UncompletedProduct.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.DetroitDataSetTableAdapters.ControlTableAdapter" Collapsed="true">
+    <Position X="16" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EACAAGAAEAAAAAcAIAAAgAAAACAICAAAAAAAAQAABBA=</HashCode>
+      <FileName>DetroitDataSet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.DetroitDataSetTableAdapters.ProductBufferTableAdapter" Collapsed="true">
+    <Position X="24.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EASAAGAAEAAAAAcAIAAAAAAAACEICAAAAAAAAAAAFBA=</HashCode>
+      <FileName>DetroitDataSet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.DetroitDataSetTableAdapters.UncompletedProductTableAdapter" Collapsed="true">
+    <Position X="28.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EASAAGAAEAAAAAcAIAAAAAAAACEICAAAAAAAAAAABBA=</HashCode>
+      <FileName>DetroitDataSet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.DetroitDataSetTableAdapters.BatchTableAdapter" Collapsed="true">
+    <Position X="26.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EASAAGAAEAAAAAcAIAAAAAAAACEICAAAAAAAAAAABBA=</HashCode>
+      <FileName>DetroitDataSet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.DetroitDataSetTableAdapters.ProductTableAdapter" Collapsed="true">
+    <Position X="23" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EASAAGAAEAAAAAcAqAABAIAAACEICAAAAAAAAAAABBA=</HashCode>
+      <FileName>DetroitDataSet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.DetroitDataSetTableAdapters.ProductOnLineTableAdapter" Collapsed="true">
+    <Position X="28.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EASAAGAAEAAAAAcAIAABAAABASEICAAAAAAAAACABBA=</HashCode>
+      <FileName>DetroitDataSet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.DetroitDataSetTableAdapters.AssembLineTableAdapter" Collapsed="true">
+    <Position X="14.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EASAAGAAEAAAAAcAIAAAAAAAACEICAAAAAAAQAAABBA=</HashCode>
+      <FileName>DetroitDataSet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.DetroitDataSetTableAdapters.SchedulerFrameTableAdapter" Collapsed="true">
+    <Position X="28.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EBSAAGAIEAAACAcgIAAQAAAAACAICAAAAAAAAAAAVBA=</HashCode>
+      <FileName>DetroitDataSet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.DetroitDataSetTableAdapters.BatchMapPointTableAdapter" Collapsed="true">
+    <Position X="23" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EACAAGAAECAAAAcAIAAAAAAAACAICAAAAAAAAAAABBA=</HashCode>
+      <FileName>DetroitDataSet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.DetroitDataSetTableAdapters.LineQueueExtTableAdapter" Collapsed="true">
+    <Position X="26.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EACAAGAEEAAAAAcAIAAAAAAAACAICAAAAgAAAAAAFBA=</HashCode>
+      <FileName>DetroitDataSet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.DetroitDataSetTableAdapters.LineQueueTableAdapter" Collapsed="true">
+    <Position X="28.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EASAAGAAEAAAAAcgIAAAAAAAACEICAAAAAAAAAAAFBA=</HashCode>
+      <FileName>DetroitDataSet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.DetroitDataSetTableAdapters.StationTableAdapter" Collapsed="true">
+    <Position X="23" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EASAAGAAEAAAAAcgIAAAAAAAACEICAAAAAAAAAAAFBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.DetroitDataSetTableAdapters.LineSnapshotTableAdapter" Collapsed="true">
+    <Position X="16" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EASAAGAAEAAACAcAIAAAAAgAACEICAAAAAAAAAAABRA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.DetroitDataSetTableAdapters.BatchTypeMapTableAdapter" Collapsed="true">
+    <Position X="28.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EASAAGAAEAAACAcAIAAAAAAAACEICAAAAAAAAAAARBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.DetroitDataSetTableAdapters.ProductStockTableAdapter" Collapsed="true">
+    <Position X="19.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EASAAGAAEAAAAAcAIAAAAAAAACEICAAAAAAAAAAABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.DetroitDataSetTableAdapters.LineSnapshotReaderTableAdapter" Collapsed="true">
+    <Position X="14.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EACAAGAAEAAAAAcAIAAAAAAAACAICAAAAAAAAAAABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.DetroitDataSetTableAdapters.TableAdapterManager" Collapsed="true">
+    <Position X="24.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AUAIECBEAABBDEEBQAAAMEgmAAAKiIEIgAZAAAAChAQ=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MOXA_CSharp_MXIO.MXIO_CS" Collapsed="true">
+    <Position X="14.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>/v///7//////7////+9///7///3z/33//f///2f/7/8=</HashCode>
+      <FileName>MXIO.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineService.Properties.Settings" Collapsed="true">
+    <Position X="16" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAQAEAQAAIAAAAAABAAAAAAAAAAAACAA=</HashCode>
+      <FileName>Settings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="LineService.LineParams" Collapsed="true">
+    <Position X="14.25" Y="8.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAACAAAAAAAAAAAAAAAAAAAABAAAQAAAIAAAAAAAAA=</HashCode>
+      <FileName>AssembLine.cs</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Interface Name="LineService.IAssembLine" Collapsed="true">
+    <Position X="14.25" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIQBEFAAAJAAEAQAAAAIAAEAwIVAAQAAARAFAEGCCRg=</HashCode>
+      <FileName>IAssembLine.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="LineService.ILogistic" Collapsed="true">
+    <Position X="16" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAQAAAAAAAAAAAAEAAAAAAgAAAAAAAABAA=</HashCode>
+      <FileName>ILogistic.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="LineService.IOPCStation" Collapsed="true">
+    <Position X="17.75" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IOPCStation.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="LineService.IStation" Collapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BgAiYAAAAAAAAAAAAAAAQAQAAAAACAAoBAAAAAGAAAg=</HashCode>
+      <FileName>IStation.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="LineService.ITimeInformer" Collapsed="true">
+    <Position X="19.5" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>TimeManager.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="LineService.PlanMode" Collapsed="true">
+    <Position X="28.25" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>AssembLine.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="LineService.StationProductAction" Collapsed="true">
+    <Position X="17.75" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AssembLine.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="LineService.ProductState" Collapsed="true">
+    <Position X="14.25" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>oACAAAAAQAAAAAAAAAAAAAAACAAAAAACAAAAAAAAACA=</HashCode>
+      <FileName>AssembLine.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="LineService.LineType" Collapsed="true">
+    <Position X="17.75" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AssembLine.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="LineService.MoveType" Collapsed="true">
+    <Position X="23" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIACAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Dispatcher.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="LineService.MXIO_ModuleType" Collapsed="true">
+    <Position X="24.75" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAQAAAAAAA=</HashCode>
+      <FileName>LineOPCProvider.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="LineService.OPCControlType" Collapsed="true">
+    <Position X="26.5" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAA=</HashCode>
+      <FileName>LineOPCProvider.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="LineService.TagQuality" Collapsed="true">
+    <Position X="19.5" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>LineOPCProvider.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="LineService.BSFlag" Collapsed="true">
+    <Position X="14.25" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAAAAAAAARCAAAAAAAAAQAAAQAAAAAAAAI=</HashCode>
+      <FileName>LineStation.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="LineService.ResetControlsType" Collapsed="true">
+    <Position X="16" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAABAAAAA=</HashCode>
+      <FileName>LineStation.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="LineService.ButtonState" Collapsed="true">
+    <Position X="16" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIA=</HashCode>
+      <FileName>LineStation.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="LineService.TimerCounterType" Collapsed="true">
+    <Position X="21.25" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAQ=</HashCode>
+      <FileName>LineStation.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="LineService.MapStepResult" Collapsed="true">
+    <Position X="19.5" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAABAAAAACA=</HashCode>
+      <FileName>ProductMap.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="LineService.MapStepState" Collapsed="true">
+    <Position X="21.25" Y="11" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>ProductMap.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="LineService.TimerKey" Collapsed="true">
+    <Position X="23" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAECAAAABAAAAAAAgAAAAAgEAAAQAIIAAAAAA=</HashCode>
+      <FileName>TimedLineStation.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="LineService.TMState" Collapsed="true">
+    <Position X="24.75" Y="11.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIA=</HashCode>
+      <FileName>TimeManager.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="8.4" />
+</ClassDiagram>

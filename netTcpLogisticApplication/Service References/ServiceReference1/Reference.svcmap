@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="3e906265-bcc6-4aa5-aa82-e21599a44a75" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:10009/Logistic/mex" Protocol="mex" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="8b3daf31-b407-4a8e-9362-a5a81f81cb87" SourceId="1" SourceUrl="http://localhost:10009/Logistic/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="ee8668c8-a579-411c-ac23-42dc31e2b605" SourceId="1" SourceUrl="http://localhost:10009/Logistic/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="b1b66c0c-4f93-4237-a99b-4feeb935bebd" SourceId="1" SourceUrl="http://localhost:10009/Logistic/mex" />
+    <MetadataFile FileName="LogisticService.xsd" MetadataType="Schema" ID="a19d26b5-9848-445f-89f5-4d3205bbeb53" SourceId="1" SourceUrl="http://localhost:10009/Logistic/mex" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

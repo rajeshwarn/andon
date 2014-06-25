@@ -1,0 +1,166 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Logistic" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsp:Policy wsu:Id="NetTcpBinding_ILogistic_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsp:Policy wsu:Id="NetTcpBinding_ILogisticCollector_policy">
+    <wsp:ExactlyOne>
+      <wsp:All>
+        <msb:BinaryEncoding xmlns:msb="http://schemas.microsoft.com/ws/06/2004/mspolicy/netbinary1" />
+        <wsaw:UsingAddressing />
+      </wsp:All>
+    </wsp:ExactlyOne>
+  </wsp:Policy>
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import namespace="http://tempuri.org/" />
+      <xsd:import namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import namespace="http://schemas.datacontract.org/2004/07/LogisticService" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ILogistic_GetLogisticRequests_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLogisticRequests" />
+  </wsdl:message>
+  <wsdl:message name="ILogistic_GetLogisticRequests_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLogisticRequestsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILogistic_GetLogisticTails_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLogisticTails" />
+  </wsdl:message>
+  <wsdl:message name="ILogistic_GetLogisticTails_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLogisticTailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILogistic_GetBatchesOnLine_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetBatchesOnLine" />
+  </wsdl:message>
+  <wsdl:message name="ILogistic_GetBatchesOnLine_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetBatchesOnLineResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILogistic_GetLogisticInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetLogisticInfo" />
+  </wsdl:message>
+  <wsdl:message name="ILogistic_GetLogisticInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetLogisticInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILogisticCollector_RenewBatchesOnLine_InputMessage">
+    <wsdl:part name="parameters" element="tns:RenewBatchesOnLine" />
+  </wsdl:message>
+  <wsdl:message name="ILogisticCollector_RenewBatchesOnLine_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RenewBatchesOnLineResponse" />
+  </wsdl:message>
+  <wsdl:message name="ILogisticCollector_RenewNextBatch_InputMessage">
+    <wsdl:part name="parameters" element="tns:RenewNextBatch" />
+  </wsdl:message>
+  <wsdl:message name="ILogisticCollector_RenewNextBatch_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RenewNextBatchResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ILogistic">
+    <wsdl:operation name="GetLogisticRequests">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILogistic/GetLogisticRequests" message="tns:ILogistic_GetLogisticRequests_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILogistic/GetLogisticRequestsResponse" message="tns:ILogistic_GetLogisticRequests_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLogisticTails">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILogistic/GetLogisticTails" message="tns:ILogistic_GetLogisticTails_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILogistic/GetLogisticTailsResponse" message="tns:ILogistic_GetLogisticTails_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetBatchesOnLine">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILogistic/GetBatchesOnLine" message="tns:ILogistic_GetBatchesOnLine_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILogistic/GetBatchesOnLineResponse" message="tns:ILogistic_GetBatchesOnLine_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetLogisticInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILogistic/GetLogisticInfo" message="tns:ILogistic_GetLogisticInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILogistic/GetLogisticInfoResponse" message="tns:ILogistic_GetLogisticInfo_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="ILogisticCollector">
+    <wsdl:operation name="RenewBatchesOnLine">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILogisticCollector/RenewBatchesOnLine" message="tns:ILogisticCollector_RenewBatchesOnLine_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILogisticCollector/RenewBatchesOnLineResponse" message="tns:ILogisticCollector_RenewBatchesOnLine_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RenewNextBatch">
+      <wsdl:input wsaw:Action="http://tempuri.org/ILogisticCollector/RenewNextBatch" message="tns:ILogisticCollector_RenewNextBatch_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ILogisticCollector/RenewNextBatchResponse" message="tns:ILogisticCollector_RenewNextBatch_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="NetTcpBinding_ILogistic" type="tns:ILogistic">
+    <wsp:PolicyReference URI="#NetTcpBinding_ILogistic_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="GetLogisticRequests">
+      <soap12:operation soapAction="http://tempuri.org/ILogistic/GetLogisticRequests" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLogisticTails">
+      <soap12:operation soapAction="http://tempuri.org/ILogistic/GetLogisticTails" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBatchesOnLine">
+      <soap12:operation soapAction="http://tempuri.org/ILogistic/GetBatchesOnLine" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetLogisticInfo">
+      <soap12:operation soapAction="http://tempuri.org/ILogistic/GetLogisticInfo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="NetTcpBinding_ILogisticCollector" type="tns:ILogisticCollector">
+    <wsp:PolicyReference URI="#NetTcpBinding_ILogisticCollector_policy" />
+    <soap12:binding transport="http://schemas.microsoft.com/soap/tcp" />
+    <wsdl:operation name="RenewBatchesOnLine">
+      <soap12:operation soapAction="http://tempuri.org/ILogisticCollector/RenewBatchesOnLine" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RenewNextBatch">
+      <soap12:operation soapAction="http://tempuri.org/ILogisticCollector/RenewNextBatch" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Logistic">
+    <wsdl:port name="NetTcpBinding_ILogistic" binding="tns:NetTcpBinding_ILogistic">
+      <soap12:address location="net.tcp://localhost:10000/Logistic" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://localhost:10000/Logistic</wsa10:Address>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+    <wsdl:port name="NetTcpBinding_ILogisticCollector" binding="tns:NetTcpBinding_ILogisticCollector">
+      <soap12:address location="net.tcp://localhost:10000/Logistic" />
+      <wsa10:EndpointReference>
+        <wsa10:Address>net.tcp://localhost:10000/Logistic</wsa10:Address>
+      </wsa10:EndpointReference>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,354 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{31112039-CEF1-4726-A03E-4131790AB8B2}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Admin</RootNamespace>
+    <AssemblyName>Admin</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AppLog">
+      <HintPath>..\AppLog\bin\Debug\AppLog.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="Microsoft.ReportViewer.WinForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BatchForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BatchForm.Designer.cs">
+      <DependentUpon>BatchForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BatchTypeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BatchTypeForm.Designer.cs">
+      <DependentUpon>BatchTypeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BatchTypeMap_OLD.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BatchTypeMap_OLD.Designer.cs">
+      <DependentUpon>BatchTypeMap_OLD.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BatchTypeMap.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BatchTypeMap.Designer.cs">
+      <DependentUpon>BatchTypeMap.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ErrorLog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ErrorLog.Designer.cs">
+      <DependentUpon>ErrorLog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Log.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Log.Designer.cs">
+      <DependentUpon>Log.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScheduleFramesDefault.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ScheduleFramesDefault.Designer.cs">
+      <DependentUpon>ScheduleFramesDefault.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ProductBuffer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProductBuffer.Designer.cs">
+      <DependentUpon>ProductBuffer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DetroitDataSet.cs">
+      <DependentUpon>DetroitDataSet.xsd</DependentUpon>
+      <SubType>Component</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="DetroitDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DetroitDataSet.xsd</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="Lines.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Lines.Designer.cs">
+      <DependentUpon>Lines.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LineQueue.cs" />
+    <Compile Include="LineQueueForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LineQueueForm.Designer.cs">
+      <DependentUpon>LineQueueForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Parts.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Parts.Designer.cs">
+      <DependentUpon>Parts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ScheduleFrames.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ScheduleFrames.Designer.cs">
+      <DependentUpon>ScheduleFrames.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SecurityMgr2.cs" />
+    <Compile Include="Properties\Settings.cs" />
+    <Compile Include="StationForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StationForm.Designer.cs">
+      <DependentUpon>StationForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Stations.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Stations.Designer.cs">
+      <DependentUpon>Stations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Stock.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Stock.Designer.cs">
+      <DependentUpon>Stock.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UncompletedProducts.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UncompletedProducts.Designer.cs">
+      <DependentUpon>UncompletedProducts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WorkSchedule.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WorkSchedule.Designer.cs">
+      <DependentUpon>WorkSchedule.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WorkScheduleRepForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WorkScheduleRepForm.Designer.cs">
+      <DependentUpon>WorkScheduleRepForm.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="BatchForm.resx">
+      <DependentUpon>BatchForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BatchTypeForm.resx">
+      <DependentUpon>BatchTypeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BatchTypeMap_OLD.resx">
+      <DependentUpon>BatchTypeMap_OLD.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="BatchTypeMap.resx">
+      <DependentUpon>BatchTypeMap.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ErrorLog.resx">
+      <DependentUpon>ErrorLog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Log.resx">
+      <DependentUpon>Log.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ScheduleFramesDefault.resx">
+      <DependentUpon>ScheduleFramesDefault.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProductBuffer.resx">
+      <DependentUpon>ProductBuffer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Lines.resx">
+      <DependentUpon>Lines.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LineQueueForm.resx">
+      <DependentUpon>LineQueueForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Parts.resx">
+      <DependentUpon>Parts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="ScheduleFrames.resx">
+      <DependentUpon>ScheduleFrames.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StationForm.resx">
+      <DependentUpon>StationForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Stations.resx">
+      <DependentUpon>Stations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Stock.resx">
+      <DependentUpon>Stock.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UncompletedProducts.resx">
+      <DependentUpon>UncompletedProducts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WorkSchedule.rdlc" />
+    <EmbeddedResource Include="WorkSchedule.resx">
+      <DependentUpon>WorkSchedule.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WorkScheduleRepForm.resx">
+      <DependentUpon>WorkScheduleRepForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Class Diagrams\Admin.cd" />
+    <None Include="DetroitDataSet.xsc">
+      <DependentUpon>DetroitDataSet.xsd</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <DesignData Include="DetroitDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DetroitDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </DesignData>
+    <None Include="DetroitDataSet.xss">
+      <DependentUpon>DetroitDataSet.xsd</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Properties\DataSources\LineService.LogMessage.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LineService\LineService.csproj">
+      <Project>{E2942A28-65E8-48D1-9575-44B997E389C4}</Project>
+      <Name>LineService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PlannerLib\PlannerLib.csproj">
+      <Project>{A50D6B57-1A9D-4E03-A428-87AB890A79E2}</Project>
+      <Name>PlannerLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Security\Security.csproj">
+      <Project>{A001887E-03B3-486B-B5EA-8D4808D0763F}</Project>
+      <Name>Security</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.0,Profile=Client">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4 Client Profile %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties BuildVersion_AssemblyInfoFilename="Properties\AssemblyInfo.cs" BuildVersion_BuildVersioningStyle="None.None.Increment.None" BuildVersion_UpdateFileVersion="True" BuildVersion_UpdateAssemblyVersion="True" BuildVersion_UseGlobalSettings="False" />
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

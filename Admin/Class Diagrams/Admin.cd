@@ -1,0 +1,313 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Admin.MainForm" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQiIACkAgCAABAAAAAKAAQECAAgkBAgAgCAABAAAAAE=</HashCode>
+      <FileName>MainForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Admin.Parts" Collapsed="true">
+    <Position X="2.5" Y="2.75" Width="1.5" />
+    <AssociationLine Name="detroitDataSet" Type="Admin.DetroitDataSet" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="4" Y="3.096" />
+        <Point X="6.625" Y="3.096" />
+        <Point X="6.625" Y="1.191" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.693" Y="1.633" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAAISAACAAABEAAACAAMACAAwABBAAAAAAAIoAAAA=</HashCode>
+      <FileName>Parts.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="detroitDataSet" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Admin.StationForm" Collapsed="true">
+    <Position X="2.5" Y="3.5" Width="1.5" />
+    <NestedTypes>
+      <Class Name="Admin.StationForm.MyValue" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>StationForm.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <AssociationLine Name="detroitDataSet" Type="Admin.DetroitDataSet" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="4" Y="3.846" />
+        <Point X="6.812" Y="3.846" />
+        <Point X="6.812" Y="1.191" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.6" Y="2.435" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AQAAQMAAACAAgBEQDACIAEACIAgABBAAAAQAAgoAAAA=</HashCode>
+      <FileName>StationForm.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="detroitDataSet" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Admin.LinesForm" Collapsed="true">
+    <Position X="2.5" Y="4.25" Width="1.5" />
+    <AssociationLine Name="detroitDataSet" Type="Admin.DetroitDataSet" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="4" Y="4.596" />
+        <Point X="7" Y="4.596" />
+        <Point X="7" Y="1.191" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.756" Y="3.081" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAgQIAAACAAABEACCCABEACQBwABRAACAQAAIoAAAA=</HashCode>
+      <FileName>Lines.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="detroitDataSet" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Admin.LineQueueForm" Collapsed="true">
+    <Position X="2.5" Y="5" Width="1.5" />
+    <AssociationLine Name="detroitDataSet" Type="Admin.DetroitDataSet">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.975" Y="3.914" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAEgAIAAAiCEABEQAGDSAEACABg4BRAAAGKIgAIAAAA=</HashCode>
+      <FileName>LineQueueForm.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="detroitDataSet" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Admin.BatchTypeMap" Collapsed="true">
+    <Position X="2.5" Y="1.25" Width="1.5" />
+    <AssociationLine Name="detroitDataSet" Type="Admin.DetroitDataSet" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="4" Y="1.596" />
+        <Point X="6.188" Y="1.596" />
+        <Point X="6.188" Y="1.191" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAIggICACCgAAhEQACDApMACAjhABRACAEAAQgIAAAA=</HashCode>
+      <FileName>BatchTypeMap.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="detroitDataSet" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Admin.BatchTypeForm" Collapsed="true">
+    <Position X="2.5" Y="2" Width="1.5" />
+    <AssociationLine Name="detroitDataSet" Type="Admin.DetroitDataSet" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="4" Y="2.346" />
+        <Point X="6.375" Y="2.346" />
+        <Point X="6.375" Y="1.191" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.266" Y="0.893" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAAgIAAACACABEAAACAIEACAAgABBAAAAAAAEoAAAA=</HashCode>
+      <FileName>BatchTypeForm.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="detroitDataSet" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Admin.BatchForm" Collapsed="true">
+    <Position X="2.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgIAwACEAABEgAACAIEACBAggBBAAAEAAAoIAAAA=</HashCode>
+      <FileName>BatchForm.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="detroitDataSet" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="Admin.DetroitDataSet" Collapsed="true">
+    <Position X="6" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Class Name="Admin.DetroitDataSet.ControlRowChangeEvent" Collapsed="true">
+        <TypeIdentifier />
+      </Class>
+      <Delegate Name="Admin.DetroitDataSet.PartsRowChangeEventHandler" Collapsed="true">
+        <TypeIdentifier />
+      </Delegate>
+      <Delegate Name="Admin.DetroitDataSet.AssembLineRowChangeEventHandler" Collapsed="true">
+        <TypeIdentifier />
+      </Delegate>
+      <Class Name="Admin.DetroitDataSet.BatchTypeMapDataTable" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DetroitDataSet.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="Admin.DetroitDataSet.PartsDataTable" Collapsed="true">
+        <TypeIdentifier />
+      </Class>
+      <Class Name="Admin.DetroitDataSet.ControlDataTable" Collapsed="true">
+        <TypeIdentifier />
+      </Class>
+      <Class Name="Admin.DetroitDataSet.LineQueueRowChangeEvent" Collapsed="true">
+        <TypeIdentifier />
+      </Class>
+      <Class Name="Admin.DetroitDataSet.BatchTypeMapRow" Collapsed="true">
+        <TypeIdentifier />
+      </Class>
+      <Class Name="Admin.DetroitDataSet.LineQueueDataTable" Collapsed="true">
+        <TypeIdentifier />
+      </Class>
+      <Class Name="Admin.DetroitDataSet.BatchRow" Collapsed="true">
+        <TypeIdentifier />
+      </Class>
+      <Class Name="Admin.DetroitDataSet.BatchTypeRow" Collapsed="true">
+        <TypeIdentifier />
+      </Class>
+      <Class Name="Admin.DetroitDataSet.BatchLinesRow" Collapsed="true">
+        <TypeIdentifier />
+      </Class>
+      <Class Name="Admin.DetroitDataSet.StationsOnLineDataTable" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DetroitDataSet.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="Admin.DetroitDataSet.StationRow" Collapsed="true">
+        <TypeIdentifier />
+      </Class>
+      <Delegate Name="Admin.DetroitDataSet.MapPointsRowChangeEventHandler" Collapsed="true">
+        <TypeIdentifier />
+      </Delegate>
+      <Class Name="Admin.DetroitDataSet.StationDataTable" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DetroitDataSet.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="Admin.DetroitDataSet.AssembLineRowChangeEvent" Collapsed="true">
+        <TypeIdentifier />
+      </Class>
+      <Delegate Name="Admin.DetroitDataSet.BatchTypeRowChangeEventHandler" Collapsed="true">
+        <TypeIdentifier />
+      </Delegate>
+      <Delegate Name="Admin.DetroitDataSet.BatchRowChangeEventHandler" Collapsed="true">
+        <TypeIdentifier />
+      </Delegate>
+      <Delegate Name="Admin.DetroitDataSet.LineQueueRowChangeEventHandler" Collapsed="true">
+        <TypeIdentifier />
+      </Delegate>
+      <Class Name="Admin.DetroitDataSet.MapPartsDataTable" Collapsed="true">
+        <TypeIdentifier />
+      </Class>
+      <Class Name="Admin.DetroitDataSet.PartsRow" Collapsed="true">
+        <TypeIdentifier />
+      </Class>
+      <Class Name="Admin.DetroitDataSet.MapPointsRow" Collapsed="true">
+        <TypeIdentifier />
+      </Class>
+      <Class Name="Admin.DetroitDataSet.BatchRowChangeEvent" Collapsed="true">
+        <TypeIdentifier />
+      </Class>
+      <Delegate Name="Admin.DetroitDataSet.StationRowChangeEventHandler" Collapsed="true">
+        <TypeIdentifier />
+      </Delegate>
+      <Delegate Name="Admin.DetroitDataSet.BatchTypeMapRowChangeEventHandler" Collapsed="true">
+        <TypeIdentifier />
+      </Delegate>
+      <Class Name="Admin.DetroitDataSet.BatchTypeRowChangeEvent" Collapsed="true">
+        <TypeIdentifier />
+      </Class>
+      <Class Name="Admin.DetroitDataSet.BatchTypeStationsRow" Collapsed="true">
+        <TypeIdentifier />
+      </Class>
+      <Class Name="Admin.DetroitDataSet.ControlRow" Collapsed="true">
+        <TypeIdentifier />
+      </Class>
+      <Class Name="Admin.DetroitDataSet.BatchTypeMapRowChangeEvent" Collapsed="true">
+        <TypeIdentifier />
+      </Class>
+      <Class Name="Admin.DetroitDataSet.MapPartsRowChangeEvent" Collapsed="true">
+        <TypeIdentifier />
+      </Class>
+      <Class Name="Admin.DetroitDataSet.BatchTypeStationsRowChangeEvent" Collapsed="true">
+        <TypeIdentifier />
+      </Class>
+      <Delegate Name="Admin.DetroitDataSet.BatchLinesRowChangeEventHandler" Collapsed="true">
+        <TypeIdentifier />
+      </Delegate>
+      <Class Name="Admin.DetroitDataSet.LineQueueRow" Collapsed="true">
+        <TypeIdentifier />
+      </Class>
+      <Class Name="Admin.DetroitDataSet.MapPartsRow" Collapsed="true">
+        <TypeIdentifier />
+      </Class>
+      <Class Name="Admin.DetroitDataSet.StationRowChangeEvent" Collapsed="true">
+        <TypeIdentifier />
+      </Class>
+      <Class Name="Admin.DetroitDataSet.MapPointsRowChangeEvent" Collapsed="true">
+        <TypeIdentifier />
+      </Class>
+      <Class Name="Admin.DetroitDataSet.DataTable1DataTable" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DetroitDataSet.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="Admin.DetroitDataSet.PartsRowChangeEvent" Collapsed="true">
+        <TypeIdentifier />
+      </Class>
+      <Class Name="Admin.DetroitDataSet.BatchTypeDataTable" Collapsed="true">
+        <TypeIdentifier />
+      </Class>
+      <Class Name="Admin.DetroitDataSet.AssembLineRow" Collapsed="true">
+        <TypeIdentifier />
+      </Class>
+      <Class Name="Admin.DetroitDataSet.BatchDataTable" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DetroitDataSet.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="Admin.DetroitDataSet.BatchLinesDataTable" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DetroitDataSet.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Delegate Name="Admin.DetroitDataSet.ControlRowChangeEventHandler" Collapsed="true">
+        <TypeIdentifier />
+      </Delegate>
+      <Class Name="Admin.DetroitDataSet.BatchLinesRowChangeEvent" Collapsed="true">
+        <TypeIdentifier />
+      </Class>
+      <Delegate Name="Admin.DetroitDataSet.BatchTypeStationsRowChangeEventHandler" Collapsed="true">
+        <TypeIdentifier />
+      </Delegate>
+      <Class Name="Admin.DetroitDataSet.MapPointsDataTable" Collapsed="true">
+        <TypeIdentifier />
+      </Class>
+      <Class Name="Admin.DetroitDataSet.AssembLineDataTable" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>DetroitDataSet.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Delegate Name="Admin.DetroitDataSet.MapPartsRowChangeEventHandler" Collapsed="true">
+        <TypeIdentifier />
+      </Delegate>
+      <Class Name="Admin.DetroitDataSet.BatchTypeStationsDataTable" Collapsed="true">
+        <TypeIdentifier />
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>DQwIABYMC4gASINo3REiYQDAAB0GSBgAA0SABSMBBBA=</HashCode>
+      <FileName>DetroitDataSet.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

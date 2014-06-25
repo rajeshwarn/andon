@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="LineManagerApp.MainForm" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQASAAEAACACAgBAAAKAAAAiAABAAggAIAAAAEAAAAE=</HashCode>
+      <FileName>MainForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineManagerApp.LinesForm" Collapsed="true">
+    <Position X="0.5" Y="3" Width="1.5" />
+    <AssociationLine Name="dataSet1" Type="LineManagerApp.DataSet1" FixedToPoint="true">
+      <Path>
+        <Point X="1.062" Y="3.691" />
+        <Point X="1.062" Y="5" />
+      </Path>
+    </AssociationLine>
+    <AssociationLine Name="childFormList" Type="System.Collections.Generic.List&lt;T&gt;" ManuallyRouted="true" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="2" Y="3.375" />
+        <Point X="2.938" Y="3.375" />
+        <Point X="2.938" Y="5" />
+      </Path>
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.07" Y="0.808" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAyQIAAAiEIAFGAACKAQEACBAwABAAAAAAABIpAAAQ=</HashCode>
+      <FileName>LinesForm.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="dataSet1" />
+      <Field Name="childFormList" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="LineManagerApp.LineDashboard" Collapsed="true">
+    <Position X="2.75" Y="0.5" Width="1.5" />
+    <AssociationLine Name="myLineClient" Type="LineManagerApp.ServiceReference2.AssembLineClient" FixedFromPoint="true" FixedToPoint="true">
+      <Path>
+        <Point X="3.938" Y="1.191" />
+        <Point X="3.938" Y="1.937" />
+        <Point X="5.25" Y="1.937" />
+      </Path>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>gCDgAAACQCAAABAAAAGACAACAKIAAABAAAAAQABhAAA=</HashCode>
+      <FileName>LineDashboard.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="myFormTimer" />
+      <Field Name="myLineClient" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="LineManagerApp.LineConnectionException" Collapsed="true">
+    <Position X="4.75" Y="3.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>LineDashboard.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineManagerApp.DataSet1" Collapsed="true">
+    <Position X="0.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAwAAAAJABQAAQAAAAAgCQBgAAAAAACEABBA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineManagerApp.FormTimer" Collapsed="true">
+    <Position X="5.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAECAAAAIAAAAAAAQAAgABAACAAAAAAAAA=</HashCode>
+      <FileName>FormTimer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LineManagerApp.ServiceReference2.AssembLineClient" Collapsed="true">
+    <Position X="5.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAEAAAJAAEAQAAAAAAAAAAIUAAQAAAQAEAAAAAAA=</HashCode>
+      <FileName>AssembLineClient.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="System.Collections.Generic.List&lt;T&gt;" Collapsed="true">
+    <Position X="2.5" Y="5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <NestedTypes>
+      <Struct Name="System.Collections.Generic.List&lt;T&gt;.Enumerator" Collapsed="true">
+        <TypeIdentifier />
+        <Lollipop Position="0.2" />
+      </Struct>
+    </NestedTypes>
+    <TypeIdentifier />
+    <Lollipop Position="0.71" />
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
