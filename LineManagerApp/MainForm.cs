@@ -234,6 +234,14 @@ namespace LineManagerApp
             }
         }
 
+        private void mediaPanelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MediaPanel.ConrolForm aMediaPanel= new MediaPanel.ConrolForm();
+            aMediaPanel.MdiParent = this;
+            aMediaPanel.Show();
+
+        }
+
 
 
 

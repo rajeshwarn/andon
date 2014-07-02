@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace LineManagerApp.LineServiceReference {
+namespace MediaPanel.ServiceReference {
     using System.Runtime.Serialization;
     using System;
     
@@ -787,7 +787,7 @@ namespace LineManagerApp.LineServiceReference {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="LineServiceReference.IAssembLine")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReference.IAssembLine")]
     public interface IAssembLine {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAssembLine/Execute", ReplyAction="http://tempuri.org/IAssembLine/ExecuteResponse")]
@@ -818,10 +818,10 @@ namespace LineManagerApp.LineServiceReference {
         void SetCounterForever(int value);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAssembLine/GetStations", ReplyAction="http://tempuri.org/IAssembLine/GetStationsResponse")]
-        LineManagerApp.LineServiceReference.LineStationBase[] GetStations();
+        MediaPanel.ServiceReference.LineStationBase[] GetStations();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAssembLine/GetStationsArray", ReplyAction="http://tempuri.org/IAssembLine/GetStationsArrayResponse")]
-        LineManagerApp.LineServiceReference.LineStationBase[] GetStationsArray();
+        MediaPanel.ServiceReference.LineStationBase[] GetStationsArray();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAssembLine/RemoveStation", ReplyAction="http://tempuri.org/IAssembLine/RemoveStationResponse")]
         void RemoveStation(string LineStationRemoveId);
@@ -845,25 +845,25 @@ namespace LineManagerApp.LineServiceReference {
         string ReadProduct(int StationIndex);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAssembLine/ReadFrame", ReplyAction="http://tempuri.org/IAssembLine/ReadFrameResponse")]
-        LineManagerApp.LineServiceReference.Frame ReadFrame();
+        MediaPanel.ServiceReference.Frame ReadFrame();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAssembLine/GetProductStock", ReplyAction="http://tempuri.org/IAssembLine/GetProductStockResponse")]
-        LineManagerApp.LineServiceReference.ProductBase[] GetProductStock();
+        MediaPanel.ServiceReference.ProductBase[] GetProductStock();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAssembLine/GetProductBuffer", ReplyAction="http://tempuri.org/IAssembLine/GetProductBufferResponse")]
-        LineManagerApp.LineServiceReference.ProductBase[] GetProductBuffer();
+        MediaPanel.ServiceReference.ProductBase[] GetProductBuffer();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAssembLine/GetStationBuffer", ReplyAction="http://tempuri.org/IAssembLine/GetStationBufferResponse")]
-        LineManagerApp.LineServiceReference.ProductBase[] GetStationBuffer(int stationId);
+        MediaPanel.ServiceReference.ProductBase[] GetStationBuffer(int stationId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAssembLine/ReadRealTimeData", ReplyAction="http://tempuri.org/IAssembLine/ReadRealTimeDataResponse")]
-        LineManagerApp.LineServiceReference.StationRealtimeData[] ReadRealTimeData(int StationIndex);
+        MediaPanel.ServiceReference.StationRealtimeData[] ReadRealTimeData(int StationIndex);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAssembLine/ReadRealTimeDataForLine", ReplyAction="http://tempuri.org/IAssembLine/ReadRealTimeDataForLineResponse")]
-        LineManagerApp.LineServiceReference.StationRealtimeData[] ReadRealTimeDataForLine(int StationIndex);
+        MediaPanel.ServiceReference.StationRealtimeData[] ReadRealTimeDataForLine(int StationIndex);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAssembLine/GetLogisticTails", ReplyAction="http://tempuri.org/IAssembLine/GetLogisticTailsResponse")]
-        LineManagerApp.LineServiceReference.LogistTailElem[] GetLogisticTails();
+        MediaPanel.ServiceReference.LogistTailElem[] GetLogisticTails();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAssembLine/GetSumStopTime", ReplyAction="http://tempuri.org/IAssembLine/GetSumStopTimeResponse")]
         int GetSumStopTime();
@@ -887,22 +887,22 @@ namespace LineManagerApp.LineServiceReference {
         void SetStationMonthFact(string stationName, int amount);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAssembLine/GetMemLogData", ReplyAction="http://tempuri.org/IAssembLine/GetMemLogDataResponse")]
-        LineManagerApp.LineServiceReference.LogMessage[] GetMemLogData();
+        MediaPanel.ServiceReference.LogMessage[] GetMemLogData();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAssembLine/GetClientInstruction", ReplyAction="http://tempuri.org/IAssembLine/GetClientInstructionResponse")]
-        LineManagerApp.LineServiceReference.ClientInstruction GetClientInstruction();
+        MediaPanel.ServiceReference.ClientInstruction GetClientInstruction();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAssembLine/SetClientInstruction", ReplyAction="http://tempuri.org/IAssembLine/SetClientInstructionResponse")]
         void SetClientInstruction(int Mode, string ContentUrl);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IAssembLineChannel : LineManagerApp.LineServiceReference.IAssembLine, System.ServiceModel.IClientChannel {
+    public interface IAssembLineChannel : MediaPanel.ServiceReference.IAssembLine, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class AssembLineClient : System.ServiceModel.ClientBase<LineManagerApp.LineServiceReference.IAssembLine>, LineManagerApp.LineServiceReference.IAssembLine {
+    public partial class AssembLineClient : System.ServiceModel.ClientBase<MediaPanel.ServiceReference.IAssembLine>, MediaPanel.ServiceReference.IAssembLine {
         
         public AssembLineClient() {
         }
@@ -959,11 +959,11 @@ namespace LineManagerApp.LineServiceReference {
             base.Channel.SetCounterForever(value);
         }
         
-        public LineManagerApp.LineServiceReference.LineStationBase[] GetStations() {
+        public MediaPanel.ServiceReference.LineStationBase[] GetStations() {
             return base.Channel.GetStations();
         }
         
-        public LineManagerApp.LineServiceReference.LineStationBase[] GetStationsArray() {
+        public MediaPanel.ServiceReference.LineStationBase[] GetStationsArray() {
             return base.Channel.GetStationsArray();
         }
         
@@ -995,31 +995,31 @@ namespace LineManagerApp.LineServiceReference {
             return base.Channel.ReadProduct(StationIndex);
         }
         
-        public LineManagerApp.LineServiceReference.Frame ReadFrame() {
+        public MediaPanel.ServiceReference.Frame ReadFrame() {
             return base.Channel.ReadFrame();
         }
         
-        public LineManagerApp.LineServiceReference.ProductBase[] GetProductStock() {
+        public MediaPanel.ServiceReference.ProductBase[] GetProductStock() {
             return base.Channel.GetProductStock();
         }
         
-        public LineManagerApp.LineServiceReference.ProductBase[] GetProductBuffer() {
+        public MediaPanel.ServiceReference.ProductBase[] GetProductBuffer() {
             return base.Channel.GetProductBuffer();
         }
         
-        public LineManagerApp.LineServiceReference.ProductBase[] GetStationBuffer(int stationId) {
+        public MediaPanel.ServiceReference.ProductBase[] GetStationBuffer(int stationId) {
             return base.Channel.GetStationBuffer(stationId);
         }
         
-        public LineManagerApp.LineServiceReference.StationRealtimeData[] ReadRealTimeData(int StationIndex) {
+        public MediaPanel.ServiceReference.StationRealtimeData[] ReadRealTimeData(int StationIndex) {
             return base.Channel.ReadRealTimeData(StationIndex);
         }
         
-        public LineManagerApp.LineServiceReference.StationRealtimeData[] ReadRealTimeDataForLine(int StationIndex) {
+        public MediaPanel.ServiceReference.StationRealtimeData[] ReadRealTimeDataForLine(int StationIndex) {
             return base.Channel.ReadRealTimeDataForLine(StationIndex);
         }
         
-        public LineManagerApp.LineServiceReference.LogistTailElem[] GetLogisticTails() {
+        public MediaPanel.ServiceReference.LogistTailElem[] GetLogisticTails() {
             return base.Channel.GetLogisticTails();
         }
         
@@ -1051,11 +1051,11 @@ namespace LineManagerApp.LineServiceReference {
             base.Channel.SetStationMonthFact(stationName, amount);
         }
         
-        public LineManagerApp.LineServiceReference.LogMessage[] GetMemLogData() {
+        public MediaPanel.ServiceReference.LogMessage[] GetMemLogData() {
             return base.Channel.GetMemLogData();
         }
         
-        public LineManagerApp.LineServiceReference.ClientInstruction GetClientInstruction() {
+        public MediaPanel.ServiceReference.ClientInstruction GetClientInstruction() {
             return base.Channel.GetClientInstruction();
         }
         
@@ -1065,32 +1065,32 @@ namespace LineManagerApp.LineServiceReference {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="LineServiceReference.ILogistic")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReference.ILogistic")]
     public interface ILogistic {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILogistic/GetLogisticRequests", ReplyAction="http://tempuri.org/ILogistic/GetLogisticRequestsResponse")]
-        LineManagerApp.LineServiceReference.LogistRequestElem[] GetLogisticRequests();
+        MediaPanel.ServiceReference.LogistRequestElem[] GetLogisticRequests();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILogistic/GetTails", ReplyAction="http://tempuri.org/ILogistic/GetTailsResponse")]
-        LineManagerApp.LineServiceReference.LogistTailElem[] GetTails();
+        MediaPanel.ServiceReference.LogistTailElem[] GetTails();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILogistic/GetBatchesOnLine", ReplyAction="http://tempuri.org/ILogistic/GetBatchesOnLineResponse")]
-        LineManagerApp.LineServiceReference.LogistTailElem[] GetBatchesOnLine();
+        MediaPanel.ServiceReference.LogistTailElem[] GetBatchesOnLine();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILogistic/GetLogisticInfo", ReplyAction="http://tempuri.org/ILogistic/GetLogisticInfoResponse")]
-        LineManagerApp.LineServiceReference.LogisticInfo GetLogisticInfo();
+        MediaPanel.ServiceReference.LogisticInfo GetLogisticInfo();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ILogistic/ReadLogisticRealTimeData", ReplyAction="http://tempuri.org/ILogistic/ReadLogisticRealTimeDataResponse")]
-        LineManagerApp.LineServiceReference.StationRealtimeData[] ReadLogisticRealTimeData(int stationIndex);
+        MediaPanel.ServiceReference.StationRealtimeData[] ReadLogisticRealTimeData(int stationIndex);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface ILogisticChannel : LineManagerApp.LineServiceReference.ILogistic, System.ServiceModel.IClientChannel {
+    public interface ILogisticChannel : MediaPanel.ServiceReference.ILogistic, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class LogisticClient : System.ServiceModel.ClientBase<LineManagerApp.LineServiceReference.ILogistic>, LineManagerApp.LineServiceReference.ILogistic {
+    public partial class LogisticClient : System.ServiceModel.ClientBase<MediaPanel.ServiceReference.ILogistic>, MediaPanel.ServiceReference.ILogistic {
         
         public LogisticClient() {
         }
@@ -1111,23 +1111,23 @@ namespace LineManagerApp.LineServiceReference {
                 base(binding, remoteAddress) {
         }
         
-        public LineManagerApp.LineServiceReference.LogistRequestElem[] GetLogisticRequests() {
+        public MediaPanel.ServiceReference.LogistRequestElem[] GetLogisticRequests() {
             return base.Channel.GetLogisticRequests();
         }
         
-        public LineManagerApp.LineServiceReference.LogistTailElem[] GetTails() {
+        public MediaPanel.ServiceReference.LogistTailElem[] GetTails() {
             return base.Channel.GetTails();
         }
         
-        public LineManagerApp.LineServiceReference.LogistTailElem[] GetBatchesOnLine() {
+        public MediaPanel.ServiceReference.LogistTailElem[] GetBatchesOnLine() {
             return base.Channel.GetBatchesOnLine();
         }
         
-        public LineManagerApp.LineServiceReference.LogisticInfo GetLogisticInfo() {
+        public MediaPanel.ServiceReference.LogisticInfo GetLogisticInfo() {
             return base.Channel.GetLogisticInfo();
         }
         
-        public LineManagerApp.LineServiceReference.StationRealtimeData[] ReadLogisticRealTimeData(int stationIndex) {
+        public MediaPanel.ServiceReference.StationRealtimeData[] ReadLogisticRealTimeData(int stationIndex) {
             return base.Channel.ReadLogisticRealTimeData(stationIndex);
         }
     }

@@ -1518,9 +1518,7 @@ namespace LineManagerApp
             //this.errorList = this.myLineClient.GetMemLogData();
             //this.dataGridView1.DataSource = this.errorList;
         }
-
-
-
+        
     }
 
 
