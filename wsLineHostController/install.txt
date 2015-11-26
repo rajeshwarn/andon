@@ -1,0 +1,5 @@
+In Microsoft Studio Command Prompt:
+
+InstallUtil /i /servicename="AssembLineService1" "C:\Program Files (x86)\Atria\Andon\wsLineHostController\bin1\wsLineHostController.exe" 
+InstallUtil /i /servicename="AssembLineService2" "C:\Program Files (x86)\Atria\Andon\wsLineHostController\bin2\wsLineHostController.exe" 
+
