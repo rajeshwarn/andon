@@ -68,6 +68,18 @@ namespace LineService
 
     public enum TMState { Off = 0, On = 1, Paused = 2 }
 
+    public enum TFrame { NonWork = 0, Work = 1 };
+
+    public static class FrameKeys 
+    {
+        public const string Reset = "*rt#";
+        public const string ResetMonth = "*rmreg#";
+        public const string ResetDay = "*rdr#";
+    }
+
+    /// <summary>
+    /// Counter class with associated string key
+    /// </summary>
     public class KeyCounter : Counter 
     {
         private string key;
@@ -80,17 +92,21 @@ namespace LineService
         }
     }
 
-
     public interface ITimeInformer 
     {
-        bool IsWorkingTime();
+        bool IsWorkingTime { get; }
     }
 
+    /// <summary>
+    /// Controls time frames and takt counters
+    /// </summary>
     public class TimeManager : ITimeInformer
     {
+        //TODO:_________________________________________________________________________________________________
+        //...
+        //...
         private int idealTaktCounter = 1;       // number of current "ideal" takt without any stops TODAY
         private int idealMonthTaktCounter = 1;  // number of current "ideal" takt without any stops THIS MONTH
-        //private int defaultTaktDuration = 60; // TODO: default takt duration ?!
 
         private SchedulerFramesCache schedulerFramesCache;
         private Frame currentFrame; // 0 - non working, 1 - working
@@ -112,22 +128,20 @@ namespace LineService
         private bool handlerRoomFree = true;
         private int freezedTaktDuration = 0;  // in minutes !!
 
-        //private SerializableDictionary<string, int> liveTaktRegister;
-        //private Dictionary<string, KeyCounter> liveTakt;
-        //private List<KeyCounter> pausedLiveTakts;
+        private IEnumerable<IStation> lineStations;
+        private LogProvider myLog;
+   
+        private PlanRegister planRegister;
+        private FactRegister factRegister;
+        private PlanRegister monthPlan;
+        private FactRegister monthFact;
 
-        IEnumerable<IStation> lineStations;
-        PlanRegister planRegister;
-        FactRegister factRegister;
+        
+        //CONSTRUCTORS__________________________________________________________________________________________ 
 
-        PlanRegister monthPlan;
-        FactRegister monthFact;
-
-        LogProvider myLog;
-
-
-
-
+        /// <summary>
+        /// Defaulf abstract constructor
+        /// </summary>
         public TimeManager()
         {
             this.planRegister = new PlanRegister() {
@@ -193,8 +207,8 @@ namespace LineService
             this.currentDate = DateTime.Today;
             //this.currentDate = this.currentDate.AddDays(-1);
             this.schedulerFramesCache = new SchedulerFramesCache();
-
         }
+
         public TimeManager(IEnumerable<IStation> stations, LogProvider log, DetroitDataSet detroit) : this()
         {
             try
@@ -230,8 +244,6 @@ namespace LineService
                       
                     this.myLog.LogAlert(AlertType.System, this.detroitDataSet.LineId.ToString(), this.GetType().ToString(), "TimeManager()",
                                                  station.Name + ", plan = 1", "system");
-
-
                 }
 
                 this.updateStationPosition();
@@ -244,47 +256,9 @@ namespace LineService
 
         }
 
-        void station_OnFree(object sender, DispatcherStationArgs e)
-        {
-            try
-            {
-                //string stationName = e.Station.Name;
-                //string key = stationName;
-
-                //Console.WriteLine("TimeManager.station_OnFree, BS=" + e.Station.BitState.ToString());
-
-                //// check is station releases FINISHED product ?
-                //if (((BSFlag)e.Station.BitState & BSFlag.Finished) == BSFlag.Finished)
-                //{
-                //    if (!this.factRegister.ContainsKey(key))
-                //    {
-                //        this.factRegister.Add(key, new RegisterRecord() { StationName = stationName, SubTotal = 1 });
-                //    }
-                //    else
-                //    {
-                //        this.factRegister[key].SubTotal++;
-                //    }
-
-                //    if (!this.monthFact.ContainsKey(key))
-                //    {
-                //        this.monthFact.Add(key, new RegisterRecord() { StationName = stationName, SubTotal = 1 });
-                //    }
-                //    else
-                //    {
-                //        this.monthFact[key].SubTotal++;
-                //    }
-
-                //    key = e.Station.Name;
-                //    (e.Station as TimedLineStation).TaktPosition = this.GetStationDayFact(key) - this.GetStationDayPlan(key);
-                //}
-            }
-            catch (Exception ex)
-            {
-                this.myLog.LogAlert(AlertType.Error, this.detroitDataSet.LineId.ToString(), ex.TargetSite.ToString(),
-                                                    ex.Source.ToString(), ex.Message.ToString(), "system");
-            }
-        }
-
+     
+        //PROPERTIES_____________________________________________________________________________________________
+        
         public int LineCounter { 
             get { return this.Takt.GetIntValue(); }
             set 
@@ -292,9 +266,34 @@ namespace LineService
                 this.Takt.SetValue(value); 
             }
         }
-        public event EventHandler OnTick;
-        public event EventHandler SlowTask;
-        public event EventHandler FastTask;
+        
+        public Frame Frame 
+        { get { return this.currentFrame; } }
+        
+        public int DayTaktNo 
+        { get { return this.idealTaktCounter; } set { this.idealTaktCounter = value; } }
+        
+        public int MonthTaktNo 
+        { get { return this.idealMonthTaktCounter; } set { this.idealMonthTaktCounter = value; } }
+        
+        public bool IsWorkingTime
+        {
+            get { return (this.currentFrame.Type == 1); }
+        }
+
+        public int FreezedTaktDuration
+        {
+            get { return this.freezedTaktDuration; }
+        }
+
+        public int TaktDuration
+        {
+            get { return this.taktDuration; }
+        }
+
+      
+        //METHODS________________________________________________________________________________________________
+
         public void On() 
         {
             try
@@ -319,6 +318,7 @@ namespace LineService
                                                     ex.Source.ToString(), ex.Message.ToString(), "system");
             }
         }
+       
         public void Off() 
         {
             this.state = TMState.Off;
@@ -326,6 +326,7 @@ namespace LineService
             this.slowTaskTimer.TimerStop();
             this.fastTaskTimer.TimerStop();
         }
+       
         public void Reset() 
         {
             try
@@ -342,9 +343,6 @@ namespace LineService
                                                     ex.Source.ToString(), ex.Message.ToString(), "system");
             }
         }
-        public Frame Frame { get { return this.currentFrame; } }
-        public int DayTaktNo { get { return this.idealTaktCounter; } set { this.idealTaktCounter = value; } }
-        public int MonthTaktNo { get { return this.idealMonthTaktCounter; } set { this.idealMonthTaktCounter = value; } }
 
         public int GetDayGap(string stationName) 
         { 
@@ -368,6 +366,7 @@ namespace LineService
             }
             return result;
         }
+
         public int GetMonthGap(string stationName) 
         {
             //return this.GetDayGap(stationName); // TODO: GetMonthGap ...
@@ -412,6 +411,7 @@ namespace LineService
             }
             return result;
         }
+        
         public int GetStationDayFact(string stationName)
         {
             int result = 0;
@@ -450,6 +450,7 @@ namespace LineService
             }
             return result;
         }
+        
         public int GetStationMonthFact(string stationName)
         {
             int result = 0;
@@ -468,7 +469,6 @@ namespace LineService
             }
             return result;
         }
-
 
         public void SetStationDayPlan(string stationName, int amount) 
         {
@@ -546,7 +546,6 @@ namespace LineService
             }
         }
 
-
         public void Backup() 
         { 
             TMSavedData dataToSave = new TMSavedData();
@@ -565,6 +564,7 @@ namespace LineService
                 this.myLog.LogAlert(AlertType.Error, this.detroitDataSet.LineId.ToString(), ex.TargetSite.ToString(), ex.Source, ex.ToString(), "system"); 
             }
         }
+
         public void Restore() 
         {
             Serialization sAgent = new Serialization("serialization_tm" + this.detroitDataSet.LineId.ToString() + "_user.dat");
@@ -603,23 +603,82 @@ namespace LineService
                 this.myLog.LogAlert(AlertType.Error, this.detroitDataSet.LineId.ToString(), ex.TargetSite.ToString(), ex.Source, ex.ToString(), "system"); 
             }
         }
-        public bool IsWorkingTime()
-        {
-            return (this.currentFrame.Type == 1);
-        }
+         
         public void FreezeTaktDuration(int duration) 
         { 
            this.freezedTaktDuration = duration; 
         }
 
-        public int FreezedTaktDuration
-        {
-            get { return this.freezedTaktDuration; }
-        }
-
         public void UnFreezeTaktDuration()
         {
             this.freezedTaktDuration = 0;
+        }
+        
+        public bool IsStationLate(string stationName)
+        {
+            bool result = true;
+            try
+            {
+                result = (this.GetStationDayFact(stationName) < this.GetStationDayPlan(stationName));
+                return result;
+            }
+            catch (Exception ex)
+            {
+                this.myLog.LogAlert(AlertType.Error, this.detroitDataSet.LineId.ToString(), ex.TargetSite.ToString(),
+                                    ex.Source.ToString(), ex.Message.ToString(), "system");
+                return result;
+            }
+        }
+
+
+        //EVENTS_________________________________________________________________________________________________
+    
+        public event EventHandler OnTick;
+        public event EventHandler SlowTask;
+        public event EventHandler FastTask;
+
+
+        //PRIVATE_METHODS___________=_____________________________________________________________________________
+
+        private void station_OnFree(object sender, DispatcherStationArgs e)
+        {
+            try
+            {
+                //string stationName = e.Station.Name;
+                //string key = stationName;
+
+                //Console.WriteLine("TimeManager.station_OnFree, BS=" + e.Station.BitState.ToString());
+
+                //// check is station releases FINISHED product ?
+                //if (((BSFlag)e.Station.BitState & BSFlag.Finished) == BSFlag.Finished)
+                //{
+                //    if (!this.factRegister.ContainsKey(key))
+                //    {
+                //        this.factRegister.Add(key, new RegisterRecord() { StationName = stationName, SubTotal = 1 });
+                //    }
+                //    else
+                //    {
+                //        this.factRegister[key].SubTotal++;
+                //    }
+
+                //    if (!this.monthFact.ContainsKey(key))
+                //    {
+                //        this.monthFact.Add(key, new RegisterRecord() { StationName = stationName, SubTotal = 1 });
+                //    }
+                //    else
+                //    {
+                //        this.monthFact[key].SubTotal++;
+                //    }
+
+                //    key = e.Station.Name;
+                //    (e.Station as TimedLineStation).TaktPosition = this.GetStationDayFact(key) - this.GetStationDayPlan(key);
+                //}
+            }
+            catch (Exception ex)
+            {
+                this.myLog.LogAlert(AlertType.Error, this.detroitDataSet.LineId.ToString(), ex.TargetSite.ToString(),
+                                                    ex.Source.ToString(), ex.Message.ToString(), "system");
+            }
         }
 
         private void slowTask_handler(object sender, EventArgs e)
@@ -659,6 +718,7 @@ namespace LineService
                 handlerRoomFree = true;
             }
         }
+  
         private void fastTask_handler(object sender, EventArgs e)
         {
             if (handlerRoomFree)
@@ -679,6 +739,7 @@ namespace LineService
                 handlerRoomFree = true;
             }
         }
+  
         private void zeroTakt_handler(object sender, EventArgs e)
         {
             try
@@ -724,22 +785,7 @@ namespace LineService
         {
             try
             {
-                ////int taktSeconds = this.Takt.GetIntValue();
-                ////int seconds = taktSeconds;
-                ////int minutes = Convert.ToInt32(seconds / 60);
-                ////int hours = Convert.ToInt32(minutes / 60);
-
-                ////seconds = seconds - minutes * 60 - hours * 60 * 60;
-                ////minutes = minutes - hours * 60;
-
-                ////int systemSeconds = DateTime.Now.Second;
-                ////int systemMimutes = DateTime.Now.Minute;
-
-
-
-
                 ////systemSeconds = 60 - systemSeconds;  // because takt is backword
-
 
                 int taktSeconds = this.Takt.GetIntValue();
                 int seconds = taktSeconds;
@@ -750,7 +796,6 @@ namespace LineService
                 systemSeconds = 60 - systemSeconds;  // because takt is backward
                 if (systemSeconds == 60) systemSeconds = 0;
 
-
                 // 43 - 17
                 //
                 // 20 -> m+17    (3.1)
@@ -760,7 +805,6 @@ namespace LineService
                 // 
                 // 57 -> m+57+2   (1)
                 // 4  -> m+2     (3.2)
-
 
                 if ((seconds - 50) > systemSeconds)
                 {
@@ -825,6 +869,7 @@ namespace LineService
                                                     ex.Source.ToString(), ex.Message.ToString(), "system");
             }
         }
+    
         private int getTaktDuration() // in minutes
         {
             int result = 0;
@@ -861,6 +906,7 @@ namespace LineService
 
             return result;
         }
+    
         private void checkFrameType()
         {
 
@@ -930,6 +976,7 @@ namespace LineService
                     ex.Message, "system");
             }
         }
+
         private void OnScheduleFrameTypeChanged()
         {
             // rise event FrameTypeChanged !
@@ -938,47 +985,42 @@ namespace LineService
                 this.myLog.LogAlert(AlertType.Info, this.detroitDataSet.LineId.ToString(), this.GetType().ToString(), "OnScheduleFrameTypeChanged()",
                     String.Format("Time frame changed to {0} (type {1})", currentFrame.Name, currentFrame.Type.ToString()), "system");
 
-                if (this.currentFrame.Type == 0)
+                if (this.currentFrame.Type == (int)TFrame.Work)
                 {
-                    this.Takt.Pause();
-                    this.stopButtonTimers();
-                }
-
-                if (this.currentFrame.Type == 1)
-                {
-                    string resetKey = "*rt#";
-
+                    // atcion for working frame
                     string curFrameName = this.currentFrame.Name ?? "";
-                    if (curFrameName.Contains(resetKey))
+                    if (curFrameName.Contains(FrameKeys.Reset))
                     {
+                        // reset takt timer for all stations
                         this.Off();
-
                         this.Reset();
-
+                        
                         foreach (TimedLineStation station in this.lineStations)
-                        {
                             station.ResetTimers();
-                        }
-
+                        
                         this.updateStationPosition();
-
                         this.On();
                     }
 
-
-                    if (curFrameName.Contains("*rmreg#")) 
-                    {
+                    // check if it time to reset month plan/fact counters
+                    if (curFrameName.Contains(FrameKeys.ResetMonth)) 
                         this.resetRegisterForNextMonth();
-                    }
 
-                    if (curFrameName.Contains("*rdr#")) 
-                    {
+                    // check if it time to reset day plan/fact counters
+                    if (curFrameName.Contains(FrameKeys.ResetDay)) 
                         this.resetRegisterForNextDay();                    
-                    }
-
+ 
                     this.Takt.Start();
                     this.startButtonTimers();
+                } 
+                else if (this.currentFrame.Type == (int)TFrame.NonWork)
+                {
+                    // for non-working frame just stop
+                    this.Takt.Pause();
+                    this.stopButtonTimers();
                 }
+                
+                // if new day comes
                 this.checkDateChanged();
             }
             catch (Exception ex) 
@@ -1028,6 +1070,7 @@ namespace LineService
                                                     ex.Source.ToString(), ex.Message.ToString(), "system");
             }
         }
+      
         private void startLateTimers()
         {
             try
@@ -1051,6 +1094,7 @@ namespace LineService
                                                     ex.Source.ToString(), ex.Message.ToString(), "system");
             }
         }
+     
         private void stopButtonTimers()
         {
             try
@@ -1074,6 +1118,7 @@ namespace LineService
             }
 
         }
+     
         private void startButtonTimers()
         {
             try
@@ -1140,6 +1185,7 @@ namespace LineService
             }
          
         }
+     
         private void station_OnGetNewProduct(object sender, DispatcherStationArgs e)
         {
             try
@@ -1225,6 +1271,7 @@ namespace LineService
                                                     ex.Source.ToString(), ex.Message.ToString(), "system");
             }       
         }
+    
         private void resetRegisterForNextDay() 
         {
             try
@@ -1248,43 +1295,24 @@ namespace LineService
                     ex.Source.ToString(), ex.Message.ToString(), "system");             
             }
         }
+
         private void resetRegisterForNextMonth()
         {
             try
             {
-                this.myLog.LogAlert(AlertType.System, this.detroitDataSet.LineId.ToString(), this.GetType().ToString(), "resetRegisterForNextMonth()",
-                    "Call resetRegisterForNextMonth()", "system");
+                this.myLog.LogAlert(AlertType.System, this.detroitDataSet.LineId.ToString(), this.GetType().ToString(), 
+                    "resetRegisterForNextMonth()", "Call resetRegisterForNextMonth()", "system");
 
                 foreach (KeyValuePair<string, RegisterRecord> record in this.monthFact)
-                {
                     record.Value.SubTotal = 0;
-                }
 
                 foreach (KeyValuePair<string, PlanRegisterRecord> record in this.monthPlan)
-                {
                     record.Value.Amount = 0;
-                }
             }
             catch (Exception ex)
             {
                 this.myLog.LogAlert(AlertType.Error, this.detroitDataSet.LineId.ToString(), ex.TargetSite.ToString(),
                     ex.Source.ToString(), ex.Message.ToString(), "system");
-            }
-        }
-
-        public bool IsStationLate(string stationName) 
-        {
-            bool result = true;
-            try
-            {
-                result = (this.GetStationDayFact(stationName) < this.GetStationDayPlan(stationName));
-                return result;
-            }
-            catch (Exception ex)
-            {
-                this.myLog.LogAlert(AlertType.Error, this.detroitDataSet.LineId.ToString(), ex.TargetSite.ToString(),
-                                    ex.Source.ToString(), ex.Message.ToString(), "system");
-                return result;
             }
         }
 
@@ -1306,11 +1334,7 @@ namespace LineService
                                                     ex.Source.ToString(), ex.Message.ToString(), "system");                
             }
         }
-        public int TaktDuration 
-        { 
-            get { return this.taktDuration; } 
-        }
-
+ 
         private void resetStationsLiveTimer() 
         {
             try

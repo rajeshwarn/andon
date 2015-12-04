@@ -1,0 +1,23 @@
+
+=====================================================================================
+RELEASE NOTES 3.0.7
+=====================================================================================
+
+Tested: 
+- Functionality on Month plan/fact counters inctrement and reset by keywords in scheduler
+
+LineService/TimeManager.cs
+-----------------------------
+- Refactoring
+- added TFrame, constant type
+- added FrameKeys, constant type
+- IsWorkingTime remade as property
+
+
+LineService/TimedLineStation.cs
+-----------------------------
+- using of IsWorkingTime fixed
+
+ITimeInformer
+----------------------
+- IsWorkingTime remade as property

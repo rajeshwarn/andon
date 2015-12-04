@@ -340,7 +340,7 @@ namespace LineService
 
                     //Console.WriteLine("AddProduct Event. Station " + this.Name + ". IsWorkingFrame = " + this.TimeInformer.IsWorkingTime().ToString()); 
 
-                    if (this.TimeInformer != null && this.TimeInformer.IsWorkingTime())
+                    if (this.TimeInformer != null && this.TimeInformer.IsWorkingTime)
                     {
                         this.timers.Start(TimerKey.Operating.ToString());
                         this.timers.Start(TimerKey.LiveTakt.ToString());
