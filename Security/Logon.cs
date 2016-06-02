@@ -35,7 +35,7 @@ namespace Security
             this.CancelButton = this.btnCancel;
 
             this.tbUserName.Text = "admin";
-            this.tbUserPassword.Text = "1";
+            this.tbUserPassword.Text = "";
         }
     }
 }

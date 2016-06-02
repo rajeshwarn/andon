@@ -25827,7 +25827,7 @@ SELECT Id, Name, Start, Finish, Length, OrderNum, Type, ShiftNum FROM SchedulerF
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
             this._adapter.InsertCommand.CommandText = @"INSERT INTO [Log] ([TimeStamp], [Line], [ObjectType], [ObjectNum], [Message], [UserName]) VALUES (@TimeStamp, @Line, @ObjectType, @ObjectNum, @Message, @UserName);
-SELECT TimeStamp, CAST(AlertType AS varchar(255)) AS AlertType, Line, ObjectType, ObjectNum, Message, UserName, Id FROM [Log] WHERE (Id = SCOPE_IDENTITY()) ORDER BY Id DESC";
+SELECT TOP (3000) TimeStamp, CAST(AlertType AS varchar(255)) AS AlertType, Line, ObjectType, ObjectNum, Message, UserName, Id FROM [Log] WHERE (Id = SCOPE_IDENTITY()) ORDER BY Id DESC";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@TimeStamp", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "TimeStamp", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Line", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Line", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -25838,7 +25838,7 @@ SELECT TimeStamp, CAST(AlertType AS varchar(255)) AS AlertType, Line, ObjectType
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
             this._adapter.UpdateCommand.CommandText = @"UPDATE [Log] SET [TimeStamp] = @TimeStamp, [Line] = @Line, [ObjectType] = @ObjectType, [ObjectNum] = @ObjectNum, [Message] = @Message, [UserName] = @UserName WHERE (([TimeStamp] = @Original_TimeStamp) AND ((@IsNull_Line = 1 AND [Line] IS NULL) OR ([Line] = @Original_Line)) AND ((@IsNull_ObjectType = 1 AND [ObjectType] IS NULL) OR ([ObjectType] = @Original_ObjectType)) AND ((@IsNull_ObjectNum = 1 AND [ObjectNum] IS NULL) OR ([ObjectNum] = @Original_ObjectNum)) AND ((@IsNull_Message = 1 AND [Message] IS NULL) OR ([Message] = @Original_Message)) AND ((@IsNull_UserName = 1 AND [UserName] IS NULL) OR ([UserName] = @Original_UserName)) AND ([Id] = @Original_Id));
-SELECT TimeStamp, CAST(AlertType AS varchar(255)) AS AlertType, Line, ObjectType, ObjectNum, Message, UserName, Id FROM [Log] WHERE (Id = @Id) ORDER BY Id DESC";
+SELECT TOP (3000) TimeStamp, CAST(AlertType AS varchar(255)) AS AlertType, Line, ObjectType, ObjectNum, Message, UserName, Id FROM [Log] WHERE (Id = @Id) ORDER BY Id DESC";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@TimeStamp", global::System.Data.SqlDbType.DateTime, 0, global::System.Data.ParameterDirection.Input, 0, 0, "TimeStamp", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Line", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Line", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -25871,26 +25871,38 @@ SELECT TimeStamp, CAST(AlertType AS varchar(255)) AS AlertType, Line, ObjectType
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[2];
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[3];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT TimeStamp, cast(AlertType as varchar(255)) as AlertType, Line, ObjectType," +
-                " ObjectNum, Message, UserName, Id FROM [Log] \r\nWHERE AlertType = 1\r\nORDER BY Id " +
-                "DESC";
+            this._commandCollection[0].CommandText = "SELECT TOP 3000 TimeStamp, cast(AlertType as varchar(255)) as AlertType, Line, Ob" +
+                "jectType, ObjectNum, Message, UserName, Id FROM [Log] \r\nWHERE AlertType = 1 AND " +
+                "TimeStamp > @begin_date and TimeStamp < @end_date \r\nORDER BY Id DESC";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@begin_date", global::System.Data.SqlDbType.DateTime, 8, global::System.Data.ParameterDirection.Input, 0, 0, "TimeStamp", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@end_date", global::System.Data.SqlDbType.DateTime, 8, global::System.Data.ParameterDirection.Input, 0, 0, "TimeStamp", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = "SELECT TimeStamp, cast(AlertType as varchar(255)) as AlertType, Line, ObjectType," +
-                " ObjectNum, Message, UserName, Id FROM [Log] \r\nORDER BY Id DESC";
+            this._commandCollection[1].CommandText = "SELECT TOP (3000) CAST(AlertType AS varchar(255)) AS AlertType, Id, Line, Message" +
+                ", ObjectNum, ObjectType, TimeStamp, UserName FROM [Log] ORDER BY Id DESC";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[2] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[2].Connection = this.Connection;
+            this._commandCollection[2].CommandText = "SELECT TOP (3000) CAST(AlertType AS varchar(255)) AS AlertType, Id, Line, Message" +
+                ", ObjectNum, ObjectType, TimeStamp, UserName FROM [Log] WHERE (TimeStamp > @begi" +
+                "n_date) AND (TimeStamp < @end_date) ORDER BY TimeStamp DESC";
+            this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@begin_date", global::System.Data.SqlDbType.DateTime, 8, global::System.Data.ParameterDirection.Input, 0, 0, "TimeStamp", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@end_date", global::System.Data.SqlDbType.DateTime, 8, global::System.Data.ParameterDirection.Input, 0, 0, "TimeStamp", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
-        public virtual int Fill(DetroitDataSet.LogDataTable dataTable) {
+        public virtual int Fill(DetroitDataSet.LogDataTable dataTable, System.DateTime begin_date, System.DateTime end_date) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
+            this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(begin_date));
+            this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(end_date));
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
             }
@@ -25902,8 +25914,10 @@ SELECT TimeStamp, CAST(AlertType AS varchar(255)) AS AlertType, Line, ObjectType
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual DetroitDataSet.LogDataTable GetData() {
+        public virtual DetroitDataSet.LogDataTable GetData(System.DateTime begin_date, System.DateTime end_date) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
+            this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(begin_date));
+            this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(end_date));
             DetroitDataSet.LogDataTable dataTable = new DetroitDataSet.LogDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
@@ -25928,6 +25942,34 @@ SELECT TimeStamp, CAST(AlertType AS varchar(255)) AS AlertType, Line, ObjectType
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
         public virtual DetroitDataSet.LogDataTable GetDataAll() {
             this.Adapter.SelectCommand = this.CommandCollection[1];
+            DetroitDataSet.LogDataTable dataTable = new DetroitDataSet.LogDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, false)]
+        public virtual int FillByDate(DetroitDataSet.LogDataTable dataTable, System.DateTime begin_date, System.DateTime end_date) {
+            this.Adapter.SelectCommand = this.CommandCollection[2];
+            this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(begin_date));
+            this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(end_date));
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual DetroitDataSet.LogDataTable GetDataByDate(System.DateTime begin_date, System.DateTime end_date) {
+            this.Adapter.SelectCommand = this.CommandCollection[2];
+            this.Adapter.SelectCommand.Parameters[0].Value = ((System.DateTime)(begin_date));
+            this.Adapter.SelectCommand.Parameters[1].Value = ((System.DateTime)(end_date));
             DetroitDataSet.LogDataTable dataTable = new DetroitDataSet.LogDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
