@@ -221,9 +221,9 @@
         private System.Windows.Forms.Button btnRefresh;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnOk;
-        private DetroitDataSet detroitDataSet;
+        protected DetroitDataSet detroitDataSet;
         private System.Windows.Forms.BindingSource errorLogBindingSource;
-        private DetroitDataSetTableAdapters.ErrorLogTableAdapter errorLogTableAdapter;
+        protected DetroitDataSetTableAdapters.ErrorLogTableAdapter errorLogTableAdapter;
         private System.Windows.Forms.Button btnCheckAll;
         private System.Windows.Forms.DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn eventTimeDataGridViewTextBoxColumn;

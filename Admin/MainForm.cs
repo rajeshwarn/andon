@@ -379,7 +379,6 @@ namespace Admin
             }
         }
 
-
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (this.logProvider != null)
@@ -424,6 +423,23 @@ namespace Admin
             }
         }
 
+        private void syslogToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                SysLog aSysLogForm = new SysLog();
+                aSysLogForm.MdiParent = this;
+                aSysLogForm.Show();
+            }
+            catch (System.UnauthorizedAccessException ex)
+            {
+                System.Windows.Forms.MessageBox.Show(
+                    ex.Message
+                    , "Action alert"
+                    , System.Windows.Forms.MessageBoxButtons.OK
+                    , System.Windows.Forms.MessageBoxIcon.Exclamation);
+            }
+        }
 
 
 

@@ -13,6 +13,7 @@ namespace Admin
     public partial class ErrorLog : Form
     {
         private Timer timer;
+        public string LineId; 
         public ErrorLog()
         {
             InitializeComponent();
@@ -34,12 +35,12 @@ namespace Admin
             //this.timer.Tick += new EventHandler(timer_Tick);
         }
 
-        private void Log_Load(object sender, EventArgs e)
+        protected void Log_Load(object sender, EventArgs e)
         {
             // TODO: This line of code loads data into the 'detroitDataSet.ErrorLog' table. You can move, or remove it, as needed.
-            this.errorLogTableAdapter.FillByLine(this.detroitDataSet.ErrorLog, "1");
+            this.errorLogTableAdapter.FillByLine(this.detroitDataSet.ErrorLog);
             //this.dataGridView1.Sort(this.dataGridView1.Columns[0], ListSortDirection.Descending);
-
+     
         }
 
         private void btnOk_Click(object sender, EventArgs e)

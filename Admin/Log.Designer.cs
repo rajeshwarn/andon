@@ -26,7 +26,7 @@
         /// Required method for Designer support - do not modify
         /// the contents of this method with the code editor.
         /// </summary>
-        private void InitializeComponent()
+        protected void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -253,15 +253,15 @@
 
         #endregion
 
-        private System.Windows.Forms.DataGridView dataGridView1;
+        protected System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.Button btnFilter;
         private System.Windows.Forms.TextBox tbxFilter;
         private System.Windows.Forms.Button btnRefresh;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnOk;
-        private DetroitDataSet detroitDataSet;
+        protected DetroitDataSet detroitDataSet;
         private System.Windows.Forms.BindingSource logBindingSource;
-        private DetroitDataSetTableAdapters.LogTableAdapter logTableAdapter;
+        protected DetroitDataSetTableAdapters.LogTableAdapter logTableAdapter;
         private System.Windows.Forms.CheckBox chbAutoRefresh;
         private PlannerLib.DetroitDataSet detroitDataSet1;
         private System.Windows.Forms.DataGridViewTextBoxColumn timeStampDataGridViewTextBoxColumn;
