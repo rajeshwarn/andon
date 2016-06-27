@@ -113,7 +113,7 @@ namespace LineService
        
         private void OPCInit(List<TimedLineStation> lineStations, List<VarItem> opcVariables)
         {
-            this.myLog.LogAlert(AlertType.System, this.name, this.GetType().ToString(), "OPCInit()",
+            this.myLog.LogAlert(AlertType.System, this.Id.ToString(), this.GetType().ToString(), "OPCInit()",
                 "OPCInit started ...", "system");
 
             // for each station in the line:
@@ -161,7 +161,7 @@ namespace LineService
                 }
                 myStation.OPCProvider = this.OPCProvider;
             }
-            this.myLog.LogAlert(AlertType.System, this.name, this.GetType().ToString(), "OPCInit()",
+            this.myLog.LogAlert(AlertType.System, this.id.ToString(), this.GetType().ToString(), "OPCInit()",
                 "OPCInit finished.", "system");
         }
         private void ButtonPressed(object sender, EventArgs e) 
@@ -266,11 +266,11 @@ namespace LineService
                     if (this.lineStations[i].CurrentProduct != null)
                     {
                         busy_stations++;
-                        if (this.lineStations[i].ReadButton("FINISH") == "1")
+                        if (this.lineStations[i].ReadButtonValue("FINISH") == "1")
                         {
                             finish_pushed++;
                         }
-                        if (this.lineStations[i].ReadButton("STOP") == "1")
+                        if (this.lineStations[i].ReadButtonValue("STOP") == "1")
                         {
                             stop_pushed++;
                         }
@@ -309,48 +309,16 @@ namespace LineService
                 Button aButton;
                 for (int i = 0; i < this.lineStations.Count; i++)
                 {
-                    aButton = (Button)this.lineStations[i].StationControls["FINISH"];
-                    if (aButton != null)
+                    LineStation station = this.lineStations[i];
+                    foreach (KeyValuePair<string, Button> button in station.StationControls)
                     {
-                        aButton.Reset();
-                        this.OPCProvider.ResetButtonSignal(i + 1, aButton.Name);
+                        aButton = button.Value;
+                        if (aButton != null)
+                        {
+                            aButton.Reset();
+                            this.OPCProvider.ResetButtonSignal(i + 1, aButton.Name);
+                        }                    
                     }
-
-                    aButton = (Button)this.lineStations[i].StationControls["STOP"];
-                    if (aButton != null)
-                    {
-                        aButton.Reset();
-                        this.OPCProvider.ResetButtonSignal(i + 1, aButton.Name);
-                    }
-
-                    aButton = (Button)this.lineStations[i].StationControls["HELP"];
-                    if (aButton != null)
-                    {
-                        aButton.Reset();
-                        this.OPCProvider.ResetButtonSignal(i + 1, aButton.Name);
-                    }
-
-                    aButton = (Button)this.lineStations[i].StationControls["FAIL"];
-                    if (aButton != null)
-                    {
-                        aButton.Reset();
-                        this.OPCProvider.ResetButtonSignal(i + 1, aButton.Name);
-                    }
-
-                    aButton = (Button)this.lineStations[i].StationControls["PART1"];
-                    if (aButton != null)
-                    {
-                        aButton.Reset();
-                        this.OPCProvider.ResetButtonSignal(i + 1, aButton.Name);
-                    }
-
-                    aButton = (Button)this.lineStations[i].StationControls["PART2"];
-                    if (aButton != null)
-                    {
-                        aButton.Reset();
-                        this.OPCProvider.ResetButtonSignal(i + 1, aButton.Name);
-                    }
-
                 }
 
             }
@@ -444,7 +412,7 @@ namespace LineService
                 for (int j = 0; j <= this.detroitDataSet.Control.Rows.Count - 1; j++)
                 {
                     DataRow controlRow = this.detroitDataSet.Control.Rows[j];
-                    this.myLog.LogAlert(AlertType.System, this.name, this.GetType().ToString(), "Init()",
+                    this.myLog.LogAlert(AlertType.System, this.Id.ToString(), this.GetType().ToString(), "Init()",
                         "Adding control: id = " + Convert.ToInt32(controlRow["Id"]) + ", name = " + controlRow["Name"].ToString(), "system");
                     myStation.AddControl(Convert.ToInt32(
                         controlRow["Id"]),
@@ -769,7 +737,7 @@ namespace LineService
         {
             try
             {
-                return this.lineStations[StationIndex - 1].ReadButton(ControlKey);
+                return this.lineStations[StationIndex - 1].ReadButtonValue(ControlKey);
             }
             catch (Exception ex)
             {
@@ -906,8 +874,6 @@ namespace LineService
                 dimention += 2;  // BitState, LIVE
                 dimention += 2;  // REGP.M, REGF.M
 
-
-
                 StationRealtimeData[] result = new StationRealtimeData[dimention];
 
                 int i = 0;
@@ -928,35 +894,13 @@ namespace LineService
                 result[i].Key = "GAP_MONTH";
                 result[i].Value = this.timeManager.GetMonthGap(station.Name).ToString(); //this.monthGap.ToString();
 
-                i++;
-                result[i] = new StationRealtimeData();
-                result[i].Key = "FINISH";
-                result[i].Value = this.lineStations[stationIndex - 1].ReadButton(1);
-
-                i++;
-                result[i] = new StationRealtimeData();
-                result[i].Key = "STOP";
-                result[i].Value = this.lineStations[stationIndex - 1].ReadButton(2);
-
-                i++;
-                result[i] = new StationRealtimeData();
-                result[i].Key = "HELP";
-                result[i].Value = this.lineStations[stationIndex - 1].ReadButton(3);
-
-                i++;
-                result[i] = new StationRealtimeData();
-                result[i].Key = "PART1";
-                result[i].Value = this.lineStations[stationIndex - 1].ReadButton(4);
-
-                i++;
-                result[i] = new StationRealtimeData();
-                result[i].Key = "PART2";
-                result[i].Value = this.lineStations[stationIndex - 1].ReadButton(5);
-
-                i++;
-                result[i] = new StationRealtimeData();
-                result[i].Key = "FAIL";
-                result[i].Value = this.lineStations[stationIndex - 1].ReadButton(6);
+                foreach (KeyValuePair<string, Button> button in station.StationControls)
+                {
+                    i++;
+                    result[i] = new StationRealtimeData();
+                    result[i].Key = button.Key;
+                    result[i].Value = button.Value.State;              
+                }
 
                 i++;
                 result[i] = new StationRealtimeData();
@@ -1063,27 +1007,27 @@ namespace LineService
                     int itemIndex = offset + stationIndex * buttonCount;
                     result[itemIndex + 0] = new StationRealtimeData();
                     result[itemIndex + 0].Key = "FI" + (stationIndex + 1).ToString();
-                    result[itemIndex + 0].Value = this.lineStations[stationIndex].ReadButton(1);
+                    result[itemIndex + 0].Value = this.lineStations[stationIndex].ReadButtonValue(1);
 
                     result[itemIndex + 1] = new StationRealtimeData();
                     result[itemIndex + 1].Key = "ST" + (stationIndex + 1).ToString();
-                    result[itemIndex + 1].Value = this.lineStations[stationIndex].ReadButton(2);
+                    result[itemIndex + 1].Value = this.lineStations[stationIndex].ReadButtonValue(2);
 
                     result[itemIndex + 2] = new StationRealtimeData();
                     result[itemIndex + 2].Key = "HE" + (stationIndex + 1).ToString();
-                    result[itemIndex + 2].Value = this.lineStations[stationIndex].ReadButton(3);
+                    result[itemIndex + 2].Value = this.lineStations[stationIndex].ReadButtonValue(3);
 
                     result[itemIndex + 3] = new StationRealtimeData();
                     result[itemIndex + 3].Key = "P1" + (stationIndex + 1).ToString();
-                    result[itemIndex + 3].Value = this.lineStations[stationIndex].ReadButton(4);
+                    result[itemIndex + 3].Value = this.lineStations[stationIndex].ReadButtonValue(4);
 
                     result[itemIndex + 4] = new StationRealtimeData();
                     result[itemIndex + 4].Key = "P2" + (stationIndex + 1).ToString();
-                    result[itemIndex + 4].Value = this.lineStations[stationIndex].ReadButton(5);
+                    result[itemIndex + 4].Value = this.lineStations[stationIndex].ReadButtonValue(5);
 
                     result[itemIndex + 5] = new StationRealtimeData();
                     result[itemIndex + 5].Key = "FA" + (stationIndex + 1).ToString();
-                    result[itemIndex + 5].Value = this.lineStations[stationIndex].ReadButton(6);
+                    result[itemIndex + 5].Value = this.lineStations[stationIndex].ReadButtonValue(6);
 
                     result[itemIndex + 6] = new StationRealtimeData();
                     result[itemIndex + 6].Key = "BST" + (stationIndex + 1).ToString();

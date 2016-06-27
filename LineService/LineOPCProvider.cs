@@ -80,8 +80,8 @@ namespace LineService
                 {
                     OPCVariables[i].servHandle = myItem.ServerHandle;
 
-                    this.myLog.LogAlert(AlertType.System, this.OPCServerName, this.GetType().ToString(), "myOPCItems_Fill()",
-                        " myVarItem (name, arr_idx) = "
+                    this.myLog.LogAlert(AlertType.System, this.id.ToString(), this.GetType().ToString(), "myOPCItems_Fill()",
+                        this.OPCServerName +", myVarItem (name; arr_idx) = "
                         + myVarItem.name.ToString()
                         + ", " + myVarItem.array_index.ToString()
                         + ", myItem.ServerHandle=" + myItem.ServerHandle.ToString()

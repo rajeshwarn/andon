@@ -22,6 +22,7 @@ namespace LineService
         {
             this.myLog = logProvider;
             this.detroitDataSet = detroit;
+            this.lineName = this.detroitDataSet.LineId.ToString();
             
             //...
             // connect to database
