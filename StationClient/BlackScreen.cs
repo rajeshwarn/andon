@@ -52,7 +52,6 @@ namespace StationClient
                 this.myFormTimer = new FormTimer();
                 this.myFormTimer.CounterTick += new myEventHandler(timerHandler);
                 this.stationIndex = Convert.ToInt32(Properties.Settings.Default.StationIndex);
-                this.fLogMessage("Connect to Station #" + this.stationIndex.ToString() + " ...");
                 this.laStation.Text = "Station ID: " + stationIndex.ToString();
 
                 this.laFinishBtnValue.TextChanged += new EventHandler(finishButtonPressed_handler);
@@ -69,10 +68,11 @@ namespace StationClient
 
                 mplayer = new MediaClient.MediaPlayer(this);
                 this.lineId = Properties.Settings.Default.LineId;
-                
+
+                instruction = new ClientInstruction();
                 initTimers();
                 imqttInit();
-                instruction = new ClientInstruction();
+
             }
             catch (Exception ex)
             {
@@ -103,7 +103,6 @@ namespace StationClient
                 this.myFormTimer = new FormTimer();
                 this.myFormTimer.CounterTick += new myEventHandler(timerHandler);
                 this.stationIndex = stationIndex; //Convert.ToInt32(Properties.Settings.Default.StationIndex);
-                this.fLogMessage("Connect to Station #" + this.stationIndex.ToString() + " ...");
                 this.laStation.Text = "Station ID: " + stationIndex.ToString();
 
                 this.laFinishBtnValue.TextChanged += new EventHandler(finishButtonPressed_handler);
@@ -124,25 +123,17 @@ namespace StationClient
             }
         }
 
-        private void fLogMessage(string message) 
-        {
-            //this.tbxStationLog.Text = this.tbxStationLog.Text + message + " ";
-        }
-
         private string formatCounter(int counter) 
         { 
             // format int counter to "#:#0:00" mask
-
             string result = "NA";
             string negative_indicator = "";
 
             int seconds = counter;
-            if (seconds < 0)
-            {
+            if (seconds < 0) {
                 seconds = -seconds;
                 negative_indicator = "-";
             }
-
             int minutes = Convert.ToInt32(seconds / 60);
             int hours = Convert.ToInt32(minutes / 60);
 
@@ -152,48 +143,16 @@ namespace StationClient
             string stMinutes;
             string stHours;
 
-            if (hours > 0)
-            {
+            if (hours > 0) {
                 stMinutes = "0" + minutes.ToString() + ":";
                 stMinutes = stMinutes.Substring(stMinutes.Length - 3);
                 stHours = hours.ToString() + ":";
             }
-            else
-            {
+            else {
                 stMinutes = minutes.ToString() + ":";
                 stHours = "";
             }
-
             result = negative_indicator + stHours + stMinutes + stSesonds.Substring(stSesonds.Length - 2);
-            return result;
-        }
-
-        // Connect if not connected
-        private bool checkConnection() 
-        {
-            if (!this.connected) {
-                this.myLineClient = new ServiceReference2.AssembLineClient();
-                this.connected = (this.myLineClient != null);
-            }
-            return this.connected;
-        }
-
-        // What to show: takt, video, pic?
-        private int checkViewMode() {
-            int result = 0;
-            ServiceReference2.ClientInstruction instruction = myLineClient.GetClientInstruction();
-            switch (instruction.Mode) {
-                case 1:
-                    mplayer.PlayVideo("http://localhost:8080/shark.flv");
-                    break;
-                case 2:
-                    mplayer.ShowPicture("http://localhost:8080/pic.jpg");
-                    break;
-                default:
-                    mplayer.ResetView();
-                    break;
-            }
-            result = instruction.Mode;
             return result;
         }
 
@@ -252,115 +211,9 @@ namespace StationClient
         private void timerHandler()
         {
             // UI thread
-
             checkViewMode(instruction);
             // still pocess in background
             // what to show: takt, video, pic? 
-
-        }
-
-        private void timerHandler2()
-        {
-            this.laTime.Text = DateTime.Now.ToLongTimeString().ToString();
-            try
-            {
-                if (!this.checkConnection()) return;  // connect if disconnected  
-                if (this.checkViewMode() != 0) return; // what to show: takt, video, pic?
-
-                this.stationData = myLineClient.ReadRealTimeDataForLine(this.stationIndex);
-
-                ///refactor 3.0.10 - bbegin
-                timers["LIVE"] = Convert.ToInt32(stationData.FirstOrDefault(p => p.Key.Equals("LIVE")).Value);
-                timers["T"] = Convert.ToInt32(stationData.First(p => p.Key.Equals("T")).Value);
-                timers["TIMER_STOP"] = Convert.ToInt32(stationData.First(p => p.Key.Equals("TIMER_STOP")).Value);
-                timers["TIMER_HELP"] = Convert.ToInt32(stationData.First(p => p.Key.Equals("TIMER_HELP")).Value);
-                timers["TIMER_STOPLAST"] = Convert.ToInt32(stationData.First(p => p.Key.Equals("TIMER_STOPLAST")).Value);
-                timers["TIMER_SumLate"] = Convert.ToInt32(stationData.FirstOrDefault(p => p.Key.Equals("TIMER_SumLate")).Value);
-                ///refactor 3.0.10 - end
-
-                //done
-                this.laMem.Text = formatCounter(this.calcCounter());
-                //done
-                this.laTimeLeft.Text = formatCounter(timers["T"]);
-                //done
-                this.laLive.Text = formatCounter(timers["LIVE"]);
-                
-                //done
-                this.laStation.Text = "Station ID: " + stationData.First(p => p.Key.Equals("S")).Value;
-                //done
-                this.laProduct.Text = "Batch: " + stationData.First(p => p.Key.Equals("B")).Value;
-                //done
-                this.laFrame.Text = stationData.First(p => p.Key.Equals("F")).Value;
-
-                //done
-                this.laSumstopValue.Text = formatCounter(timers["TIMER_STOP"]);
-                //done
-                this.laHelpTimeValue.Text = formatCounter(timers["TIMER_HELP"]);
-
-                ServiceReference2.StationRealtimeData tmpObj;
-                int dayPlan;
-                int dayFact;
-                tmpObj = stationData.FirstOrDefault(p => p.Key.Equals("REGP.D"));
-                dayPlan = (tmpObj != null) ? Convert.ToInt32(tmpObj.Value) : 99;
-
-                tmpObj = stationData.FirstOrDefault(p => p.Key.Equals("REGF.D"));
-                dayFact = (tmpObj != null) ? Convert.ToInt32(tmpObj.Value) : 99;
-                //done
-                this.laDayPlan.Text = "DPF: " + dayPlan.ToString() + "/" + dayFact.ToString();
-
-                int monthPlan;
-                int monthFact;
-                tmpObj = stationData.FirstOrDefault(p => p.Key.Equals("REGP.M"));
-                monthPlan = (tmpObj != null) ? Convert.ToInt32(tmpObj.Value) : 99;
-
-                tmpObj = stationData.FirstOrDefault(p => p.Key.Equals("REGF.M"));
-                monthFact = (tmpObj != null) ? Convert.ToInt32(tmpObj.Value) : 99;
-                //done
-                this.laMonthPlan.Text = "MPF: " + monthPlan.ToString() + "/" + monthFact.ToString();
-                //done
-                this.laPlanValue.Text = (dayFact - dayPlan).ToString();          // plan fact difference
-                //done
-                this.laMonthplanValue.Text = (monthFact - monthPlan).ToString(); // plan fact difference
-                //done
-                this.laMessage.Text = "";                                        // empty string if connected
-
-                //done
-                this.laFinishBtnValue.Text = stationData.First(p => p.Key.Equals("FINISH")).Value.ToString();
-                //done
-                this.laStopBtnValue.Text = stationData.First(p => p.Key.Equals("STOP")).Value.ToString();
-                //done
-                this.laHelpBtnValue.Text = stationData.First(p => p.Key.Equals("HELP")).Value.ToString();
-
-                int newBitWord = Convert.ToInt32(stationData.FirstOrDefault(p => p.Key.Equals("BST")).Value.ToString());
-                newBitWord = newBitWord & (int)~BSFlag.Blocked; // useless bit "Blocked"
-                //done
-                this.laBitState.Text = newBitWord.ToString();
-                //done
-                this.laBitState2.Text = "BS: " + newBitWord.ToString("X");
-            }
-            catch (System.ServiceModel.EndpointNotFoundException e) {
-                this.connected = false;
-                this.myLineClient.Abort();
-                this.myLog.LogAlert(AlertType.System, this.GetType().ToString(), e.Message.ToString());
-                this.laMessage.Text = "Connecting " + new String('.', (this.myFormTimer.Counter % 4));
-                this.myLog.LogAlert(AppLog.AlertType.Error, "Client", e.Message);
-            }
-            catch (System.TimeoutException e) {
-                this.connected = false;
-                this.myLineClient.Abort();
-                this.myLog.LogAlert(AlertType.System, this.GetType().ToString(), e.Message.ToString());
-                this.laMessage.Text = "Connecting " + new String('.', (this.myFormTimer.Counter % 4));
-                this.myLog.LogAlert(AppLog.AlertType.Error, "Client", e.Message);
-            }
-            catch (Exception e1) {
-                this.connected = false;
-                if (this.myLineClient != null) {
-                    this.myLineClient.Abort();
-                }
-                this.myLog.LogAlert(AlertType.System, this.GetType().ToString(), e1.Message.ToString());
-                this.myLog.LogAlert(AppLog.AlertType.Error, "Client", e1.Message);
-            }
-
         }
 
         private Color getButtonColor(string state, int button_type) 

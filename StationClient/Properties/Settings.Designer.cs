@@ -34,7 +34,7 @@ namespace StationClient.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("myhost")]
+        [global::System.Configuration.DefaultSettingValueAttribute("mqtt_broker")]
         public string mqttHost {
             get {
                 return ((string)(this["mqttHost"]));

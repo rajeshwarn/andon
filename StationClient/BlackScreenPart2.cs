@@ -183,17 +183,18 @@ namespace StationClient
                 switch (e.Topic.Replace(context_station, "")) {
                     case "timers": 
                         dynamic resultTi = (JArray.Parse(Encoding.UTF8.GetString(e.Message)))[0];
-                        timers["LIVE"]              = resultTi.LIVE;
+                        timers["TIMER_LIVE"]        = resultTi.LiveTakt;
                         timers["T"]                 = resultTi.T;
-                        timers["TIMER_STOP"]        = resultTi.TIMER_STOP;
-                        timers["TIMER_HELP"]        = resultTi.TIMER_HELP;
-                        timers["TIMER_STOPLAST"]    = resultTi.TIMER_STOPLAST;
-                        timers["TIMER_SumLate"]     = resultTi.TIMER_SumLate;
+                        timers["TIMER_STOP"]        = resultTi.STOP;
+                        timers["TIMER_HELP"]        = resultTi.HELP;
+                        timers["TIMER_STOPLAST"]    = resultTi.STOPLAST;
+                        timers["TIMER_SumLate"]     = resultTi.SumLate;
 
-                        //json block [{ "LIVE": "1", "T":"2", "TIMER_STOP":"3", "TIMER_HELP":"4", "TIMER_STOPLAST":"5", "TIMER_SumLate":"6" }]
+                        //json block [{"STOP": 0, "HELP": 0, "PART1": 0, "PART2": 0, "Fail": 0, "STOPLAST": 0, 
+                        //             "Late": 224, "Operating": 0, "SumLate": 0, "LiveTakt": 3300, "T": 3600}]
                         safeChangeControl(laMem, formatCounter(this.calcCounter()));
                         safeChangeControl(laTimeLeft, formatCounter(timers["T"]));
-                        safeChangeControl(laLive, formatCounter(timers["LIVE"]));
+                        safeChangeControl(laLive, formatCounter(timers["TIMER_LIVE"]));
                         safeChangeControl(laSumstopValue, formatCounter(timers["TIMER_STOP"]));
                         safeChangeControl(laHelpTimeValue, formatCounter(timers["TIMER_HELP"]));
                         break;

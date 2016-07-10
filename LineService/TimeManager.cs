@@ -77,6 +77,15 @@ namespace LineService
         public const string ResetDay = "*rdr#";
     }
 
+    public class PlanFactEventArgs : EventArgs {
+        public IStation Station;
+
+        public PlanFactEventArgs(IStation Station)
+        {
+            this.Station = Station;
+        }
+    }
+
     /// <summary>
     /// Counter class with associated string key
     /// </summary>
@@ -102,9 +111,6 @@ namespace LineService
     /// </summary>
     public class TimeManager : ITimeInformer
     {
-        //TODO:_________________________________________________________________________________________________
-        //...
-        //...
         private int idealTaktCounter = 1;       // number of current "ideal" takt without any stops TODAY
         private int idealMonthTaktCounter = 1;  // number of current "ideal" takt without any stops THIS MONTH
 
@@ -120,7 +126,7 @@ namespace LineService
         private TaktTimer2 slowTaskTimer;
         private int slowTaskStep = 10000;       // 10 sec
         private TaktTimer2 fastTaskTimer;
-        private int fastTaskStep = 3000;        // 1 sec
+        private int fastTaskStep = 500;        // 1 sec
         private DateTime currentDate;
 
         private DetroitDataSet detroitDataSet;
@@ -247,6 +253,7 @@ namespace LineService
                 }
 
                 this.updateStationPosition();
+                this.PlanFactChangedAllStations(this, new EventArgs());
             }
             catch (Exception ex)
             {
@@ -274,7 +281,10 @@ namespace LineService
         { get { return this.idealTaktCounter; } set { this.idealTaktCounter = value; } }
         
         public int MonthTaktNo 
-        { get { return this.idealMonthTaktCounter; } set { this.idealMonthTaktCounter = value; } }
+        { 
+            get { return this.idealMonthTaktCounter; } 
+            set { this.idealMonthTaktCounter = value; } 
+        }
         
         public bool IsWorkingTime
         {
@@ -480,8 +490,7 @@ namespace LineService
                     this.checkSumLateEvent(null, stationName, this.GetStationDayFact(stationName) - amount);
 
                     IStation station = this.lineStations.FirstOrDefault(p => p.Name.Equals(stationName));
-                    if (station != null)
-                    {
+                    if (station != null) {
                         (station as TimedLineStation).TaktPosition = this.GetStationDayFact(stationName) - amount;
                     }
                 }
@@ -521,6 +530,9 @@ namespace LineService
                     if (station != null)
                     {
                         (station as TimedLineStation).TaktPosition = amount - this.GetStationDayPlan(stationName);
+                        if (PlanFactChangedOneStation != null) {
+                            PlanFactChangedOneStation(this, new PlanFactEventArgs(station));
+                        }
                     }
                 }
             }
@@ -595,8 +607,10 @@ namespace LineService
                 }
 
                 this.taktDuration = this.getTaktDuration() * 60;
-                
 
+                if (PlanFactChangedAllStations != null) {
+                    PlanFactChangedAllStations(this, new EventArgs());
+                }
             }
             catch (Exception ex)
             {
@@ -630,12 +644,33 @@ namespace LineService
             }
         }
 
+        public string JsonPlanFact(string stationName, bool wrapped)
+        {
+            //json block [{"REGP_D":"1", "REGF_D":"2", "REGP_M":"1", "REGF_M":"2"}]
+            string result = "";
+
+            int REGP_D = GetStationDayPlan(stationName);
+            int REGF_D = GetStationDayFact(stationName);
+            int REGP_M = GetStationMonthPlan(stationName);
+            int REGF_M = GetStationMonthFact(stationName);
+
+            result = "\"REGP_D\": " + REGP_D + ", \"REGF_D\": " + REGF_D 
+                + ", \"REGP_M\": " + REGP_M + ", \"REGF_M\": " + REGF_M;
+
+            if (wrapped) {
+                result = "[{" + result + "}]";
+            }
+            return result;
+        }
+
 
         //EVENTS_________________________________________________________________________________________________
     
         public event EventHandler OnTick;
         public event EventHandler SlowTask;
         public event EventHandler FastTask;
+        public event EventHandler<PlanFactEventArgs> PlanFactChangedOneStation;
+        public event EventHandler PlanFactChangedAllStations;
 
 
         //PRIVATE_METHODS___________=_____________________________________________________________________________
@@ -768,6 +803,10 @@ namespace LineService
                 }
 
                 this.updateStationPosition();
+                if (PlanFactChangedAllStations != null) { 
+                    PlanFactChangedAllStations(this, new EventArgs ());
+                }
+
 
                 // start LateTimers for stations that have not finished yet
                 // ...
@@ -1012,6 +1051,10 @@ namespace LineService
  
                     this.Takt.Start();
                     this.startButtonTimers();
+
+                    if (PlanFactChangedAllStations != null) {
+                        PlanFactChangedAllStations(this, new EventArgs());
+                    }
                 } 
                 else if (this.currentFrame.Type == (int)TFrame.NonWork)
                 {
@@ -1037,6 +1080,7 @@ namespace LineService
         
         private void checkDateChanged()
         {
+            bool registersChanged = false;
             try
             {
                 DateTime date = new DateTime(this.currentDate.Year, this.currentDate.Month, this.currentDate.Day);
@@ -1049,6 +1093,7 @@ namespace LineService
                                                     "checkDateChanged()", "New month happens !!!", "system");
                     this.idealMonthTaktCounter = 1;
                     this.resetRegisterForNextMonth();
+                    registersChanged = true;
                 }
 
 
@@ -1057,11 +1102,16 @@ namespace LineService
                     // new day happens !! :-)
                     this.idealTaktCounter = 1;
                     this.resetRegisterForNextDay();
+                    registersChanged = true;
 
                 //    this.currentDate = DateTime.Today;
                 }
 
                 this.currentDate = DateTime.Today;
+
+                if (registersChanged && PlanFactChangedAllStations != null) {
+                    PlanFactChangedAllStations(this, new EventArgs());
+                }
             
             }
             catch (Exception ex)
@@ -1174,6 +1224,10 @@ namespace LineService
 
                 key = e.Station.Name;
                 (e.Station as TimedLineStation).TaktPosition = this.GetStationDayFact(key) - this.GetStationDayPlan(key);
+
+                if (PlanFactChangedOneStation != null) {
+                    PlanFactChangedOneStation(this, new PlanFactEventArgs(e.Station));
+                }
 
                 //this.checkSumLateEvent(e.Station, "", (e.Station as TimedLineStation).TaktPosition);
                 //this.resetLiveLateBit(e.Station);
@@ -1351,6 +1405,6 @@ namespace LineService
             }
         }
 
-      
+     
     }
 }

@@ -13,6 +13,10 @@ using System.Timers;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
 
+using uPLibrary.Networking.M2Mqtt;
+using uPLibrary.Networking.M2Mqtt.Messages;
+using Newtonsoft.Json;
+using System.Net;
 
 namespace LineService
 {
@@ -104,234 +108,16 @@ namespace LineService
 
         private StationTableAdapter stationTableAdapter;
         private ControlTableAdapter controlTableAdapter;
-        
         private LineSnapshotTableAdapter lineSnapshotTableAdapter = new LineSnapshotTableAdapter();
         private DetroitDataSet.LineSnapshotDataTable lineSnapshotTable; //= new DetroitDataSet.LineSnapshotDataTable();
 
-       
-        private void OPCInit(List<TimedLineStation> lineStations, List<VarItem> opcVariables)
-        {
-            this.myLog.LogAlert(AlertType.System, this.Id.ToString(), this.GetType().ToString(), "OPCInit()",
-                "OPCInit started ...", "system");
+        private MqttClient mqttClient; 
 
-            // for each station in the line:
-            // - read list of controls from Database by line_id
-            // - add variables to "items" array
-            int i = 0;
-            int k = 0;
-
-            foreach (TimedLineStation myStation in this.lineStations) 
-            {
-                i++; // station index
-                int j = 0;
-                foreach (object myObject in myStation.StationControls.Values) 
-                {
-                    Button myButton = (Button)myObject;
-                    j++; // button index
-                    k++; // index of the variable in the group
-
-                    VarItem myVarItem = new VarItem();
-                    myVarItem.name = myButton.VarName;
-                    myVarItem.array_index = k;
-                    myVarItem.station_index = i;
-                    myVarItem.button_key = myButton.Name;
-                    myVarItem.type = OPCControlType.Button;
-                    myVarItem.hash_key = myVarItem.station_index.ToString() + "-" + myVarItem.button_key.ToString();
-                    myVarItem.MXIO_channel = 99;
-                    myVarItem.MXIO_ipAddr = "";
-                    myVarItem.MXIO_moduleType = 0;
-                    opcVariables.Add(myVarItem);
-                    
-                    k++; // index of the OPC Variable in the group
-
-                    VarItem myVarSignalItem = new VarItem();
-                    myVarSignalItem.name = myButton.VarSignalName;
-                    myVarSignalItem.array_index = k;
-                    myVarSignalItem.station_index = i;
-                    //myVarSignalItem.button_index = j;
-                    myVarSignalItem.button_key = myButton.Name;
-                    myVarSignalItem.type = OPCControlType.Lamp;
-                    myVarSignalItem.hash_key = myVarSignalItem.station_index.ToString() + "-" + myVarSignalItem.button_key.ToString();
-                    myVarSignalItem.MXIO_channel = myButton.Channel;
-                    myVarSignalItem.MXIO_ipAddr = myButton.IPAddr;
-                    myVarSignalItem.MXIO_moduleType = myButton.ModuleType;
-                    opcVariables.Add(myVarSignalItem);
-                }
-                myStation.OPCProvider = this.OPCProvider;
-            }
-            this.myLog.LogAlert(AlertType.System, this.id.ToString(), this.GetType().ToString(), "OPCInit()",
-                "OPCInit finished.", "system");
-        }
-        private void ButtonPressed(object sender, EventArgs e) 
-        {
-            try
-            {
-                // write action into log
-                this.myLog.LogAlert(AlertType.System, this.id.ToString(), this.GetType().ToString(), "ButtonPressed()",
-                    "Method started", "system");
-
-                // pointer to apropriate variable of Button in array of OPC items
-                int buttonIndex = ((VarEventArgs)e).varIndex;
-                // pointer to apropriate variable of Lamp in array of OPC items
-                int signalIndex = buttonIndex + 1;
-
-                // try to switch-on or switch-off the lamp ofthe button
-                this.checkButtonsLamp(buttonIndex, signalIndex);
-
-                //disabled since v.1 
-                //this.checkButtonsOnLine();
-            }
-            catch (Exception ex)
-            {
-                this.myLog.LogAlert(AlertType.Error, this.Id.ToString(), ex.TargetSite.ToString(),
-                                                    ex.Source.ToString(), ex.Message.ToString(), "system");
-            }
-        }
-
-        private void checkButtonsLamp(int buttonIndex, int signalIndex)
-        {
-            try
-            {
-
-                int buttonState = 0;
-
-                // get Button variable from array of OPC items
-                VarItem varButtonItem = this.OPCProvider.OPCVariables.Find(p => p.array_index.Equals(buttonIndex));
-
-                // get Signal variable from array of OPC items
-                VarItem myVarSignalItem = this.OPCProvider.OPCVariables.Find(p => p.array_index.Equals(signalIndex));
-
-                // try to "push" the Button for station object
-                if (varButtonItem != null)
-                {
-                    buttonState = this.PushStationButton(varButtonItem.station_index, varButtonItem.button_key);
-                    this.myLog.LogAlert(AlertType.System, this.id.ToString(), this.GetType().ToString(), "checkButtonsLamp()",
-                        varButtonItem.name + " Button pushed = " + buttonState.ToString(), "system");
-
-                    if (varButtonItem.button_key == "FINISH")
-                    {
-                        this.freezeButtonTemporary(varButtonItem.station_index, varButtonItem.button_key);
-                    }
-                }
-
-                if (myVarSignalItem != null && (varButtonItem != null))
-                {
-                    // hit the lamp output!
-                    // read curren state of the Lamp and invert it
-                    bool signalState = Convert.ToBoolean(buttonState);
-
-                    //this.OPCProvider.WriteVariableValue((int)myVarSignalItem.servHandle, signalState);
-                    this.OPCProvider.WriteVariableValue(myVarSignalItem, signalState);
-                    bool faktiskSignalState = (bool)(this.OPCProvider.ReadVariableValue((int)myVarSignalItem.servHandle));
-
-                    ////// Press button second time ?!   
-                    ////// 
-                    ////if (signalState != faktiskSignalState)
-                    ////{
-                    ////    this.OPCProvider.WriteVariableValue(myVarSignalItem, signalState);
-                    ////    faktiskSignalState = (bool)(this.OPCProvider.ReadVariableValue((int)myVarSignalItem.servHandle));
-                    ////}
-
-                    ////if (signalState != faktiskSignalState)
-                    ////{
-                    ////    signalState = faktiskSignalState;
-                    ////    this.PushStationButton(varButtonItem.station_index, varButtonItem.button_key);
-                    ////}
-                    this.myLog.LogAlert(AlertType.System, this.id.ToString(), this.GetType().ToString(), "checkButtonsLamp()",
-                        myVarSignalItem.name + " Lamp on = " + signalState, "system");
-                }
-
-            }
-            catch (Exception ex)
-            {
-                this.myLog.LogAlert(AlertType.Error, this.Id.ToString(), ex.TargetSite.ToString(),
-                                                    ex.Source.ToString(), ex.Message.ToString(), "system");
-            }
-        }
-        private void checkButtonsOnLine()
-        {
-
-            try
-            {
-                //this.myLog.LogAlert(AlertType.System, "checkButtonsOnLine()", "Method started");
-
-                int busy_stations = 0;
-                int finish_pushed = 0;
-                int stop_pushed = 0;
-
-                for (int i = 0; i < this.lineStations.Count; i++)
-                {
-                    if (this.lineStations[i].CurrentProduct != null)
-                    {
-                        busy_stations++;
-                        if (this.lineStations[i].ReadButtonValue("FINISH") == "1")
-                        {
-                            finish_pushed++;
-                        }
-                        if (this.lineStations[i].ReadButtonValue("STOP") == "1")
-                        {
-                            stop_pushed++;
-                        }
-                    }
-
-                }
-                if ((busy_stations > 0) & (busy_stations == finish_pushed) & (stop_pushed == 0))
-                {
-                    this.Move();
-                }
-            }
-            catch (Exception ex)
-            {
-                this.myLog.LogAlert(AlertType.Error, this.Id.ToString(), ex.TargetSite.ToString(),
-                                                    ex.Source.ToString(), ex.Message.ToString(), "system");
-            }
-        }
-        private void resetButtons()
-        {
-            try
-            {
-                for (int i = 0; i < this.lineStations.Count; i++)
-                {
-                    this.lineStations[i].ResetControls(ResetControlsType.All);
-                }
-            }
-            catch (Exception ex) 
-            {
-                this.myLog.LogAlert(AlertType.Error, "resetButtons()", ex.Message);
-            }
-        }
-        private void resetSignals() 
-        {
-            try
-            {
-                Button aButton;
-                for (int i = 0; i < this.lineStations.Count; i++)
-                {
-                    LineStation station = this.lineStations[i];
-                    foreach (KeyValuePair<string, Button> button in station.StationControls)
-                    {
-                        aButton = button.Value;
-                        if (aButton != null)
-                        {
-                            aButton.Reset();
-                            this.OPCProvider.ResetButtonSignal(i + 1, aButton.Name);
-                        }                    
-                    }
-                }
-
-            }
-            catch (Exception ex)
-            {
-                this.myLog.LogAlert(AlertType.Error, this.Id.ToString(), ex.Source.ToString(), ex.TargetSite.ToString(),
-                       "resetSignals()", ex.Message);
-            }        
-        }
-       
-     
         public override int Id { get { return this.id; } }
         public string Name { get { return this.name; } }
         public int MoveCounter { get { return this.moveCounter; } }
 
+               
 
 
 
@@ -347,6 +133,7 @@ namespace LineService
 
             this.lineType = (LineType)(Convert.ToInt16(Properties.Settings.Default.LineType));
        }
+
         public void Init(int id)
         {
             int MAIN_STATION_TYPE = 1;
@@ -457,6 +244,8 @@ namespace LineService
             this.timeManager.OnTick += new EventHandler(timeManager_OnTick);
             this.timeManager.SlowTask += new EventHandler(timeManager_SlowTask);
             this.timeManager.FastTask += new EventHandler(timeManager_FastTask);
+            this.timeManager.PlanFactChangedAllStations += new EventHandler(timeManager_PlanFactChangedAllStations);
+            this.timeManager.PlanFactChangedOneStation += new EventHandler<PlanFactEventArgs>(timeManager_PlanFactChangedOneStation);
 
             // link one time handler for all stations on the line
             for (int i = 0; i <= this.lineStations.Count - 1; i++)
@@ -464,10 +253,204 @@ namespace LineService
                // this.lineStations[i].OnFree += new EventHandler(this.onFreeStation);
             }
 
+            this.initMqtt();
             this.timeManager.On();
          }
 
+        private void OPCInit(List<TimedLineStation> lineStations, List<VarItem> opcVariables)
+        {
+            this.myLog.LogAlert(AlertType.System, this.Id.ToString(), this.GetType().ToString(), "OPCInit()",
+                "OPCInit started ...", "system");
 
+            // for each station in the line:
+            // - read list of controls from Database by line_id
+            // - add variables to "items" array
+            int i = 0;
+            int k = 0;
+
+            foreach (TimedLineStation myStation in this.lineStations) {
+                i++; // station index
+                int j = 0;
+                foreach (object myObject in myStation.StationControls.Values) {
+                    Button myButton = (Button)myObject;
+                    j++; // button index
+                    k++; // index of the variable in the group
+
+                    VarItem myVarItem = new VarItem();
+                    myVarItem.name = myButton.VarName;
+                    myVarItem.array_index = k;
+                    myVarItem.station_index = i;
+                    myVarItem.button_key = myButton.Name;
+                    myVarItem.type = OPCControlType.Button;
+                    myVarItem.hash_key = myVarItem.station_index.ToString() + "-" + myVarItem.button_key.ToString();
+                    myVarItem.MXIO_channel = 99;
+                    myVarItem.MXIO_ipAddr = "";
+                    myVarItem.MXIO_moduleType = 0;
+                    opcVariables.Add(myVarItem);
+
+                    k++; // index of the OPC Variable in the group
+
+                    VarItem myVarSignalItem = new VarItem();
+                    myVarSignalItem.name = myButton.VarSignalName;
+                    myVarSignalItem.array_index = k;
+                    myVarSignalItem.station_index = i;
+                    //myVarSignalItem.button_index = j;
+                    myVarSignalItem.button_key = myButton.Name;
+                    myVarSignalItem.type = OPCControlType.Lamp;
+                    myVarSignalItem.hash_key = myVarSignalItem.station_index.ToString() + "-" + myVarSignalItem.button_key.ToString();
+                    myVarSignalItem.MXIO_channel = myButton.Channel;
+                    myVarSignalItem.MXIO_ipAddr = myButton.IPAddr;
+                    myVarSignalItem.MXIO_moduleType = myButton.ModuleType;
+                    opcVariables.Add(myVarSignalItem);
+                }
+                myStation.OPCProvider = this.OPCProvider;
+            }
+            this.myLog.LogAlert(AlertType.System, this.id.ToString(), this.GetType().ToString(), "OPCInit()",
+                "OPCInit finished.", "system");
+        }
+        private void ButtonPressed(object sender, EventArgs e)
+        {
+            try {
+                // write action into log
+                this.myLog.LogAlert(AlertType.System, this.id.ToString(), this.GetType().ToString(), "ButtonPressed()",
+                    "Method started", "system");
+
+                // pointer to apropriate variable of Button in array of OPC items
+                int buttonIndex = ((VarEventArgs)e).varIndex;
+                // pointer to apropriate variable of Lamp in array of OPC items
+                int signalIndex = buttonIndex + 1;
+
+                // try to switch-on or switch-off the lamp ofthe button
+                this.checkButtonsLamp(buttonIndex, signalIndex);
+
+                //disabled since v.1 
+                //this.checkButtonsOnLine();
+            }
+            catch (Exception ex) {
+                this.myLog.LogAlert(AlertType.Error, this.Id.ToString(), ex.TargetSite.ToString(),
+                                                    ex.Source.ToString(), ex.Message.ToString(), "system");
+            }
+        }
+
+        private void checkButtonsLamp(int buttonIndex, int signalIndex)
+        {
+            try {
+
+                int buttonState = 0;
+
+                // get Button variable from array of OPC items
+                VarItem varButtonItem = this.OPCProvider.OPCVariables.Find(p => p.array_index.Equals(buttonIndex));
+
+                // get Signal variable from array of OPC items
+                VarItem myVarSignalItem = this.OPCProvider.OPCVariables.Find(p => p.array_index.Equals(signalIndex));
+
+                // try to "push" the Button for station object
+                if (varButtonItem != null) {
+                    buttonState = this.PushStationButton(varButtonItem.station_index, varButtonItem.button_key);
+                    this.myLog.LogAlert(AlertType.System, this.id.ToString(), this.GetType().ToString(), "checkButtonsLamp()",
+                        varButtonItem.name + " Button pushed = " + buttonState.ToString(), "system");
+
+                    if (varButtonItem.button_key == "FINISH") {
+                        this.freezeButtonTemporary(varButtonItem.station_index, varButtonItem.button_key);
+                    }
+                }
+
+                if (myVarSignalItem != null && (varButtonItem != null)) {
+                    // hit the lamp output!
+                    // read curren state of the Lamp and invert it
+                    bool signalState = Convert.ToBoolean(buttonState);
+
+                    //this.OPCProvider.WriteVariableValue((int)myVarSignalItem.servHandle, signalState);
+                    this.OPCProvider.WriteVariableValue(myVarSignalItem, signalState);
+                    bool faktiskSignalState = (bool)(this.OPCProvider.ReadVariableValue((int)myVarSignalItem.servHandle));
+
+                    ////// Press button second time ?!   
+                    ////// 
+                    ////if (signalState != faktiskSignalState)
+                    ////{
+                    ////    this.OPCProvider.WriteVariableValue(myVarSignalItem, signalState);
+                    ////    faktiskSignalState = (bool)(this.OPCProvider.ReadVariableValue((int)myVarSignalItem.servHandle));
+                    ////}
+
+                    ////if (signalState != faktiskSignalState)
+                    ////{
+                    ////    signalState = faktiskSignalState;
+                    ////    this.PushStationButton(varButtonItem.station_index, varButtonItem.button_key);
+                    ////}
+                    this.myLog.LogAlert(AlertType.System, this.id.ToString(), this.GetType().ToString(), "checkButtonsLamp()",
+                        myVarSignalItem.name + " Lamp on = " + signalState, "system");
+                }
+
+            }
+            catch (Exception ex) {
+                this.myLog.LogAlert(AlertType.Error, this.Id.ToString(), ex.TargetSite.ToString(),
+                                                    ex.Source.ToString(), ex.Message.ToString(), "system");
+            }
+        }
+        private void checkButtonsOnLine()
+        {
+
+            try {
+                //this.myLog.LogAlert(AlertType.System, "checkButtonsOnLine()", "Method started");
+
+                int busy_stations = 0;
+                int finish_pushed = 0;
+                int stop_pushed = 0;
+
+                for (int i = 0; i < this.lineStations.Count; i++) {
+                    if (this.lineStations[i].CurrentProduct != null) {
+                        busy_stations++;
+                        if (this.lineStations[i].ReadButtonValue("FINISH") == "1") {
+                            finish_pushed++;
+                        }
+                        if (this.lineStations[i].ReadButtonValue("STOP") == "1") {
+                            stop_pushed++;
+                        }
+                    }
+
+                }
+                if ((busy_stations > 0) & (busy_stations == finish_pushed) & (stop_pushed == 0)) {
+                    this.Move();
+                }
+            }
+            catch (Exception ex) {
+                this.myLog.LogAlert(AlertType.Error, this.Id.ToString(), ex.TargetSite.ToString(),
+                                                    ex.Source.ToString(), ex.Message.ToString(), "system");
+            }
+        }
+        private void resetButtons()
+        {
+            try {
+                for (int i = 0; i < this.lineStations.Count; i++) {
+                    this.lineStations[i].ResetControls(ResetControlsType.All);
+                }
+            }
+            catch (Exception ex) {
+                this.myLog.LogAlert(AlertType.Error, "resetButtons()", ex.Message);
+            }
+        }
+        private void resetSignals()
+        {
+            try {
+                Button aButton;
+                for (int i = 0; i < this.lineStations.Count; i++) {
+                    LineStation station = this.lineStations[i];
+                    foreach (KeyValuePair<string, Button> button in station.StationControls) {
+                        aButton = button.Value;
+                        if (aButton != null) {
+                            aButton.Reset();
+                            this.OPCProvider.ResetButtonSignal(i + 1, aButton.Name);
+                        }
+                    }
+                }
+
+            }
+            catch (Exception ex) {
+                this.myLog.LogAlert(AlertType.Error, this.Id.ToString(), ex.Source.ToString(), ex.TargetSite.ToString(),
+                       "resetSignals()", ex.Message);
+            }
+        }
+       
 
         //#region IAssembLine Members
 
@@ -1659,8 +1642,9 @@ namespace LineService
         }
 
         private void timeManager_FastTask(object sender, EventArgs e) 
-        { 
-            
+        {
+            publishStationEvents();
+            Console.WriteLine(formatCounter(GetCounter()));
         }
 
         private void makeSnapShot()
@@ -1764,8 +1748,116 @@ namespace LineService
             this.clientContentUrl = ContentUrl;
         }
 
+        private void publishStationEvents() 
+        { 
+            string topic = "andon/line/" + id.ToString();
+            byte[] messageStr;
 
+            try {
+                /// publish timers in fast task, every 1s
+                /// json block [{"STOP": 0, "HELP": 0, "PART1": 0, "PART2": 0, "Fail": 0, "STOPLAST": 0, 
+                ///             "Late": 224, "Operating": 0, "SumLate": 0, "LiveTakt": 3300, "T": 3600}]
+                foreach (TimedLineStation station in lineStations) {
+                    string json = station.Timers.JsonData(false); // get all timers from station "as-is"
+                    json += "\"T\": " + GetCounter();             // add extra counter form line
+                    json = "[{" + json + "}]";
 
+                    topic = "andon/line/" + Id + "/station/" + station.Index + "/timers";
+                    messageStr = Encoding.UTF8.GetBytes(json);
+                    mqttClient.Publish(topic, messageStr, MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
+                }
+            }
+            catch (Exception ex) {
+                myLog.LogAlert(AlertType.Error, id.ToString(), ex.TargetSite.ToString(),
+                    ex.Source.ToString(), ex.Message.ToString(), "system");
+            }
+        }
+
+        private void initMqtt() 
+        {
+            string mqttBroker = "mqtt_broker";
+            mqttClient = new MqttClient(mqttBroker);
+            string clientId = DateTime.Now.Ticks.ToString() + "-line-" + Id.ToString();
+            mqttClient.Connect(clientId);
+        }
+
+        private string formatCounter(int counter)
+        {
+            // format int counter to "#:#0:00" mask
+            string result = "NA";
+            string negative_indicator = "";
+
+            int seconds = counter;
+            if (seconds < 0) {
+                seconds = -seconds;
+                negative_indicator = "-";
+            }
+            int minutes = Convert.ToInt32(seconds / 60);
+            int hours = Convert.ToInt32(minutes / 60);
+
+            seconds = seconds - minutes * 60;
+            minutes = minutes - hours * 60;
+            string stSesonds = "0" + seconds.ToString();
+            string stMinutes;
+            string stHours;
+
+            if (hours > 0) {
+                stMinutes = "0" + minutes.ToString() + ":";
+                stMinutes = stMinutes.Substring(stMinutes.Length - 3);
+                stHours = hours.ToString() + ":";
+            }
+            else {
+                stMinutes = minutes.ToString() + ":";
+                stHours = "";
+            }
+            result = negative_indicator + stHours + stMinutes + stSesonds.Substring(stSesonds.Length - 2);
+            return result;
+        }
+
+        private void timeManager_PlanFactChangedOneStation(object sender, PlanFactEventArgs e)
+        {
+            LineStation station = ((LineStation)e.Station);
+            ///
+            /// publish GAPx.x data to mqttBroker
+            ///
+            string topic = "andon/line/" + id.ToString() + "/station/" + station.Index + "/planfact";
+            byte[] messageStr;
+
+            try {
+                string json = timeManager.JsonPlanFact(station.Name, true);
+                messageStr = Encoding.UTF8.GetBytes(json);
+                mqttClient.Publish(topic, messageStr, MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
+            }
+            catch (Exception ex) {
+                myLog.LogAlert(AlertType.Error, id.ToString(), ex.TargetSite.ToString(),
+                        ex.Source.ToString(), ex.Message.ToString(), "system");
+            }
+        }
+
+        private void timeManager_PlanFactChangedAllStations(object sender, EventArgs e)
+        {
+            ///
+            /// publish GAPx.x data to mqttBroker
+            ///
+            byte[] messageStr;
+            string topic = "";
+            string json = "";
+
+            try {
+                foreach (LineStation station in lineStations) {
+                    topic = "andon/line/" + id.ToString() + "/station/" + station.Index + "/planfact";
+                    
+                    json = timeManager.JsonPlanFact(station.Name, true);
+                 
+                    messageStr = Encoding.UTF8.GetBytes(json);
+                    mqttClient.Publish(topic, messageStr, MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);            
+                }
+            }
+            catch (Exception ex) {
+                myLog.LogAlert(AlertType.Error, id.ToString(), ex.TargetSite.ToString(),
+                        ex.Source.ToString(), ex.Message.ToString(), "system");
+            }
+        }
 
     }
 }

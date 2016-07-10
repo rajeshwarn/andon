@@ -6,6 +6,8 @@ using System.Timers;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
 
+using Newtonsoft.Json;
+
 namespace LineService
 {
     [Serializable]
@@ -134,7 +136,6 @@ namespace LineService
             this.value = this.value + mult * 1;        
         }
 
-
         public int GetIntValue()
         {
             return this.value;
@@ -149,6 +150,7 @@ namespace LineService
             this.value = newValue;
         }
 
-
+        [JsonProperty]
+        public int Value { get { return value;} }
     }
 }

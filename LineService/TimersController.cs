@@ -5,6 +5,8 @@ using System.Text;
 using System.Runtime.Serialization;
 using System.Collections;
 
+using Newtonsoft.Json;
+
 
 namespace LineService
 {
@@ -253,6 +255,17 @@ namespace LineService
                 Console.WriteLine(DateTime.Now + " " + ex.TargetSite.ToString(), ex.Source, ex.ToString());
             }
 
+        }
+
+        public string JsonData(bool wrapped) {
+            string result = "";
+            foreach (KeyValuePair<string, Counter> timer in timers) {
+                result += "\"" + timer.Key + "\": " + timer.Value.Value + ", ";
+            }
+            if (wrapped) {
+                result = "{" + result + "}";
+            }
+            return result;
         }
 
     }

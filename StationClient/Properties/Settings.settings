@@ -6,7 +6,7 @@
       <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="mqttHost" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">myhost</Value>
+      <Value Profile="(Default)">mqtt_broker</Value>
     </Setting>
     <Setting Name="LineId" Type="System.Int32" Scope="Application">
       <Value Profile="(Default)">1</Value>
