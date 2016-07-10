@@ -243,10 +243,6 @@
       <Project>{A001887E-03B3-486B-B5EA-8D4808D0763F}</Project>
       <Name>Security</Name>
     </ProjectReference>
-    <ProjectReference Include="..\StationClient\StationClient.csproj">
-      <Project>{B41A3A47-701B-4A9E-BC4A-5BBA26E20F6F}</Project>
-      <Name>StationClient</Name>
-    </ProjectReference>
     <ProjectReference Include="..\wsLineHostController\wsLineHostController.csproj">
       <Project>{1A1ACF6F-3F08-41E3-8850-B5D099BCB2BF}</Project>
       <Name>wsLineHostController</Name>

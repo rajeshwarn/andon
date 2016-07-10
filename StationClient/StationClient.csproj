@@ -10,8 +10,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>StationClient</RootNamespace>
     <AssemblyName>StationClient</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
@@ -39,6 +40,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>true</UseVSHostingProcess>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -48,6 +50,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>
@@ -57,10 +60,13 @@
     <Reference Include="AppLog">
       <HintPath>..\AppLog\bin\Debug\AppLog.dll</HintPath>
     </Reference>
-    <Reference Include="MediaClient">
-      <HintPath>..\..\..\..\Users\petelin\Documents\Visual Studio 2010\Projects\Android\MediaClient\bin\Debug\MediaClient.exe</HintPath>
+    <Reference Include="M2Mqtt.Net">
+      <HintPath>..\packages\M2Mqtt.4.3.0.0\lib\net45\M2Mqtt.Net.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualBasic.PowerPacks.Vs, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
@@ -89,7 +95,11 @@
     <Compile Include="BlackScreen1920.designer.cs">
       <DependentUpon>BlackScreen1920.cs</DependentUpon>
     </Compile>
+    <Compile Include="BlackScreenPart2.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FormTimer.cs" />
+    <Compile Include="mqttLogger.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\ServiceReference2\Reference.cs">
@@ -112,9 +122,11 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="App.config" />
     <None Include="Class Diagrams\StationClient.cd" />
+    <None Include="packages.config" />
     <None Include="Properties\DataSources\LineService.LineStationBase.datasource" />
     <None Include="Properties\DataSources\LineService.ProductBase.datasource" />
     <None Include="Properties\DataSources\LineService.StationRealtimeData.datasource" />
@@ -223,6 +235,12 @@
       <Isolated>False</Isolated>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MediaClient\MediaClient.csproj">
+      <Project>{13325d6d-5bfe-43a5-beac-434fa6b11f3b}</Project>
+      <Name>MediaClient</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

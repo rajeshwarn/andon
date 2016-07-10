@@ -143,7 +143,6 @@
             this.btnHelp.Tag = "";
             this.btnHelp.Text = "Help";
             this.btnHelp.UseVisualStyleBackColor = true;
-            this.btnHelp.Click += new System.EventHandler(this.btnHelp_Click);
             // 
             // btnStop
             // 
@@ -156,7 +155,6 @@
             this.btnStop.Tag = "btnFinish";
             this.btnStop.Text = "Stop";
             this.btnStop.UseVisualStyleBackColor = true;
-            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
             // 
             // btnFinish
             // 
@@ -169,7 +167,6 @@
             this.btnFinish.Tag = "btnFinish";
             this.btnFinish.Text = "Finish";
             this.btnFinish.UseVisualStyleBackColor = true;
-            this.btnFinish.Click += new System.EventHandler(this.btnFinish_Click);
             // 
             // laParts3BtnValue
             // 
@@ -284,7 +281,6 @@
             this.laPlanValue.Text = "-1";
             this.laPlanValue.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.laPlanValue.UseWaitCursor = true;
-            this.laPlanValue.Click += new System.EventHandler(this.laPlanValue_Click);
             // 
             // label2
             // 
@@ -320,7 +316,6 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 55;
             this.pictureBox1.TabStop = false;
-            this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
             // 
             // laStation
             // 
@@ -615,7 +610,6 @@
             this.laBitState2.Size = new System.Drawing.Size(189, 39);
             this.laBitState2.TabIndex = 59;
             this.laBitState2.Text = "BS: 0010";
-            this.laBitState2.Click += new System.EventHandler(this.label4_Click);
             // 
             // laMessage
             // 

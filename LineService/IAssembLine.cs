@@ -85,10 +85,6 @@ namespace LineService
         [OperationContract]
         LogistTailElem[] GetLogisticTails();
 
-
-        [OperationContract]
-        int GetSumStopTime();
-
         [OperationContract]
         void RestoreLine();
 

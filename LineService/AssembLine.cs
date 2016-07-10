@@ -54,8 +54,6 @@ namespace LineService
         } 
     }
 
-
-
     public class ProductsOnLine : Queue<Product> { }
     public class BatchStock : Queue<Batch> { }
     public class LineFrame : Frame 
@@ -945,7 +943,7 @@ namespace LineService
                 i++;
                 result[i] = new StationRealtimeData();
                 result[i].Key = "SS";
-                result[i].Value = this.GetSumStopTime().ToString();
+                result[i].Value = "";
 
                 i++;
                 result[i] = new StationRealtimeData();
@@ -1213,14 +1211,6 @@ namespace LineService
             return this.ReadRealTimeData(stationIndex);
         }
 
-
-        
-        
-        public int GetSumStopTime() 
-        {
-            //return this.sumStopTime;
-            return 0;
-        }
         public void SetStationDayPlan(string stationName, int amount) 
         {
             try
