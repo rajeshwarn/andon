@@ -59,9 +59,10 @@ namespace LineService
     public class LineStation : LineStationBase, IStation
     {
         private const int FINISH_TIMEOUT = 1000;
-        //private const int FINISH_FREEZE_TIMEOUT = 1 * 5 * 1000 ;
 
         private const int FINISH_FREEZE_TIMEOUT = 15 * 60 * 1000 ;
+
+        private const int BUTTONS_COUNT = 6;
 
         private int type; // 0 - assistant station, 1 - saldom station, 2 - main station with assistant
         private int bufferSize;
@@ -88,28 +89,6 @@ namespace LineService
         public StationBuffer Buffer { get { return this.stationBuffer; } }
         public int Index { get { return this.index; } }
         public virtual int BitState { get; set; }
-
-        // This is the serialization constructor.
-        // Satisfies rule: ImplementSerializationConstructors.
-        //protected LineStation(SerializationInfo info, StreamingContext context)
-        //{
-        //    ////    this.id = (int)info.GetValue("id", typeof(int));
-        //    ////    this.type = (int)info.GetValue("type", typeof(int));
-        //    ////    this.name = (string)info.GetValue("name", typeof(string));
-        //    ////    this.bufferSize = (int)info.GetValue("bufferSize", typeof(int));
-        //    ////    this.index = (int)info.GetValue("index", typeof(int));
-        //}
-        //// The following method serializes the instance.
-        //[SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.SerializationFormatter)]
-        //void ISerializable.GetObjectData(SerializationInfo info, StreamingContext context)
-        //{
-        //    ////    info.AddValue("id", this.id);
-        //    ////    info.AddValue("type", this.type);
-        //    ////    info.AddValue("name", this.name);
-        //    ////    info.AddValue("bufferSize", this.bufferSize);
-        //    ////    info.AddValue("index", this.index);
-        //}
-
 
         public LineStation(int id, int type, string name, int bufferSize, int stationIndex, Line line, LogProvider logProvider)
             : base()
@@ -177,7 +156,7 @@ namespace LineService
             return result;
         }
 
-        public virtual string ReadButton(string button_key)
+        public virtual string ReadButtonValue(string button_key)
         {
             string result = "0";
             Button aButton = (Button)this.StationControls[button_key];
@@ -188,7 +167,7 @@ namespace LineService
             return result;
         }
 
-        public virtual string ReadButton(int button_index)
+        public virtual string ReadButtonValue(int button_index)
         {
             string result = "0";
             if (button_index <= this.StationControlsList.Count) 

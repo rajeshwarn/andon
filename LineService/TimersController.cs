@@ -115,12 +115,20 @@ namespace LineService
 
             for (int i = 0; i < this.timers.Count; i++)
             {
-                Counter aCounter = (Counter)this.timers[keys[i]];
-                if (aCounter.Enabled && !excludeKeys.Contains(keys[i].Substring(0, 4)))
+                try 
                 {
-                    this.pausedTimers.Add(aCounter);
-                    aCounter.Stop();
+                    Counter aCounter = (Counter)this.timers[keys[i]];
+                    if (aCounter != null && aCounter.Enabled && !excludeKeys.Contains(keys[i].Substring(0, 4)))
+                    {
+                        this.pausedTimers.Add(aCounter);
+                        aCounter.Stop();
+                    }
                 }
+                catch (Exception ex) 
+                {
+                    Console.WriteLine(DateTime.Now + " " + ex.TargetSite.ToString(), ex.Source, ex.ToString());
+                }
+
             }
         }
 

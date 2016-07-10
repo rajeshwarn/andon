@@ -114,11 +114,11 @@ namespace LineService
             }
 
         }
-        public override string ReadButton(string button_key)
+        public override string ReadButtonValue(string button_key)
         {
             try
             {
-                string result = base.ReadButton(button_key);
+                string result = base.ReadButtonValue(button_key);
                 return result;
             }
             catch (Exception ex)
@@ -128,11 +128,11 @@ namespace LineService
                 return "";
             }
         }
-        public override string ReadButton(int button_index)
+        public override string ReadButtonValue(int button_index)
         {
             try
             {
-                string result = base.ReadButton(button_index);
+                string result = base.ReadButtonValue(button_index);
                 return result;
             }
             catch (Exception ex)
@@ -179,16 +179,10 @@ namespace LineService
         {
             try
             {
-                //this.myLog.LogAlert(AlertType.System, this.line.Id.ToString(), this.GetType().ToString(), "ResetControls()", 
-                //    "Method started ...", "system");
-
                 base.ResetControls(resetType);
 
                 Button aButton;
                 TimedLineStation station = this;
-
-                //this.myLog.LogAlert(AlertType.System, this.line.Id.ToString(), this.GetType().ToString(), "ResetControls()",
-                //                    "Method bookmark #2 ...", "system");
 
                 if (resetType == ResetControlsType.All)
                     station.Timers.StopAll();
@@ -196,35 +190,14 @@ namespace LineService
                     station.Timers.StopForRelease();
 
 
-                //this.myLog.LogAlert(AlertType.System, this.line.Id.ToString(), this.GetType().ToString(), "ResetControls()",
-                //                    "Method bookmark #3 ...", "system");
-
-                // Reset FINISH buttons - temp !!!!!!!
                 aButton = (Button)station.StationControls["FINISH"];
-
-                //this.myLog.LogAlert(AlertType.System, this.line.Id.ToString(), this.GetType().ToString(), "ResetControls()",
-                //                    "Method bookmark #4 ...", "system");
-
                 if (aButton != null && aButton.State == "1")
                 {
-                    //aButton.IsBlocked = false;  // ANTIFREEZE
                     aButton.Reset();
-                    
-                    //this.myLog.LogAlert(AlertType.System, this.line.Id.ToString(), this.GetType().ToString(), "ResetControls()",
-                    //                                    "Method bookmark #5 ...", "system");
-
                     this.myLog.LogAlert(AlertType.System, this.line.Id.ToString(), this.GetType().ToString(), "ResetControls()",
                                            "station.Index=" + station.Index.ToString() + ", aButton.Name=" + aButton.Name.ToString(), "system");
-
                     this.opcProvider.ResetButtonSignal(station.Index, aButton.Name);
-
-                    //this.myLog.LogAlert(AlertType.System, this.line.Id.ToString(), this.GetType().ToString(), "ResetControls()",
-                    //                                    "station.Index=" + station.Index.ToString() + ", aButton.Name=" + aButton.Name.ToString(), "system");
                 }
-
-                //this.myLog.LogAlert(AlertType.System, this.line.Id.ToString(), this.GetType().ToString(), "ResetControls()",
-                //                    "Method bookmark #7 ...", "system");
-
 
                 aButton = (Button)station.StationControls["STOP"];
                 if (aButton != null && aButton.State == "1")
