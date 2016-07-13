@@ -10,6 +10,8 @@ using System.Collections;
 using System.Security.Permissions;
 using System.Timers;
 
+using Newtonsoft.Json;
+
 namespace LineService
 {
     public enum BSFlag { Finished = 0x0001, Late = 0x0100, Blocked = 0x0010, Free = 0x0200, LiveLate = 0x0400, SumLate = 0x0800, Outgo = 0x0020 }
@@ -79,16 +81,33 @@ namespace LineService
         private int holdingEvents = 0;
         private bool finishPublished = false;
 
-        public List<object> StationControlsList = new List<object>();
+        public List<Button> StationControlsList;
 
-        public int Type { get { return this.type; } }
-        public Product CurrentProduct { get { return this.currentProduct; } }
+        public int Type 
+        { 
+            get { return this.type; } 
+        }
+        public Product CurrentProduct 
+        { 
+            get { return this.currentProduct; } 
+        }
 
-
-        public int BufferSize { get { return this.bufferSize; } }
-        public StationBuffer Buffer { get { return this.stationBuffer; } }
-        public int Index { get { return this.index; } }
-        public virtual int BitState { get; set; }
+        public int BufferSize 
+        { 
+            get { return this.bufferSize; } 
+        }
+        public StationBuffer Buffer 
+        { 
+            get { return this.stationBuffer; } 
+        }
+        public int Index 
+        { 
+            get { return this.index; } 
+        }
+        public virtual int BitState 
+        { 
+            get; set; 
+        }
 
         public LineStation(int id, int type, string name, int bufferSize, int stationIndex, Line line, LogProvider logProvider)
             : base()
@@ -104,10 +123,10 @@ namespace LineService
             this.myLog = logProvider;
             this.line = line;
 
-            this.onFinished +=new EventHandler<DispatcherStationArgs>(LineStation_onFinished);
+            StationControlsList = new List<Button>();
+            onFinished +=new EventHandler<DispatcherStationArgs>(LineStation_onFinished);
         }
-        
-
+     
         public void SetId(int id)
         {
             this.id = id;
@@ -183,7 +202,7 @@ namespace LineService
         
         public void AddControl(int id, string name, string varName, string varSignalName, string keyString, string ipAddr, int channel, int moduleType, string partAddress) 
         {
-            Button myButton = new Button(id, name, varName, varSignalName, keyString);
+            Button myButton = new Button(this, id, name, varName, varSignalName, keyString);
             myButton.IPAddr = ipAddr;
             myButton.Channel = channel;
             myButton.ModuleType = moduleType;
@@ -353,10 +372,7 @@ namespace LineService
 
         }
 
-
         protected event EventHandler<DispatcherStationArgs> onFinished;
-
-
 
 
         private void LineStation_onFinished(object sender, DispatcherStationArgs e) 
@@ -635,6 +651,18 @@ namespace LineService
                 this.myLog.LogAlert(AlertType.Error, this.line.Id.ToString(), this.GetType().ToString(), "Restore()", ex.ToString(), "system");
                 Console.WriteLine(DateTime.Now + " " + ex.TargetSite.ToString(), ex.Source, ex.ToString());
             }        
+        }
+
+        public string JsonAttributes(bool wrapped) 
+        {
+            string result = "";
+            result += "\"" + "S" + "\": " + name + ", ";
+            result += "\"" + "B" + "\": " + (currentProduct != null ? currentProduct.Name : "") + ", ";
+            //.... etc.      
+            if (wrapped) {
+                result = "{" + result + "}";
+            }
+            return result;
         }
 
     }

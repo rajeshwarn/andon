@@ -22,9 +22,21 @@ namespace LineService
 
     public class TimedLineStation : LineStation, IOPCStation
     {
-        private int bitState = (int)BSFlag.Free;
+        private int _bitState = (int)BSFlag.Free;
+
         private TimersController timers;
         private int positionOffset = 0;
+        private int bitState 
+        {
+            get { return this._bitState; }
+            
+            set { 
+                this._bitState = value;
+                if (OnBitStateChanged != null) {
+                    OnBitStateChanged(this, new EventArgs());
+                }
+            }
+        }
 
         public TimersController Timers { get { return this.timers;} }
         public ITimeInformer TimeInformer;
@@ -283,8 +295,6 @@ namespace LineService
         public override int BitState
         {
             get { return this.bitState; } 
-
-            set { this.bitState = value; }
         }
         public override bool AddProduct(Product product) 
         {
@@ -433,6 +443,7 @@ namespace LineService
         }
 
         public event EventHandler OnBeginToLateMore;
+        public event EventHandler OnBitStateChanged;
 
         void TimedLineStation_OnBeginToLateMore(object sender, EventArgs e)
         {

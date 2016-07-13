@@ -253,11 +253,10 @@ namespace LineService
                 }
 
                 this.updateStationPosition();
-                this.PlanFactChangedAllStations(this, new EventArgs());
             }
             catch (Exception ex)
             {
-                this.myLog.LogAlert(AlertType.Error, this.detroitDataSet.LineId.ToString(), ex.TargetSite.ToString(),
+                this.myLog.LogAlert(AlertType.Error, this.detroitDataSet.LineId.ToString(), ex.TargetSite.DeclaringType.FullName.ToString(),
                                                     ex.Source.ToString(), ex.Message.ToString(), "system");
             }
 
@@ -987,7 +986,7 @@ namespace LineService
                     {
                         this.currentFrame.Type = newFrameType;
                         this.currentFrame.Name = curFrameRow["Name"].ToString();
-                        this.OnScheduleFrameTypeChanged();
+                        this.scheduleFrameTypeChanged();
                     }
 
                     if (this.currentFrame.Type == 0 && this.Takt.Enabled) 
@@ -1016,7 +1015,7 @@ namespace LineService
             }
         }
 
-        private void OnScheduleFrameTypeChanged()
+        private void scheduleFrameTypeChanged()
         {
             // rise event FrameTypeChanged !
             try
@@ -1065,6 +1064,9 @@ namespace LineService
                 
                 // if new day comes
                 this.checkDateChanged();
+
+
+
             }
             catch (Exception ex) 
             {

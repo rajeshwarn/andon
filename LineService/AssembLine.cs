@@ -90,13 +90,13 @@ namespace LineService
 
         private LineType lineType = LineType.Synchro;
         
-        private List<TimedLineStation> lineStations = new List<TimedLineStation>();
+        internal List<TimedLineStation> lineStations = new List<TimedLineStation>();
         private Dispatcher dispatcher;
         private Supplier supplier;
         private LogType logType;
         private MemLog myLog; //LogProvider myLog;
         private LineOPCProvider OPCProvider;
-        private TimeManager timeManager;
+        internal TimeManager timeManager;
 
         private Hashtable logisticRequestTable = new Hashtable();
         private Hashtable logisticTailTable = new Hashtable();
@@ -139,6 +139,8 @@ namespace LineService
             int MAIN_STATION_TYPE = 1;
             //int DEFAULT_BUFFER_SIZE = 0;
             this.id = id;
+
+            this.initMqtt();
 
             this.OPCProvider = new LineOPCProvider(this.id, this.myLog);
             this.OPCProvider.ServerRestarted += new EventHandler(this.handlerOPCProvider_ServerRestarted);
@@ -221,17 +223,21 @@ namespace LineService
             this.myLog.LogAlert(AlertType.System, this.Id.ToString(), this.GetType().ToString(), "Init()",
                     "SetOPCMode = true", "system");
 
-            //x this.lineQueue = new LineQueue(this, this.myLog);
-            //x this.productBuffer.OnRemoveProduct += new EventHandler(this.productBuffer_OnRemoveProduct);
-
-            //x this.uncompletedProducts = new UncompletedProducts(this, this.detroitDataSet);
-            //x this.batchStock = new BatchStock();
-
-            // clean products with state "line" from cache table
-            //this.lineSnapshotTableAdapter.DeleteByLineId(this.id);  // tbd - this must be removed than line will going to restore form LineSnapshot
             this.lineSnapshotTableAdapter.Fill(this.lineSnapshotTable, this.id);
 
             IEnumerable<IStation> lineIStatons = this.lineStations;
+
+
+            // link one time handler for all stations on the line
+            foreach (TimedLineStation station in lineIStatons) {
+                station.OnBitStateChanged += new EventHandler(station_OnBitStateChanged);
+                foreach (ControlItem control in station.StationControlsList) {
+                    control.OnChanged += new EventHandler(stationControl_OnChanged);
+                }
+                station_OnBitStateChanged(station, new EventArgs());
+                // station.OnFree += new EventHandler(this.onFreeStation);        
+            }     
+
             this.dispatcher = new Dispatcher(this.id, lineIStatons, this.myLog);
             this.supplier = new Supplier(this.id, this.detroitDataSet, this.myLog, dispatcher);
             
@@ -247,13 +253,6 @@ namespace LineService
             this.timeManager.PlanFactChangedAllStations += new EventHandler(timeManager_PlanFactChangedAllStations);
             this.timeManager.PlanFactChangedOneStation += new EventHandler<PlanFactEventArgs>(timeManager_PlanFactChangedOneStation);
 
-            // link one time handler for all stations on the line
-            for (int i = 0; i <= this.lineStations.Count - 1; i++)
-            {
-               // this.lineStations[i].OnFree += new EventHandler(this.onFreeStation);
-            }
-
-            this.initMqtt();
             this.timeManager.On();
          }
 
@@ -589,7 +588,6 @@ namespace LineService
                                                     ex.Source.ToString(), ex.Message.ToString(), "system");
             }
         }
-
 
         public void Move()
         {
@@ -1260,7 +1258,6 @@ namespace LineService
             }
         }
 
-
         private void checkOPCServer()
         {
             try
@@ -1289,7 +1286,6 @@ namespace LineService
                     ex.ToString(), "system");            
             }
         }
-
 
         private int calcPlanGap(Product enProduct, PlanMode planMode)
         {
@@ -1325,8 +1321,6 @@ namespace LineService
             return -2;
         }
 
-
-
         private void fillLogisticRequestTable(int stationIndex, string controlKey, int buttonState) 
         {
             try
@@ -1361,7 +1355,6 @@ namespace LineService
                                                     ex.Source.ToString(), ex.Message.ToString(), "system");
             }
         }
-
         private void fillLogisticTail()
         {
             try
@@ -1394,7 +1387,6 @@ namespace LineService
                                                     ex.Source.ToString(), ex.Message.ToString(), "system");
             }
         }
-
 
         private void fillLogisticTailTable2(LineStation station, Product product, StationProductAction action) 
         {
@@ -1610,9 +1602,7 @@ namespace LineService
                                                     ex.Source.ToString(), ex.Message.ToString(), "system");
             }
         }
-
-
-        void dispatcher_OnProductFinishedLine(object sender, DispatcherMoveArgs e)
+        private void dispatcher_OnProductFinishedLine(object sender, DispatcherMoveArgs e)
         {
             this.eventCounter++;
         }
@@ -1626,13 +1616,15 @@ namespace LineService
         {
             try
             {
-                this.fillLogisticTail();
-                this.backupLine();
-                this.makeSnapShot();
-                this.checkOPCServer();
-                this.supplier.StartNewProduct();
-                this.supplier.RefreshLineQueue();
+                fillLogisticTail();
+                backupLine();
+                makeSnapShot();
+                checkOPCServer();
+                supplier.StartNewProduct();
+                supplier.RefreshLineQueue();
                 //Console.WriteLine(DateTime.Now.ToString() + "  timeManager_SlowTask done.");
+
+                publishStationAttributes();
             }
             catch (Exception ex)
             {
@@ -1640,7 +1632,6 @@ namespace LineService
                     ex.ToString(), "system");
             }
         }
-
         private void timeManager_FastTask(object sender, EventArgs e) 
         {
             publishStationEvents();
@@ -1727,60 +1718,6 @@ namespace LineService
             return myLog.ErrorList;
         }
 
-        //----------------------------------------------------------------------------
-        //
-        //   MediaServer functions !
-        //
-        //
-
-        protected int clientContentMode = 2;
-        protected string clientContentUrl = "";
-
-        public ClientInstruction GetClientInstruction() 
-        {
-            ClientInstruction taktMode = new ClientInstruction() { Mode = this.clientContentMode, ContentUrl = this.clientContentUrl };
-            return taktMode;
-        }
-
-        public void SetClientInstruction(int Mode, string ContentUrl) 
-        {
-            this.clientContentMode = Mode;
-            this.clientContentUrl = ContentUrl;
-        }
-
-        private void publishStationEvents() 
-        { 
-            string topic = "andon/line/" + id.ToString();
-            byte[] messageStr;
-
-            try {
-                /// publish timers in fast task, every 1s
-                /// json block [{"STOP": 0, "HELP": 0, "PART1": 0, "PART2": 0, "Fail": 0, "STOPLAST": 0, 
-                ///             "Late": 224, "Operating": 0, "SumLate": 0, "LiveTakt": 3300, "T": 3600}]
-                foreach (TimedLineStation station in lineStations) {
-                    string json = station.Timers.JsonData(false); // get all timers from station "as-is"
-                    json += "\"T\": " + GetCounter();             // add extra counter form line
-                    json = "[{" + json + "}]";
-
-                    topic = "andon/line/" + Id + "/station/" + station.Index + "/timers";
-                    messageStr = Encoding.UTF8.GetBytes(json);
-                    mqttClient.Publish(topic, messageStr, MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
-                }
-            }
-            catch (Exception ex) {
-                myLog.LogAlert(AlertType.Error, id.ToString(), ex.TargetSite.ToString(),
-                    ex.Source.ToString(), ex.Message.ToString(), "system");
-            }
-        }
-
-        private void initMqtt() 
-        {
-            string mqttBroker = "mqtt_broker";
-            mqttClient = new MqttClient(mqttBroker);
-            string clientId = DateTime.Now.Ticks.ToString() + "-line-" + Id.ToString();
-            mqttClient.Connect(clientId);
-        }
-
         private string formatCounter(int counter)
         {
             // format int counter to "#:#0:00" mask
@@ -1814,12 +1751,45 @@ namespace LineService
             return result;
         }
 
+        ///----------------------------------------------------------------------------
+        ///
+        ///   MediaServer functions !
+        ///
+        ///
+
+        protected int clientContentMode = 2;
+        protected string clientContentUrl = "";
+
+        public ClientInstruction GetClientInstruction() 
+        {
+            ClientInstruction taktMode = new ClientInstruction() { Mode = this.clientContentMode, ContentUrl = this.clientContentUrl };
+            return taktMode;
+        }
+
+        public void SetClientInstruction(int Mode, string ContentUrl) 
+        {
+            this.clientContentMode = Mode;
+            this.clientContentUrl = ContentUrl;
+        }
+
+        ///----------------------------------------------------------------------------
+        ///
+        ///   Communication functions !
+        ///   * publish data via mqtt service
+        ///   
+
+        private void initMqtt()
+        {
+            string mqttBroker = "mqtt_broker";
+            mqttClient = new MqttClient(mqttBroker);
+            string clientId = DateTime.Now.Ticks.ToString() + "-line-" + Id.ToString();
+            mqttClient.Connect(clientId);
+        }
+
         private void timeManager_PlanFactChangedOneStation(object sender, PlanFactEventArgs e)
         {
             LineStation station = ((LineStation)e.Station);
-            ///
             /// publish GAPx.x data to mqttBroker
-            ///
             string topic = "andon/line/" + id.ToString() + "/station/" + station.Index + "/planfact";
             byte[] messageStr;
 
@@ -1836,28 +1806,246 @@ namespace LineService
 
         private void timeManager_PlanFactChangedAllStations(object sender, EventArgs e)
         {
-            ///
             /// publish GAPx.x data to mqttBroker
-            ///
+            foreach (LineStation station in lineStations) {
+                timeManager_PlanFactChangedOneStation(sender, new PlanFactEventArgs(station));
+            }
+        }
+
+        private void publishStationEvents()
+        {
+            string topic = "andon/line/" + id.ToString();
             byte[] messageStr;
-            string topic = "";
-            string json = "";
 
             try {
-                foreach (LineStation station in lineStations) {
-                    topic = "andon/line/" + id.ToString() + "/station/" + station.Index + "/planfact";
-                    
-                    json = timeManager.JsonPlanFact(station.Name, true);
-                 
+                /// publish timers in fast task, every 1s
+                /// json block [{"STOP": 0, "HELP": 0, "PART1": 0, "PART2": 0, "Fail": 0, "STOPLAST": 0, 
+                ///             "Late": 224, "Operating": 0, "SumLate": 0, "LiveTakt": 3300, "T": 3600}]
+                foreach (TimedLineStation station in lineStations) {
+                    string json = station.Timers.JsonData(false); // get all timers from station "as-is"
+                    json += "\"T\": " + GetCounter();             // add extra counter form line
+                    json = "[{" + json + "}]";
+
+                    topic = "andon/line/" + Id + "/station/" + station.Index + "/timers";
                     messageStr = Encoding.UTF8.GetBytes(json);
-                    mqttClient.Publish(topic, messageStr, MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);            
+                    mqttClient.Publish(topic, messageStr, MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
                 }
             }
             catch (Exception ex) {
                 myLog.LogAlert(AlertType.Error, id.ToString(), ex.TargetSite.ToString(),
+                    ex.Source.ToString(), ex.Message.ToString(), "system");
+            }
+        }
+
+        private void publishStationAttributes() 
+        {
+            try {  //json block [{"S": "station name", "B": "product", "F": "current frame"}]
+
+                foreach (TimedLineStation station in lineStations) {
+                    
+                    string json = station.JsonAttributes(false); 
+                    json += "\"" + "F" + "\": " + ReadFrame().Name ;
+                    json = "[{" + json + "}]";
+
+                    string topic = "andon/line/" + Id + "/station/" + station.Index + "/attr";
+                    byte[] messageStr = Encoding.UTF8.GetBytes(json);
+                    mqttClient.Publish(topic, messageStr, MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, true); // retain
+                }
+            }
+            catch (Exception ex) {
+                myLog.LogAlert(AlertType.Error, id.ToString(), ex.TargetSite.ToString(),
+                    ex.Source.ToString(), ex.Message.ToString(), "system");
+            }    
+        }
+
+        private void station_OnBitStateChanged(object station, EventArgs e) 
+        {       
+     
+            try {
+                if (station == null) {
+                    myLog.LogAlert(AlertType.Error, id.ToString(), "LineService", "station_OnBitStateChanged()", 
+                        "'station' object is null", "system");
+                }
+                string msg = ((TimedLineStation)station).BitState.ToString();
+                string topic = "andon/line/" + Id + "/station/" + ((TimedLineStation)station).Index + "/bst";
+                byte[] messageStr = Encoding.UTF8.GetBytes(msg);
+                mqttClient.Publish(topic, messageStr, MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, true); // retain
+            }
+            catch (Exception ex) {
+                myLog.LogAlert(AlertType.Error, id.ToString(), ex.Source.ToString(), 
+                    ex.TargetSite.ToString(), ex.Message.ToString(), "system");
+            }   
+        }
+
+        private void stationControl_OnChanged(object control, EventArgs e) 
+        { 
+            /// publich control state
+            if (control is ControlItem) { 
+ 
+                LineStation station = (LineStation)(((ControlItem)control).Owner);
+                try {
+                    string msg = ((ControlItem)control).State;
+                    string topic = "andon/line/" + Id + "/station/" + station.Index + "/button/" + ((ControlItem)control).Name;
+                    byte[] messageStr = Encoding.UTF8.GetBytes(msg);
+                    mqttClient.Publish(topic, messageStr, MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, true); // retain
+
+                }
+                catch (Exception ex) {
+                    myLog.LogAlert(AlertType.Error, id.ToString(), ex.TargetSite.ToString(),
+                        ex.Source.ToString(), ex.Message.ToString(), "system");
+                }
+
+            }
+        } 
+
+    }
+
+    internal class LinePublisher : Object 
+    {
+        private AssembLine line;
+        private MqttClient mqttClient;
+        private MemLog myLog;
+
+        internal LinePublisher(AssembLine owner_line) 
+        {
+            line = owner_line;
+            myLog = new MemLog(LogType.SQL, Properties.Settings.Default.DetroitConnectionString.ToString(), false);
+            
+            initMqtt();
+
+            line.timeManager.PlanFactChangedOneStation += new EventHandler<PlanFactEventArgs>(timeManager_PlanFactChangedOneStation);
+            line.timeManager.PlanFactChangedAllStations += new EventHandler(timeManager_PlanFactChangedAllStations);
+
+            foreach (TimedLineStation station in line.lineStations) {
+                station.OnBitStateChanged += new EventHandler(station_OnBitStateChanged);
+                
+                foreach (ControlItem control in station.StationControlsList) {
+                    control.OnChanged += new EventHandler(stationControl_OnChanged);
+                }
+                
+                station_OnBitStateChanged(station, new EventArgs());
+            }
+        }
+
+        private void initMqtt()
+        {
+            string mqttBroker = "mqtt_broker";
+            mqttClient = new MqttClient(mqttBroker);
+            string clientId = DateTime.Now.Ticks.ToString() + "-line-" + line.Id.ToString();
+            mqttClient.Connect(clientId);
+        }
+
+        private void timeManager_PlanFactChangedOneStation(object sender, PlanFactEventArgs e)
+        {
+            LineStation station = ((LineStation)e.Station);
+            /// publish GAPx.x data to mqttBroker
+            string topic = "andon/line/" + line.Id.ToString() + "/station/" + station.Index + "/planfact";
+            byte[] messageStr;
+
+            try {
+                string json = line.timeManager.JsonPlanFact(station.Name, true);
+                messageStr = Encoding.UTF8.GetBytes(json);
+                mqttClient.Publish(topic, messageStr, MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
+            }
+            catch (Exception ex) {
+                myLog.LogAlert(AlertType.Error, line.Id.ToString(), ex.TargetSite.ToString(),
                         ex.Source.ToString(), ex.Message.ToString(), "system");
             }
         }
 
+        private void timeManager_PlanFactChangedAllStations(object sender, EventArgs e)
+        {
+            /// publish GAPx.x data to mqttBroker
+            foreach (LineStation station in line.lineStations) {
+                timeManager_PlanFactChangedOneStation(sender, new PlanFactEventArgs(station));
+            }
+        }
+
+        private void publishStationEvents()
+        {
+            string topic = "andon/line/" + line.Id.ToString();
+            byte[] messageStr;
+
+            try {
+                /// publish timers in fast task, every 1s
+                /// json block [{"STOP": 0, "HELP": 0, "PART1": 0, "PART2": 0, "Fail": 0, "STOPLAST": 0, 
+                ///             "Late": 224, "Operating": 0, "SumLate": 0, "LiveTakt": 3300, "T": 3600}]
+                foreach (TimedLineStation station in line.lineStations) {
+                    string json = station.Timers.JsonData(false); // get all timers from station "as-is"
+                    json += "\"T\": " + line.GetCounter();             // add extra counter form line
+                    json = "[{" + json + "}]";
+
+                    topic = "andon/line/" + line.Id + "/station/" + station.Index + "/timers";
+                    messageStr = Encoding.UTF8.GetBytes(json);
+                    mqttClient.Publish(topic, messageStr, MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
+                }
+            }
+            catch (Exception ex) {
+                myLog.LogAlert(AlertType.Error, line.Id.ToString(), ex.TargetSite.ToString(),
+                    ex.Source.ToString(), ex.Message.ToString(), "system");
+            }
+        }
+
+        private void publishStationAttributes()
+        {
+            try {  //json block [{"S": "station name", "B": "product", "F": "current frame"}]
+
+                foreach (TimedLineStation station in line.lineStations) {
+
+                    string json = station.JsonAttributes(false);
+                    json += "\"" + "F" + "\": " + line.ReadFrame().Name;
+                    json = "[{" + json + "}]";
+
+                    string topic = "andon/line/" + line.Id + "/station/" + station.Index + "/attr";
+                    byte[] messageStr = Encoding.UTF8.GetBytes(json);
+                    mqttClient.Publish(topic, messageStr, MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, true); // retain
+                }
+            }
+            catch (Exception ex) {
+                myLog.LogAlert(AlertType.Error, line.Id.ToString(), ex.TargetSite.ToString(),
+                    ex.Source.ToString(), ex.Message.ToString(), "system");
+            }
+        }
+
+        private void station_OnBitStateChanged(object station, EventArgs e)
+        {
+
+            try {
+                if (station == null) {
+                    myLog.LogAlert(AlertType.Error, line.Id.ToString(), "LineService", "station_OnBitStateChanged()",
+                        "'station' object is null", "system");
+                }
+                string msg = ((TimedLineStation)station).BitState.ToString();
+                string topic = "andon/line/" + line.Id + "/station/" + ((TimedLineStation)station).Index + "/bst";
+                byte[] messageStr = Encoding.UTF8.GetBytes(msg);
+                mqttClient.Publish(topic, messageStr, MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, true); // retain
+            }
+            catch (Exception ex) {
+                myLog.LogAlert(AlertType.Error, line.Id.ToString(), ex.Source.ToString(),
+                    ex.TargetSite.ToString(), ex.Message.ToString(), "system");
+            }
+        }
+
+        private void stationControl_OnChanged(object control, EventArgs e)
+        {
+            /// publich control state
+            if (control is ControlItem) {
+
+                LineStation station = (LineStation)(((ControlItem)control).Owner);
+                try {
+                    string msg = ((ControlItem)control).State;
+                    string topic = "andon/line/" + line.Id + "/station/" + station.Index + "/button/" + ((ControlItem)control).Name;
+                    byte[] messageStr = Encoding.UTF8.GetBytes(msg);
+                    mqttClient.Publish(topic, messageStr, MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, true); // retain
+
+                }
+                catch (Exception ex) {
+                    myLog.LogAlert(AlertType.Error, line.Id.ToString(), ex.TargetSite.ToString(),
+                        ex.Source.ToString(), ex.Message.ToString(), "system");
+                }
+
+            }
+        } 
     }
+
 }

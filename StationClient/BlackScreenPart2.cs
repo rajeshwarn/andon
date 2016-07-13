@@ -120,13 +120,13 @@ namespace StationClient
             }
             if (e.Topic.StartsWith(context_button)) {
                 switch (e.Topic.Replace(context_button, "")) {
-                    case "1":
+                    case "FINISH":
                         safeChangeControl(this.laFinishBtnValue, Encoding.UTF8.GetString(e.Message));
                         break;
-                    case "2":
+                    case "STOP":
                         safeChangeControl(this.laStopBtnValue, Encoding.UTF8.GetString(e.Message));
                         break;
-                    case "3":
+                    case "HELP":
                         safeChangeControl(this.laHelpBtnValue, Encoding.UTF8.GetString(e.Message));
                         break;
                     case "4":
