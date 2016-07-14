@@ -96,6 +96,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Publisher.cs" />
     <Compile Include="Router.cs" />
     <Compile Include="SchedulerFramesCache.cs" />
     <Compile Include="SerializableDictionary.cs" />
