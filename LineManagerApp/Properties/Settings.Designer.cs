@@ -70,5 +70,44 @@ namespace LineManagerApp.Properties {
                 return ((string)(this["DetroitConnectionString1"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("broker.hivemq.com")]
+        public string web_client_mqtt_brocker {
+            get {
+                return ((string)(this["web_client_mqtt_brocker"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://192.168.1.31/web-client")]
+        public string web_server {
+            get {
+                return ((string)(this["web_server"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("/index.html")]
+        public string web_client {
+            get {
+                return ((string)(this["web_client"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("mqtt_brocker")]
+        public string mqtt_brocker {
+            get {
+                return ((string)(this["mqtt_brocker"]));
+            }
+            set {
+                this["mqtt_brocker"] = value;
+            }
+        }
     }
 }

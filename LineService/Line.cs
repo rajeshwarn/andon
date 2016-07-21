@@ -23,6 +23,7 @@ namespace LineService
 
         public abstract LineStationBase GetStation(int stationId);
         public abstract List<LineStationBase> GetStations();
+
         
     }
 }

@@ -10,8 +10,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>netTcpLogisticApplication</RootNamespace>
     <AssemblyName>netTcpLogisticApplication</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
@@ -38,6 +39,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -47,6 +49,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -79,9 +82,13 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="Properties\DataSources\LogisticService.LogistBatch.datasource" />
+    <None Include="Properties\DataSources\LogisticService.LogistBatch1.datasource" />
     <None Include="Properties\DataSources\LogisticService.LogisticInfo.datasource" />
+    <None Include="Properties\DataSources\LogisticService.LogisticInfo1.datasource" />
     <None Include="Properties\DataSources\LogisticService.LogistRequestElem.datasource" />
+    <None Include="Properties\DataSources\LogisticService.LogistRequestElem1.datasource" />
     <None Include="Properties\DataSources\LogisticService.LogistTailElem.datasource" />
+    <None Include="Properties\DataSources\LogisticService.LogistTailElem1.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

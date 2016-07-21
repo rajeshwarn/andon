@@ -124,7 +124,7 @@ namespace LineService
         private int taktDuration = 0;           // takt time in seconds
 
         private TaktTimer2 slowTaskTimer;
-        private int slowTaskStep = 10000;       // 10 sec
+        private int slowTaskStep = 4000;       // 10 sec
         private TaktTimer2 fastTaskTimer;
         private int fastTaskStep = 500;        // 1 sec
         private DateTime currentDate;
@@ -645,7 +645,7 @@ namespace LineService
 
         public string JsonPlanFact(string stationName, bool wrapped)
         {
-            //json block [{"REGP_D":"1", "REGF_D":"2", "REGP_M":"1", "REGF_M":"2"}]
+            //json block {"REGP_D":"1", "REGF_D":"2", "REGP_M":"1", "REGF_M":"2"}
             string result = "";
 
             int REGP_D = GetStationDayPlan(stationName);
@@ -653,11 +653,11 @@ namespace LineService
             int REGP_M = GetStationMonthPlan(stationName);
             int REGF_M = GetStationMonthFact(stationName);
 
-            result = "\"REGP_D\": " + REGP_D + ", \"REGF_D\": " + REGF_D 
-                + ", \"REGP_M\": " + REGP_M + ", \"REGF_M\": " + REGF_M;
+            result = "\"REGP_D\": " + "\"" + REGP_D + "\"" + ", \"REGF_D\": " + "\"" + REGF_D + "\""
+                + ", \"REGP_M\": " + "\"" + REGP_M + "\"" + ", \"REGF_M\": " + "\"" + REGF_M + "\"";
 
             if (wrapped) {
-                result = "[{" + result + "}]";
+                result = "{" + result + "}";
             }
             return result;
         }

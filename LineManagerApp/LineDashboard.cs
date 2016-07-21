@@ -21,6 +21,8 @@ using System.Runtime.Serialization.Formatters.Soap;
 using Security;
 using System.Windows.Forms;
 using System.Drawing;
+using System.Diagnostics;
+
 
 namespace LineManagerApp
 {
@@ -28,6 +30,33 @@ namespace LineManagerApp
     public enum BSFlag { Finished = 0x0001, Late = 0x0100, Hungry = 0x0010, Free = 0x0200, LiveLate = 0x0400, SumLate = 0x0800, Outgo = 0x0020 }
 
     public enum ButtonState { On = 1, Off = 0 }
+
+    public class BtnClickEventArgs : EventArgs 
+    { 
+        public int StationIndex;
+        public string Key;
+    }
+
+    public class CtrlButton : Button 
+    {
+        private int OwnerIndex;
+        private string Key;
+        public event EventHandler<BtnClickEventArgs> Click;
+
+        public CtrlButton(int StationIndex, string Key) 
+        {
+            base.Click += new EventHandler(base_Click);
+            this.OwnerIndex = StationIndex;
+            this.Key = Key;
+        }
+
+        private void base_Click(object sender, EventArgs e) 
+        {
+            if (this.Click != null) {
+                this.Click(this, new BtnClickEventArgs() { StationIndex = this.OwnerIndex, Key = this.Key });
+            }
+        }
+    }
 
     public partial class LineDashboard : Form
     {
@@ -124,6 +153,7 @@ namespace LineManagerApp
             // create stations block
             for (int i = 0; i < this.lineStations.Count(); i++)
             {
+                int stationIndex = i + 1;
                 GroupBox gbxStation = new GroupBox();
                 gbxStation.Name = "gbxStation_"  + i.ToString();
                 gbxStation.Text = this.lineStations[i].Name;
@@ -175,59 +205,62 @@ namespace LineManagerApp
                 lbxBuffer.BorderStyle = BorderStyle.FixedSingle;
                 paColorPanel.Controls.Add(lbxBuffer);
 
-
                 // hide !!!!!
                 lbxBuffer.Visible = false;
                 laBuffer.Visible = false;
-
 
                 // add indicator buttons
                 int secondLineY = lbxBuffer.Location.Y + lbxBuffer.Size.Height;
                 int thirdLineY = secondLineY + 28;
                 int indButtonsInterval = indButtonSizeWidth + 4;
 
-                Button btnF = new Button();
+                CtrlButton btnF = new CtrlButton(stationIndex, "FINISH");
                 btnF.Name = "btnFinish_" + i.ToString(); 
                 btnF.Size = new Size(indButtonSizeWidth, indButtonSizeHeight);
                 btnF.Location = new Point(tbxProduct.Location.X, secondLineY);
                 btnF.Text = "F";
                 paColorPanel.Controls.Add(btnF);
-                btnF.Click += new EventHandler(btnF_Click);
+                btnF.Click += new EventHandler<BtnClickEventArgs>(btnF_Click);
 
-                Button btnS = new Button();
+                CtrlButton btnS = new CtrlButton(stationIndex, "STOP");
                 btnS.Name = "btnStop_" + i.ToString(); 
                 btnS.Size = new Size(indButtonSizeWidth, indButtonSizeHeight);
                 btnS.Location = new Point(tbxProduct.Location.X + indButtonsInterval * 1, secondLineY);
                 btnS.Text = "S";
                 paColorPanel.Controls.Add(btnS);
+                btnS.Click += new EventHandler<BtnClickEventArgs>(btn_Click); // stationIndex, "STOP"
 
-                Button btnH = new Button();
+                CtrlButton btnH = new CtrlButton(stationIndex, "HELP");
                 btnH.Name = "btnHelp_" + i.ToString(); 
                 btnH.Size = new Size(indButtonSizeWidth, indButtonSizeHeight);
                 btnH.Location = new Point(tbxProduct.Location.X + indButtonsInterval * 2, secondLineY);
                 btnH.Text = "H";
                 paColorPanel.Controls.Add(btnH);
+                btnH.Click += new EventHandler<BtnClickEventArgs>(btn_Click);
 
-                Button btnP1 = new Button();
+                CtrlButton btnP1 = new CtrlButton(stationIndex, "PART1");
                 btnP1.Name = "btnPart1_" + i.ToString(); 
                 btnP1.Size = new Size(indButtonSizeWidth, indButtonSizeHeight);
                 btnP1.Location = new Point(tbxProduct.Location.X, thirdLineY);
                 btnP1.Text = "P";
                 paColorPanel.Controls.Add(btnP1);
+                btnP1.Click += new EventHandler<BtnClickEventArgs>(btn_Click);
 
-                Button btnP2 = new Button();
+                CtrlButton btnP2 = new CtrlButton(stationIndex, "PART2");
                 btnP2.Name = "btnPart2_" + i.ToString();
                 btnP2.Size = new Size(indButtonSizeWidth, indButtonSizeHeight);
                 btnP2.Location = new Point(tbxProduct.Location.X + indButtonsInterval * 1, thirdLineY);
                 btnP2.Text = "P";
                 paColorPanel.Controls.Add(btnP2);
+                btnP2.Click += new EventHandler<BtnClickEventArgs>(btn_Click);
 
-                Button btnU = new Button();
+                CtrlButton btnU = new CtrlButton(stationIndex, "FAIL");
                 btnU.Name = "btnFail_" + i.ToString();
                 btnU.Size = new Size(indButtonSizeWidth, indButtonSizeHeight);
                 btnU.Location = new Point(tbxProduct.Location.X + indButtonsInterval * 2, thirdLineY);
                 btnU.Text = "U";
                 paColorPanel.Controls.Add(btnU);
+                btnU.Click += new EventHandler<BtnClickEventArgs>(btn_Click);
 
                 Button btnP = new Button();
                 btnP.Name = "btnPlan_" + i.ToString();
@@ -369,7 +402,7 @@ namespace LineManagerApp
             this.ClientSize = new Size(gbxStock.Location.X + gbxStock.Size.Width + 20, Ypos + YoffsetGroup * (this.lineStations.Count()) + YoffsetLine);
         }
 
-        void btnP_Click(object sender, EventArgs e)
+        private void btnP_Click(object sender, EventArgs e)
         {
             
             PlanDialog editDialog = new PlanDialog();
@@ -475,15 +508,16 @@ namespace LineManagerApp
             //}
         }
 
-        void btnF_Click(object sender, EventArgs e)
+        private void btnF_Click(object sender, EventArgs e)
         {
-
             string stationName = ((Button)sender).Parent.Parent.Text;
             this.myLineClient.FinishStation(stationName);
         }
 
-
-
+        private void btn_Click(object sender, BtnClickEventArgs e) 
+        {
+            myLineClient.PushStationButton(e.StationIndex, e.Key);
+        }
 
         private void RefreshDrawObjects() 
         {
@@ -569,7 +603,6 @@ namespace LineManagerApp
             return result;
         }
 
-
         private void timerHandler(object sender, EventArgs e) 
         {
             //------------------------------------------------
@@ -619,7 +652,8 @@ namespace LineManagerApp
                 }
                 //this.laMoveCounter.Text = this.moveCounter.ToString();
 
-                this.laSumStopValue.Text = this.formatTaktTime(Convert.ToInt32(stationData.FirstOrDefault(p => p.Key.Equals("SS")).Value));
+                string sumStopValue = stationData.FirstOrDefault(p => p.Key.Equals("SS")).Value;
+                this.laSumStopValue.Text = this.formatTaktTime(Convert.ToInt32((sumStopValue == "" ? "0" : sumStopValue)));
 
 
                 //------------------------------------------------
@@ -988,9 +1022,24 @@ namespace LineManagerApp
                 + "/LineService" + lineId.ToString();
             string endpoint_confname = Properties.Settings.Default.EndpointName;
 
-            Form stationForm = new StationClient.BlackScreen(stationIndex + 1, endpoint_confname, endpoint_address);
-            stationForm.FormClosed += new FormClosedEventHandler(stationForm_FormClosed);
-            stationForm.Show();
+            string mqttBroker = Properties.Settings.Default.web_client_mqtt_brocker;
+            string webServer = Properties.Settings.Default.web_server;
+            string webClient = Properties.Settings.Default.web_client;
+            string url = webServer + String.Format(webClient + "?lid={0}&sid={1}&mb={2}", 
+                                                   new object[] { lineId, stationIndex + 1, mqttBroker });
+            //System.Diagnostics.Process.Start(url);
+
+            Process myProcess = new Process();
+            myProcess.StartInfo.UseShellExecute = true;
+            myProcess.StartInfo.FileName = url;
+            myProcess.Start();
+
+            ///
+            /// 2.0 old version
+            ///
+            //Form stationForm = new StationClient.BlackScreen(stationIndex + 1, endpoint_confname, endpoint_address);
+            //stationForm.FormClosed += new FormClosedEventHandler(stationForm_FormClosed);
+            //stationForm.Show();
         }
         private void stationForm_FormClosed(Object sender, FormClosedEventArgs e) 
         {

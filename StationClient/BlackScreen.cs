@@ -9,7 +9,6 @@ using System.Windows.Forms;
 using AppLog;
 using System.Collections;
 using System.IO.Compression;
-using AppLog;
 
 using uPLibrary.Networking.M2Mqtt;
 using uPLibrary.Networking.M2Mqtt.Messages;
@@ -33,14 +32,11 @@ namespace StationClient
         private int stationIndex;
         private int lineId;
         private Size formSize;
-        private ServiceReference2.AssembLineClient myLineClient;
-        private ServiceReference2.Frame frame = new ServiceReference2.Frame();
+        private string frameName;
+        private int frameType;
         private FormTimer myFormTimer;
 
-        private ServiceReference2.StationRealtimeData[] stationData;
-
         private int stopTimeCounter = 0;
-        private bool connected = false;
 
         private MediaClient.MediaPlayer mplayer;
 
@@ -62,8 +58,7 @@ namespace StationClient
                 this.formSize = this.Size;
 
                 this.timerStop.Tick += new EventHandler(timerStop_Tick);
-                this.myLineClient = new ServiceReference2.AssembLineClient();
-                this.connected = true;
+
                 this.laBitState.Text = "0";
 
                 mplayer = new MediaClient.MediaPlayer(this);
@@ -111,8 +106,7 @@ namespace StationClient
                 this.laBitState.TextChanged += new EventHandler(laBitState_TextChanged);
 
                 this.timerStop.Tick += new EventHandler(timerStop_Tick);
-                this.myLineClient = new ServiceReference2.AssembLineClient(endpoint_confname, endpoint_address);
-                this.connected = true;
+                
                 this.laBitState.Text = "0";
 
                 mplayer = new MediaClient.MediaPlayer(this);
@@ -181,7 +175,7 @@ namespace StationClient
             int counter = 0;
             int taktCounter = timers["T"];
 
-            int codeWord = this.getButtonsWord();
+            int codeWord = this.GetButtonsWord();
             if ((codeWord & 0x0008) == 0x0008) { //stop     
                 counter = timers["TIMER_STOPLAST"];
             }
@@ -277,7 +271,7 @@ namespace StationClient
 
         private void finishButtonPressed_handler(object sender, EventArgs e) 
         {
-            this.paBlack.BackColor = this.applyColorSchema(this.getButtonsWord());
+            this.paBlack.BackColor = this.applyColorSchema(this.GetButtonsWord());
             if (((Label)sender).Text == "1")
             {
                 this.laFinish.ForeColor = Color.LightGreen;
@@ -290,7 +284,7 @@ namespace StationClient
 
         private void stopButtonPressed_handler(object sender, EventArgs e)
         {
-            this.paBlack.BackColor = this.applyColorSchema(this.getButtonsWord());
+            this.paBlack.BackColor = this.applyColorSchema(this.GetButtonsWord());
             
             if (((Label)sender).Text == "1") {
                 this.laStop.ForeColor = Color.Red;
@@ -305,7 +299,7 @@ namespace StationClient
 
         private void helpButtonPressed_handler(object sender, EventArgs e)
         {
-            this.paBlack.BackColor = this.applyColorSchema(this.getButtonsWord());
+            this.paBlack.BackColor = this.applyColorSchema(this.GetButtonsWord());
             
             if (((Label)sender).Text == "1") {
                 this.laHelp.ForeColor = Color.Yellow;
@@ -318,7 +312,7 @@ namespace StationClient
         private void laBitState_TextChanged(object sender, EventArgs e)
         {
             // 0000 0001 0000 - 8..5th bit 
-            int codeword = this.getButtonsWord();
+            int codeword = this.GetButtonsWord();
 
             this.paBlack.BackColor = this.applyColorSchema(codeword);
         }
@@ -360,13 +354,13 @@ namespace StationClient
             this.Form_MouseMove(sender, e);
         }
 
-        private int getButtonsWord() 
+        public int GetButtonsWord() 
         { 
             int intWord = 
                 (Convert.ToInt32(this.laBitState.Text) & 0xFFF0) +
                 + Convert.ToInt32(this.laStopBtnValue.Text)* 8
                 + Convert.ToInt32(this.laHelpBtnValue.Text) * 4
-                + Convert.ToInt32(this.frame.Type.ToString()) * 2
+                + Convert.ToInt32(this.frameType.ToString()) * 2
                 + Convert.ToInt32(this.laFinishBtnValue.Text) * 1;
             return intWord;
         }

@@ -12,7 +12,6 @@ namespace StationClient
 {
     public class MqttLogger : IDisposable
     {
-        private string hostName = "localhost";
         private MqttClient client;
         private string clientId;
         private string senderId;

@@ -103,7 +103,7 @@ namespace LineService
         private LineSnapshotTableAdapter lineSnapshotTableAdapter = new LineSnapshotTableAdapter();
         private DetroitDataSet.LineSnapshotDataTable lineSnapshotTable; 
 
-        private Publisher publisher;
+        public Publisher publisher;
 
         internal List<TimedLineStation> lineStations = new List<TimedLineStation>();
         internal TimeManager timeManager;
@@ -466,7 +466,7 @@ namespace LineService
                 {
                     resultList.Add((LineStationBase)station);
                 }
-                return null;
+                return resultList;
             }
             catch (Exception ex)
             {

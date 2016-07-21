@@ -15,10 +15,14 @@ namespace LineService
         {
             get { return state; }
             set {
+
                 if (state != value && OnChanged != null) {
+                    state = value;
                     OnChanged(this, new EventArgs());
                 }
-                state = value;    
+                else {
+                    state = value;
+                }
             }
         }
 

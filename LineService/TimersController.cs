@@ -260,7 +260,7 @@ namespace LineService
         public string JsonData(bool wrapped) {
             string result = "";
             foreach (KeyValuePair<string, Counter> timer in timers) {
-                result += "\"" + timer.Key + "\": " + timer.Value.Value + ", ";
+                result += "\"" + timer.Key + "\": " + "\"" + timer.Value.Value + "\"" + ", ";
             }
             if (wrapped) {
                 result = "{" + result + "}";

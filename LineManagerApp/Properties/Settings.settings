@@ -27,5 +27,17 @@
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
       <Value Profile="(Default)">Data Source=LUND\SQLEXPRESS;Initial Catalog=Detroit;Persist Security Info=True;User ID=admin;Password=1</Value>
     </Setting>
+    <Setting Name="web_client_mqtt_brocker" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">broker.hivemq.com</Value>
+    </Setting>
+    <Setting Name="web_server" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://192.168.1.31/web-client</Value>
+    </Setting>
+    <Setting Name="web_client" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">/index.html</Value>
+    </Setting>
+    <Setting Name="mqtt_brocker" Type="System.String" Scope="User">
+      <Value Profile="(Default)">mqtt_brocker</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

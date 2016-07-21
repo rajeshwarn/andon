@@ -656,8 +656,8 @@ namespace LineService
         public string JsonAttributes(bool wrapped) 
         {
             string result = "";
-            result += "\"" + "S" + "\": " + name + ", ";
-            result += "\"" + "B" + "\": " + (currentProduct != null ? currentProduct.Name : "") + ", ";
+            result += "\"" + "S" + "\": " + "\"" + name + "\"" + ", ";
+            result += "\"" + "B" + "\": " + "\"" + (currentProduct != null ? currentProduct.Name : "") + "\"" + ", ";
             //.... etc.      
             if (wrapped) {
                 result = "{" + result + "}";

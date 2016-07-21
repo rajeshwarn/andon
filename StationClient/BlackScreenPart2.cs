@@ -8,6 +8,7 @@ using uPLibrary.Networking.M2Mqtt.Messages;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Windows.Forms;
+using AppLog;
 
 namespace StationClient
 {
@@ -59,7 +60,6 @@ namespace StationClient
     /// - REGF.D, REGP.D, REGP.M, REGF.M - duplicate
     /// - LIVE, BST - duplicate
 
-
     public partial class BlackScreen
     {
         private MqttClient client;
@@ -91,6 +91,8 @@ namespace StationClient
                 safeChangeControl(laMessage, "");
             }
 
+            mqttLogger = new MqttLogger(brokerHostName, "scu" + stationIndex);
+
             client.Subscribe(new string[] { context_station + "attr" }, qoS);//andon/line/1/station/1/attr
             client.Subscribe(new string[] { context_station + "planfact" }, qoS);
             client.Subscribe(new string[] { context_station + "bst" }, qoS);
@@ -104,107 +106,137 @@ namespace StationClient
             clientTi.Subscribe(new string[] { context_station + "timers" }, qoS);
             clientTi.MqttMsgPublishReceived += new MqttClient.MqttMsgPublishEventHandler(clientTi_MqttMsgPublishReceived);
 
-            mqttLogger = new MqttLogger(brokerHostName, "scu" + stationIndex);
+
+        }
+
+        private void noMqttConnectionHandler() 
+        {
+            string errorMsg = "Conetsion is not established, mqttLogger is null. \n Check your MQTT connection settings in 'hosts'.";
+            MessageBox.Show(errorMsg, "Alert", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            myLog.LogAlert(AlertType.Error, lineId.ToString(), "BlackScreen",
+                 "client_MqttMsgPublishReceived()", errorMsg, "system");         
         }
 
         private void client_MqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)
         {
-            mqttLogger.Log("<<< \"" + e.Topic + "\" : \"" + Encoding.UTF8.GetString(e.Message) + "\"");  
+            try {
+                if (mqttLogger == null) 
+                    noMqttConnectionHandler();
+                
+                mqttLogger.Log("<<< \"" + e.Topic + "\" : \"" + Encoding.UTF8.GetString(e.Message) + "\"");
 
-            if (e.Topic == context_station + "instruction") { 
-                instruction = JsonConvert.DeserializeObject<ClientInstruction>(Encoding.UTF8.GetString(e.Message));
-                //json block {"Mode": "0", "ContentUrl": ""}
-                //json block {"Mode": "1", "ContentUrl": "http://localhost:8080/shark.flv"}
-                //json block {"Mode": "1", "ContentUrl": "http://vid2.anyclip.com/sr7smhbbtn"}
-                //json block {"Mode": "2", "ContentUrl": "http://localhost:8080/pic.jpg"}
-            }
-            if (e.Topic.StartsWith(context_button)) {
-                switch (e.Topic.Replace(context_button, "")) {
-                    case "FINISH":
-                        safeChangeControl(this.laFinishBtnValue, Encoding.UTF8.GetString(e.Message));
-                        break;
-                    case "STOP":
-                        safeChangeControl(this.laStopBtnValue, Encoding.UTF8.GetString(e.Message));
-                        break;
-                    case "HELP":
-                        safeChangeControl(this.laHelpBtnValue, Encoding.UTF8.GetString(e.Message));
-                        break;
-                    case "4":
-                        mqttLogger.Log("Empty button 4 handler");
-                        break;
-                    case "5":
-                        mqttLogger.Log("Empty button 5 handler");
-                        break;
-                    case "6":
-                        mqttLogger.Log("Empty button 6 handler");
-                        break;
-                    default:
-                        mqttLogger.Log("Unexpected mqtt topic \"" + e.Topic + "\"" );
-                        break;
+                if (e.Topic == context_station + "instruction") {
+                    instruction = JsonConvert.DeserializeObject<ClientInstruction>(Encoding.UTF8.GetString(e.Message));
+                    //json block {"Mode": "0", "ContentUrl": ""}
+                    //json block {"Mode": "1", "ContentUrl": "http://localhost:8080/shark.flv"}
+                    //json block {"Mode": "1", "ContentUrl": "http://vid2.anyclip.com/sr7smhbbtn"}
+                    //json block {"Mode": "2", "ContentUrl": "http://localhost:8080/pic.jpg"}
+                }
+                if (e.Topic.StartsWith(context_button)) {
+                    switch (e.Topic.Replace(context_button, "")) {
+                        case "FINISH":
+                            safeChangeControl(this.laFinishBtnValue, Encoding.UTF8.GetString(e.Message));
+                            break;
+                        case "STOP":
+                            safeChangeControl(this.laStopBtnValue, Encoding.UTF8.GetString(e.Message));
+                            break;
+                        case "HELP":
+                            safeChangeControl(this.laHelpBtnValue, Encoding.UTF8.GetString(e.Message));
+                            break;
+                        case "4":
+                            mqttLogger.Log("Empty button 4 handler");
+                            break;
+                        case "5":
+                            mqttLogger.Log("Empty button 5 handler");
+                            break;
+                        case "6":
+                            mqttLogger.Log("Empty button 6 handler");
+                            break;
+                        default:
+                            mqttLogger.Log("Unexpected mqtt topic \"" + e.Topic + "\"");
+                            break;
+                    }
+                }
+                else if (e.Topic.StartsWith(context_station)) {
+                    switch (e.Topic.Replace(context_station, "")) {
+                        case "attr":
+                            //dynamic result = (JArray.Parse(Encoding.UTF8.GetString(e.Message)))[0];
+                            dynamic result = JObject.Parse(Encoding.UTF8.GetString(e.Message));
+                            //json block {"S": "station name", "B": "product", "F": "current frame"}
+                            safeChangeControl(laStation, "Station ID: " + result.S);
+                            safeChangeControl(laProduct, "Batch: " + result.B);
+                            safeChangeControl(laFrame, "" + result.F);
+                            frameName = result.F;
+                            frameType = result.FT;
+                            break;
+                        case "planfact":
+                            result = (JArray.Parse(Encoding.UTF8.GetString(e.Message)))[0];
+                            //json block [{"REGP_D":"1", "REGF_D":"2", "REGP_M":"1", "REGF_M":"2"}]
+                            safeChangeControl(laDayPlan, "DPF: " + result.REGP_D + "/" + result.REGF_D);
+                            safeChangeControl(laMonthPlan, "MPF: " + result.REGP_M + "/" + result.REGF_M);
+                            safeChangeControl(laMonthplanValue, (Convert.ToInt16(result.REGF_M) - Convert.ToInt16(result.REGP_M)).ToString());
+                            safeChangeControl(laPlanValue, (Convert.ToInt16(result.REGF_D) - Convert.ToInt16(result.REGP_D)).ToString());
+                            break;
+                        case "bst":
+                            int newBitWord = Convert.ToUInt16(Encoding.UTF8.GetString(e.Message));
+                            newBitWord = newBitWord & (int)~BSFlag.Blocked; // useless bit "Blocked"
+                            safeChangeControl(laBitState, newBitWord.ToString());
+                            safeChangeControl(laBitState2, "BS: " + newBitWord.ToString("X4"));
+                            break;
+                        default:
+                            mqttLogger.Log("Unexpected mqtt topic \"" + e.Topic + "\"");
+                            break;
+                    }
+                }
+                else {
+                    Console.WriteLine("Ooops! Unknown topic of message ...");
                 }
             }
-            else if (e.Topic.StartsWith(context_station)) {
-                switch (e.Topic.Replace(context_station, "")) {
-                    case "attr":
-                        dynamic result = (JArray.Parse(Encoding.UTF8.GetString(e.Message)))[0];
-                        //json block [{"S": "station name", "B": "product", "F": "current frame"}]
-                        safeChangeControl(laStation, "Station ID: " + result.S);
-                        safeChangeControl(laProduct, "Batch: " + result.B);
-                        safeChangeControl(laFrame, "" + result.F);
-                        break;
-                    case "planfact":
-                        result = (JArray.Parse(Encoding.UTF8.GetString(e.Message)))[0];
-                        //json block [{"REGP_D":"1", "REGF_D":"2", "REGP_M":"1", "REGF_M":"2"}]
-                        safeChangeControl(laDayPlan, "DPF: " + result.REGP_D + "/" + result.REGF_D);
-                        safeChangeControl(laMonthPlan, "MPF: " + result.REGP_M + "/" + result.REGF_M);
-                        safeChangeControl(laMonthplanValue, (Convert.ToInt16(result.REGF_M) - Convert.ToInt16(result.REGP_M)).ToString());
-                        safeChangeControl(laPlanValue, (Convert.ToInt16(result.REGF_D) - Convert.ToInt16(result.REGP_D)).ToString());
-                        break;
-                    case "bst":
-                        int newBitWord = Convert.ToUInt16(Encoding.UTF8.GetString(e.Message));
-                        newBitWord = newBitWord & (int)~BSFlag.Blocked; // useless bit "Blocked"
-                        safeChangeControl(laBitState, newBitWord.ToString());
-                        safeChangeControl(laBitState2, "BS: " + newBitWord.ToString("X4"));
-                        break;
-                    default:
-                        mqttLogger.Log("Unexpected mqtt topic \"" + e.Topic + "\"");
-                        break;             
-                }
-            }
-            else {
-                Console.WriteLine("Ooops! Unknown topic of message ...");
+            catch (Exception ex) {
+                myLog.LogAlert(AlertType.Error, lineId.ToString(), ex.TargetSite.ToString(),
+                        ex.Source.ToString(), ex.Message.ToString(), "system");
             }
         }
 
         private void clientTi_MqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)
         {
-            mqttLogger.Log("<<< \"" + e.Topic + "\" : \"" + Encoding.UTF8.GetString(e.Message) + "\"");
-            if (e.Topic.StartsWith(context_station)) {
-                switch (e.Topic.Replace(context_station, "")) {
-                    case "timers": 
-                        dynamic resultTi = (JArray.Parse(Encoding.UTF8.GetString(e.Message)))[0];
-                        timers["TIMER_LIVE"]        = resultTi.LiveTakt;
-                        timers["T"]                 = resultTi.T;
-                        timers["TIMER_STOP"]        = resultTi.STOP;
-                        timers["TIMER_HELP"]        = resultTi.HELP;
-                        timers["TIMER_STOPLAST"]    = resultTi.STOPLAST;
-                        timers["TIMER_SumLate"]     = resultTi.SumLate;
+            try {
+                if (mqttLogger == null)
+                    noMqttConnectionHandler();
 
-                        //json block [{"STOP": 0, "HELP": 0, "PART1": 0, "PART2": 0, "Fail": 0, "STOPLAST": 0, 
-                        //             "Late": 224, "Operating": 0, "SumLate": 0, "LiveTakt": 3300, "T": 3600}]
-                        safeChangeControl(laMem, formatCounter(this.calcCounter()));
-                        safeChangeControl(laTimeLeft, formatCounter(timers["T"]));
-                        safeChangeControl(laLive, formatCounter(timers["TIMER_LIVE"]));
-                        safeChangeControl(laSumstopValue, formatCounter(timers["TIMER_STOP"]));
-                        safeChangeControl(laHelpTimeValue, formatCounter(timers["TIMER_HELP"]));
-                        break;
-                    default:
-                        Console.WriteLine("Ooops! Unknown topic of message ...");
-                        break;
+                mqttLogger.Log("<<< \"" + e.Topic + "\" : \"" + Encoding.UTF8.GetString(e.Message) + "\"");
+                if (e.Topic.StartsWith(context_station)) {
+                    switch (e.Topic.Replace(context_station, "")) {
+                        case "timers":
+                            string strResult = Encoding.UTF8.GetString(e.Message);
+                            dynamic resultTi = JObject.Parse(strResult);
+                            timers["TIMER_LIVE"] = resultTi.LiveTakt;
+                            timers["T"] = resultTi.T;
+                            timers["TIMER_STOP"] = resultTi.STOP;
+                            timers["TIMER_HELP"] = resultTi.HELP;
+                            timers["TIMER_STOPLAST"] = resultTi.STOPLAST;
+                            timers["TIMER_SumLate"] = resultTi.SumLate;
+
+                            //json block [{"STOP": 0, "HELP": 0, "PART1": 0, "PART2": 0, "Fail": 0, "STOPLAST": 0, 
+                            //             "Late": 224, "Operating": 0, "SumLate": 0, "LiveTakt": 3300, "T": 3600}]
+                            safeChangeControl(laMem, formatCounter(this.calcCounter()));
+                            safeChangeControl(laTimeLeft, formatCounter(timers["T"]));
+                            safeChangeControl(laLive, formatCounter(timers["TIMER_LIVE"]));
+                            safeChangeControl(laSumstopValue, formatCounter(timers["TIMER_STOP"]));
+                            safeChangeControl(laHelpTimeValue, formatCounter(timers["TIMER_HELP"]));
+                            break;
+                        default:
+                            Console.WriteLine("Ooops! Unknown topic of message ...");
+                            break;
+                    }
+                }
+                else {
+                    Console.WriteLine("Ooops! Unknown topic of message ...");
                 }
             }
-            else {
-                Console.WriteLine("Ooops! Unknown topic of message ...");
+            catch (Exception ex) {
+                myLog.LogAlert(AlertType.Error, lineId.ToString(), ex.TargetSite.ToString(),
+                        ex.Source.ToString(), ex.Message.ToString(), "system");
             }
         }
 
@@ -227,29 +259,6 @@ namespace StationClient
         }
     }
 
-    /// <summary>
-    /// Stub interface class
-    /// </summary>
-    public class StationAttributes {
-       
-        [JsonProperty("S")]
-        public string StationName { get; set; }
 
-        [JsonProperty("B")]
-        public string Product { get; set; }
 
-        [JsonProperty("F")]
-        public string Frame { get; set; }
-    }
-
-    /// <summary>
-    /// Stub interface class
-    /// </summary>
-    public class ClientInstruction
-    {
-        [JsonProperty]
-        public int Mode;
-        [JsonProperty]
-        public string ContentUrl;
-    }
 }

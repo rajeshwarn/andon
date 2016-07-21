@@ -22,7 +22,7 @@ namespace LineService
 
     public class TimedLineStation : LineStation, IOPCStation
     {
-        private int _bitState = (int)BSFlag.Free;
+        private int _bitState; // = (int)BSFlag.Free;
 
         private TimersController timers;
         private int positionOffset = 0;
@@ -116,6 +116,8 @@ namespace LineService
                     //this.timers.Stop(TimerKey.Late.ToString());
                 }
 
+
+                GetButtonsWord();
                 return result;
             }
             catch (Exception ex)
@@ -491,7 +493,6 @@ namespace LineService
 
         }
 
-
         public void SetControls(Dictionary<string, ButtonState> controls) 
         {
             try
@@ -518,7 +519,18 @@ namespace LineService
             }           
         }
 
+        public int GetButtonsWord()
+        {
 
+            int intWord =
+                (Convert.ToInt32(this.bitState) & 0xFFF0) +
+                + Convert.ToInt32(this.ReadButtonValue("STOP")) * 8
+                + Convert.ToInt32(this.ReadButtonValue("HELP")) * 4
+                + 0 * 2
+                + Convert.ToInt32(this.ReadButtonValue("FINISH")) * 1;
+            bitState = bitState & (0xFFF0 + 0x0002) | intWord;       // 0x0002 maskinf frame type
+            return intWord;
+        }
 
     }
 
