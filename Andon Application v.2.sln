@@ -1,6 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
+
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LineManagerApp", "LineManagerApp\LineManagerApp.csproj", "{DD9BB4A0-1235-4DE8-AB9B-62BD1AC59274}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StationClient", "StationClient\StationClient.csproj", "{B41A3A47-701B-4A9E-BC4A-5BBA26E20F6F}"
